@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "02b98776-8210-405c-ae9f-763901f15fd6",
+		"name": "Retail",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17349135"
+	},
+	"item": [
+		{
+			"name": "Endpoints",
+			"item": [
+				{
+					"name": "Catalog Upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Deliverect-Version",
+								"value": "retail",
+								"type": "text"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"callbackUrl\": \"https://98ef4ae273da56f360f9fc8d98224c02.m.pipedream.net\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{restUrl}}catalog/accounts/{{accountId}}/itemsUploadUrl",
+							"host": [
+								"{{restUrl}}catalog"
+							],
+							"path": [
+								"accounts",
+								"{{accountId}}",
+								"itemsUploadUrl"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Items CSV",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"host": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-goog-meta-callback",
+								"value": "https://98ef4ae273da56f360f9fc8d98224c02.m.pipedream.net",
+								"type": "text"
+							},
+							{
+								"key": "Host",
+								"value": "storage.googleapis.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": ""
+							}
+						},
+						"url": {
+							"raw": "{{signedUrl}}",
+							"host": [
+								"{{signedUrl}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inventory Update",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Deliverect-Version",
+								"value": "retail",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"callbackUrl\":\" https://9e18d94875742ae28e95faa0e2a25309.m.pipedream.net\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{restUrl}}catalog/accounts/{{accountId}}/inventoryUploadUrl",
+							"host": [
+								"{{restUrl}}catalog"
+							],
+							"path": [
+								"accounts",
+								"{{accountId}}",
+								"inventoryUploadUrl"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit Inventory CSV",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"host": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "X-goog-meta-callback",
+								"value": "https://98ef4ae273da56f360f9fc8d98224c02.m.pipedream.net",
+								"type": "text"
+							},
+							{
+								"key": "Host",
+								"value": "storage.googleapis.com",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": ""
+							}
+						},
+						"url": {
+							"raw": "{{signedUrl}}",
+							"host": [
+								"{{signedUrl}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
