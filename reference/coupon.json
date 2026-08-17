@@ -49,6 +49,9 @@
          "tags": [
           "Deliverect Endpoints"
         ],
+         "summary": "Validate Coupon",
+         "description": "Validate one or more coupon codes for an order in a single request. Each code is validated independently — an invalid or ineligible code does not fail the whole request; it is reported in that code's own result entry, while the rest of the batch still returns normal results.  This is the recommended way to validate coupon codes. It replaces the older, single-code Validate Coupon endpoint, which required one call per code.",
+         "operationId": "post_coupons-accountid-channel-channellinkid-coupons-couponcode-validate",
         "responses": {
           "200": {
             "description": ""
@@ -79,10 +82,10 @@
             },
             "required": true
           }
-        ],
-        "description": "Validate one or more coupon codes for an order in a single request. Each code is validated independently — an invalid or ineligible code does not fail the whole request; it is reported in that code's own result entry, while the rest of the batch still returns normal results.  This is the recommended way to validate coupon codes. It replaces the older, single-code Validate Coupon endpoint, which required one call per code.",
-        "summary": "Validate Coupon",
-        "operationId": "post_coupons-accountid-channel-channellinkid-coupons-couponcode-validate"
+        ]
+        
+       
+       
       }
     },
     "//coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate": {
@@ -90,6 +93,9 @@
          "tags": [
           "Deliverect Endpoints"
         ],
+        "summary": "Validate Coupon",
+        "operationId": "post_coupons-accountid-channel-channellinkid-coupons-couponcode-validate-1",
+        "deprecated": true,
         "responses": {
           "200": {
             "description": "",
@@ -121,10 +127,7 @@
             },
             "required": true
           }
-        ],
-        "summary": "Validate Coupon",
-        "operationId": "post_coupons-accountid-channel-channellinkid-coupons-couponcode-validate-1",
-        "deprecated": true
+        ]
       }
     },
     "/coupons/{accountId}/channel/{channelLinkId}/coupons/validate": {
@@ -132,6 +135,8 @@
          "tags": [
           "Deliverect Endpoints"
         ],
+        "summary": "Validate Coupons",
+        "operationId": "post_coupons-accountid-channel-channellinkid-coupons-validate",
         "responses": {
           "200": {
             "description": ""
@@ -154,9 +159,9 @@
             },
             "required": true
           }
-        ],
-        "operationId": "post_coupons-accountid-channel-channellinkid-coupons-validate",
-        "summary": "Validate Coupons"
+        ]
+        
+        
       }
     },
     "/coupons/{accountId}/channel/{channelLinkId}/coupons": {
@@ -164,6 +169,7 @@
          "tags": [
           "Deliverect Endpoints"
         ],
+        "summary": "Get Coupons",
         "description": "",
         "operationId": "get_couponsadmin{accountId}coupons{couponId}-1",
         "responses": {
@@ -400,8 +406,8 @@
             },
             "required": true
           }
-        ],
-        "summary": "Get Coupons"
+        ]
+        
       }
     }
   }
