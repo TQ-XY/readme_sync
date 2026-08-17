@@ -46,6 +46,9 @@
   "paths": {
     "/coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate": {
       "post": {
+         "tags": [
+          "Deliverect Endpoints"
+        ],
         "responses": {
           "200": {
             "description": ""
@@ -82,8 +85,11 @@
         "operationId": "post_coupons-accountid-channel-channellinkid-coupons-couponcode-validate"
       }
     },
-    "/coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate2": {
+    "//coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate": {
       "post": {
+         "tags": [
+          "Deliverect Endpoints"
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -123,6 +129,9 @@
     },
     "/coupons/{accountId}/channel/{channelLinkId}/coupons/validate": {
       "post": {
+         "tags": [
+          "Deliverect Endpoints"
+        ],
         "responses": {
           "200": {
             "description": ""
@@ -152,6 +161,9 @@
     },
     "/coupons/{accountId}/channel/{channelLinkId}/coupons": {
       "get": {
+         "tags": [
+          "Deliverect Endpoints"
+        ],
         "description": "",
         "operationId": "get_couponsadmin{accountId}coupons{couponId}-1",
         "responses": {
