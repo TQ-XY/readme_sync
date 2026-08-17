@@ -77,7 +77,7 @@
         "operationId": "post_coupons-accountid-channel-channellinkid-coupons-couponcode-validate"
       }
     },
-    "//coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate": {
+    "/coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate2": {
       "post": {
         "responses": {
           "200": {
