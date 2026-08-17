@@ -1,0 +1,391 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "coupon_api",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.staging.deliverect.com"
+    }
+  ],
+  "security": [
+    {
+      "oauth2ClientCredentials": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "oauth2ClientCredentials": {
+        "type": "oauth2",
+        "description": "Obtain an access token using the partner client ID and client secret. Send the returned token with each API request in the Authorization header as a Bearer token.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/oauth/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true,
+    "oauth-options": {
+      "useInsecureClientAuthentication": true
+    }
+  },
+  "x-readme-fauxas": true,
+  "tags": [],
+  "paths": {
+    "/coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "couponCode",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "channelLinkId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "description": "Validate one or more coupon codes for an order in a single request. Each code is validated independently — an invalid or ineligible code does not fail the whole request; it is reported in that code's own result entry, while the rest of the batch still returns normal results.  This is the recommended way to validate coupon codes. It replaces the older, single-code Validate Coupon endpoint, which required one call per code.",
+        "summary": "Validate Coupon",
+        "operationId": "post_coupons-accountid-channel-channellinkid-coupons-couponcode-validate"
+      }
+    },
+    "//coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "couponCode",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "channelLinkId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Validate Coupon",
+        "operationId": "post_coupons-accountid-channel-channellinkid-coupons-couponcode-validate-1",
+        "deprecated": true
+      }
+    },
+    "/coupons/{accountId}/channel/{channelLinkId}/coupons/validate": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "channelLinkId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "post_coupons-accountid-channel-channellinkid-coupons-validate",
+        "summary": "Validate Coupons"
+      }
+    },
+    "/coupons/{accountId}/channel/{channelLinkId}/coupons": {
+      "get": {
+        "description": "",
+        "operationId": "get_couponsadmin{accountId}coupons{couponId}-1",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "example": 1,
+                      "default": 0
+                    },
+                    "page": {
+                      "type": "integer",
+                      "example": 1,
+                      "default": 0
+                    },
+                    "size": {
+                      "type": "integer",
+                      "example": 50,
+                      "default": 0
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "example": "D23"
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "item"
+                          },
+                          "discounts": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "example": "flat_off"
+                                },
+                                "value": {
+                                  "type": "integer",
+                                  "example": 1234,
+                                  "default": 0
+                                },
+                                "currency": {
+                                  "type": "string",
+                                  "example": "EUR"
+                                },
+                                "plus": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "example": "ABC-123"
+                                  }
+                                },
+                                "display": {
+                                  "type": "string",
+                                  "example": "12.34"
+                                }
+                              }
+                            }
+                          },
+                          "conditions": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "example": "max_uses_per_coupon"
+                                },
+                                "maxUsesPerCoupon": {
+                                  "type": "integer",
+                                  "example": 3,
+                                  "default": 0
+                                }
+                              }
+                            }
+                          },
+                          "description": {
+                            "type": "string",
+                            "example": "my coupon"
+                          },
+                          "id": {
+                            "type": "string",
+                            "example": "690e1ef7a856cfe57553a9e1"
+                          },
+                          "accountId": {
+                            "type": "string",
+                            "example": "681cbecf4ae843d500e25e47"
+                          },
+                          "timesUsed": {
+                            "type": "integer",
+                            "example": 0,
+                            "default": 0
+                          },
+                          "created": {
+                            "type": "string",
+                            "example": "2025-11-07T16:31:51.508000Z"
+                          },
+                          "updated": {
+                            "type": "string",
+                            "example": "2025-11-07T16:31:51.509000Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "total": 1,
+                      "page": 1,
+                      "size": 50,
+                      "items": [
+                        {
+                          "code": "D23",
+                          "type": "item",
+                          "discounts": [
+                            {
+                              "type": "flat_off",
+                              "value": 1234,
+                              "currency": "EUR",
+                              "plus": [
+                                "ABC-123",
+                                "DEF-456"
+                              ],
+                              "display": "12.34"
+                            }
+                          ],
+                          "conditions": [
+                            {
+                              "type": "max_uses_per_coupon",
+                              "maxUsesPerCoupon": 3
+                            },
+                            {
+                              "type": "locations",
+                              "locationIds": [
+                                "68434f75202fe35540a31c23"
+                              ]
+                            }
+                          ],
+                          "description": "my coupon",
+                          "id": "690e1ef7a856cfe57553a9e1",
+                          "accountId": "681cbecf4ae843d500e25e47",
+                          "timesUsed": 0,
+                          "created": "2025-11-07T16:31:51.508000Z",
+                          "updated": "2025-11-07T16:31:51.509000Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "context": {
+                      "type": "object",
+                      "properties": {}
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message"
+                  ]
+                },
+                "examples": {
+                  "Not Found": {
+                    "summary": "Not Found",
+                    "value": {
+                      "code": "coupon_not_found",
+                      "message": "coupon not found",
+                      "context": {}
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "size",
+            "schema": {
+              "type": "integer",
+              "default": "25"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": "1"
+            }
+          },
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "channelLinkId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Get Coupons"
+      }
+    }
+  }
+}
