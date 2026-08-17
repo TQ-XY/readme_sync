@@ -37,7 +37,12 @@
     }
   },
   "x-readme-fauxas": true,
-  "tags": [],
+  "tags": [
+        {
+      "name": "Deliverect Endpoints",
+      "description": "Deliverect Endpoints"
+    }
+  ],
   "paths": {
     "/coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate": {
       "post": {
