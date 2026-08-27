@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "coupon_api",
+    "title": "Coupon API",
     "version": "1.0"
   },
   "servers": [
@@ -46,12 +46,13 @@
   "paths": {
     "/coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate": {
       "post": {
+         "summary": "Validate Coupon",
+         "description": "Validate one or more coupon codes for an order in a single request. Each code is validated independently — an invalid or ineligible code does not fail the whole request; it is reported in that code's own result entry, while the rest of the batch still returns normal results.  This is the recommended way to validate coupon codes. It replaces the older, single-code Validate Coupon endpoint, which required one call per code.",
          "tags": [
           "Deliverect Endpoints",
           "internal"
         ],
-         "summary": "Validate Coupon",
-         "description": "Validate one or more coupon codes for an order in a single request. Each code is validated independently — an invalid or ineligible code does not fail the whole request; it is reported in that code's own result entry, while the rest of the batch still returns normal results.  This is the recommended way to validate coupon codes. It replaces the older, single-code Validate Coupon endpoint, which required one call per code.",
+        
          "operationId": "post_coupons-accountid-channel-channellinkid-coupons-couponcode-validate",
         "responses": {
           "200": {
