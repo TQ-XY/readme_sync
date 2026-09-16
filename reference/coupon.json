@@ -46,11 +46,11 @@
   "paths": {
     "/coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate": {
       "post": {
+         "tags": [
+          "Endpoints"
+        ],
         "summary": "Validate Coupon",
         "description": "Validate one or more coupon codes for an order in a single request. Each code is validated independently — an invalid or ineligible code does not fail the whole request; it is reported in that code's own result entry, while the rest of the batch still returns normal results.  This is the recommended way to validate coupon codes. It replaces the older, single-code Validate Coupon endpoint, which required one call per code.",
-        "tags": [
-          "Deliverect Endpoints"
-        ],
         "operationId": "post_coupons-accountid-channel-channellinkid-coupons-couponcode-validate",
         "responses": {
           "200": {
@@ -88,7 +88,7 @@
     "//coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate": {
       "post": {
         "tags": [
-          "Deliverect Endpoints"
+          "Endpoints"
         ],
         "summary": "Validate Coupon",
         "operationId": "post_coupons-accountid-channel-channellinkid-coupons-couponcode-validate-1",
@@ -130,7 +130,7 @@
     "/coupons/{accountId}/channel/{channelLinkId}/coupons/validate": {
       "post": {
         "tags": [
-          "Deliverect Endpoints"
+          "Endpoints"
         ],
         "summary": "Validate Coupons",
         "operationId": "post_coupons-accountid-channel-channellinkid-coupons-validate",
@@ -162,7 +162,7 @@
     "/coupons/{accountId}/channel/{channelLinkId}/coupons": {
       "get": {
         "tags": [
-          "Deliverect Endpoints"
+          "Endpoints"
         ],
         "summary": "Get Coupons",
         "description": "",
