@@ -38,7 +38,7 @@
   },
   "x-readme-fauxas": true,
   "tags": [
-        {
+    {
       "name": "Deliverect Endpoints",
       "description": "Deliverect Endpoints"
     }
@@ -46,14 +46,12 @@
   "paths": {
     "/coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate": {
       "post": {
-         "summary": "Validate Coupon",
-         "description": "Validate one or more coupon codes for an order in a single request. Each code is validated independently — an invalid or ineligible code does not fail the whole request; it is reported in that code's own result entry, while the rest of the batch still returns normal results.  This is the recommended way to validate coupon codes. It replaces the older, single-code Validate Coupon endpoint, which required one call per code.",
-         "tags": [
-          "Deliverect Endpoints",
-          "internal"
+        "summary": "Validate Coupon",
+        "description": "Validate one or more coupon codes for an order in a single request. Each code is validated independently — an invalid or ineligible code does not fail the whole request; it is reported in that code's own result entry, while the rest of the batch still returns normal results.  This is the recommended way to validate coupon codes. It replaces the older, single-code Validate Coupon endpoint, which required one call per code.",
+        "tags": [
+          "Deliverect Endpoints"
         ],
-        
-         "operationId": "post_coupons-accountid-channel-channellinkid-coupons-couponcode-validate",
+        "operationId": "post_coupons-accountid-channel-channellinkid-coupons-couponcode-validate",
         "responses": {
           "200": {
             "description": ""
@@ -85,14 +83,11 @@
             "required": true
           }
         ]
-        
-       
-       
       }
     },
     "//coupons/{accountId}/channel/{channelLinkId}/coupons/{couponCode}/validate": {
       "post": {
-         "tags": [
+        "tags": [
           "Deliverect Endpoints"
         ],
         "summary": "Validate Coupon",
@@ -134,7 +129,7 @@
     },
     "/coupons/{accountId}/channel/{channelLinkId}/coupons/validate": {
       "post": {
-         "tags": [
+        "tags": [
           "Deliverect Endpoints"
         ],
         "summary": "Validate Coupons",
@@ -162,13 +157,11 @@
             "required": true
           }
         ]
-        
-        
       }
     },
     "/coupons/{accountId}/channel/{channelLinkId}/coupons": {
       "get": {
-         "tags": [
+        "tags": [
           "Deliverect Endpoints"
         ],
         "summary": "Get Coupons",
@@ -409,7 +402,6 @@
             "required": true
           }
         ]
-        
       }
     }
   }
