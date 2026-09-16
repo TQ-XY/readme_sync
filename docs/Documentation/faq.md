@@ -1,5 +1,5 @@
 ---
-title: '### FAQ'
+title: FAQ
 deprecated: false
 hidden: false
 metadata:
