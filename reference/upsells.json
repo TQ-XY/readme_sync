@@ -44,15 +44,15 @@
       "description": "This endpoint allows you to exchange client credentials for a Bearer access token, required when authenticating API requests made to Deliverect."
     },
     {
-      "name": "Deliverect Endpoints",
-      "description": "Deliverect Endpoints"
+      "name": "Endpoints",
+      "description": "Endpoints"
     }
   ],
   "paths": {
     "/upsell/channel/{channelLinkId}": {
       "post": {
         "tags": [
-          "Deliverect Endpoints"
+          "Endpoints"
         ],
         "summary": "Get Upsell Items",
         "operationId": "getUpsellItems",
