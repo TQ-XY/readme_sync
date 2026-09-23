@@ -1,6 +1,5 @@
 name: readme_sync
 
-# Run workflow for every push to the `main` branch
 on:
   push:
     branches:
@@ -13,10 +12,12 @@ jobs:
       - name: Checkout this repo
         uses: actions/checkout@v4
 
-      # Run GitHub Action to sync docs in `documentation` directory
-      - name: GitHub Action
-        # We recommend specifying a fixed version, i.e. @v10
-        # Docs: https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions#example-using-versioned-actions
+      - name: Sync guides (./docs)
         uses: readmeio/rdme@v10
         with:
-          rdme: docs upload ./documentation --key=${{ secrets.README_API_KEY }} --branch=2.0
+          rdme: docs upload ./docs --key=${{ secrets.README_API_KEY }} --branch=2.0
+
+      - name: Sync API reference (./reference)
+        uses: readmeio/rdme@v10
+        with:
+          rdme: reference upload ./reference --key=${{ secrets.README_API_KEY }} --branch=2.0
