@@ -9,7 +9,7 @@ metadata:
 
 <br />
 
-<Accordion title="Can any product be recommended?" icon="fad fa-question">
+<Accordion title="Can any product be recommended,please?" icon="fad fa-question">
   Only products currently online and not snoozed at that location. The latest published menu is checked and disabled products are filtered out.
 </Accordion>
 
