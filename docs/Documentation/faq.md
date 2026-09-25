@@ -1,5 +1,5 @@
 ---
-title: FAQ
+title: "FAQ"
 metadata:
   robots: index
 privacy:
