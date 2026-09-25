@@ -1,0 +1,9 @@
+{
+	"servers": {
+		"deliverect-api": {
+			"type": "http",
+			"url": "https://developers.deliverect.com/mcp"
+		}
+	},
+	"inputs": []
+}

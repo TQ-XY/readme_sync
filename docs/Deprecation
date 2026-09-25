@@ -1,0 +1,37 @@
+We announce the deprecations of APIs, features, or attributes on the [API Updates page](https://developers.deliverect.com/changelog).
+
+We will avoid deprecations when we cannot ensure backward compatibility.
+
+Our deprecation policy describes how we communicate deprecations when backward compatibility is not ensured. We also aim to offer an alternative to potentially impacted partners.
+
+The deprecation policy is a part of our API terms and conditions and refers to the following Deliverect APIs:
+
+- POS API
+- Channel API
+- Commerce API
+- Dispatch API
+- Store API
+- KDS API
+- Reporting endpoints
+
+**The Deliverect deprecation policy conforms to the following rules:**
+
+- An element to be deprecated will be identified in the documentation and the changelog on the Deliverect Developer Hub.
+- An element to be deprecated will be accompanied by the expected retirement date.
+- The affected API documentation will describe an alternative method. If there is no migration path, it should state that there is none.
+- Deprecated API elements are maintained for at least three months after the announcement on the Deliverect Developer Hub.
+- After three months, the deprecated API element will be removed from the documentation on the Deliverect Developer Hub.
+- After three months, the deprecated element may be removed from the affected API.
+- Deliverect will proactively communicate the deprecated elements to all users using the affected API at the time of the deprecation announcement.
+- Elements marked as Beta can be changed at any time and thus are exempt from the deprecation policy.
+
+## Deprecation documentation
+
+The deprecated element and the deprecation date are provided on the Deliverect Developer Hub. This will be documented in the following two locations:
+
+- The <Anchor target="_blank" href="https://developers.deliverect.com/changelog">API Updates page</Anchor>.
+- The API reference documentation for that specific element.
+
+## Deprecation policy exceptions
+
+A situation may occur where this policy impedes the development of an API, or the application becomes undesirable for security reasons. In such cases, Deliverect has the right to break backward compatibility. Users using the affected API are notified of this change.
