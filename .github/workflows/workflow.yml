@@ -15,9 +15,9 @@ jobs:
       - name: Sync guides (./docs)
         uses: readmeio/rdme@v10
         with:
-          rdme: docs upload ./docs --key=${{ secrets.README_API_KEY }} ----branch=v1.0
+          rdme: docs upload ./docs --key=${{ secrets.README_API_KEY }} --branch=v1.0
 
       - name: Sync API reference (./reference)
         uses: readmeio/rdme@v10
         with:
-          rdme: reference upload ./reference --key=${{ secrets.README_API_KEY }} ----branch=v1.0
+          rdme: reference upload ./reference --key=${{ secrets.README_API_KEY }} --branch=v1.0
