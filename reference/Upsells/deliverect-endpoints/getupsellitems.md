@@ -2,5 +2,7 @@
 api:
   file: upsells.json
   operationId: getUpsellItems
-hidden: false
+privacy:
+  view: public
 ---
+

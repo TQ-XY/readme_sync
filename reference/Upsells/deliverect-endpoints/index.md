@@ -1,4 +1,6 @@
 ---
 title: Deliverect Endpoints
-hidden: false
+privacy:
+  view: public
 ---
+

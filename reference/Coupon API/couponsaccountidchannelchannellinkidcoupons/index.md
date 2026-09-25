@@ -1,4 +1,6 @@
 ---
-title: /coupons/{accountId}/channel/{channelLinkId}/coupons
-hidden: false
+title: '/coupons/{accountId}/channel/{channelLinkId}/coupons'
+privacy:
+  view: public
 ---
+
