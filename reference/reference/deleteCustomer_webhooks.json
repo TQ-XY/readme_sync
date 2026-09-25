@@ -1,0 +1,170 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Delete Customer",
+    "description": "This API enables the deletion of the customer data flow between Deliverect and the DSP system.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://yourwebhook.com/",
+      "description": "Placeholder for the webhook URL channels will provide to Deliverect during setup."
+    }
+  ],
+  "paths": {
+    "/deleteCustomer": {
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {}
+            },
+            "description": "Created"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Bad Request": {
+                    "summary": "Bad Request",
+                    "value": "{}"
+                  }
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Not Found": {
+                    "summary": "Not Found",
+                    "value": "{}"
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Internal Server Error": {
+                    "summary": "Internal Server Error",
+                    "value": "{}"
+                  }
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ],
+        "operationId": "deletecustomer_delete",
+        "x-readme": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customerId": {
+                    "type": "string",
+                    "description": "Unique identifier of the customer",
+                    "default": "customer_123"
+                  },
+                  "accountId": {
+                    "type": "string",
+                    "description": "Deliverect account identifier",
+                    "default": "507*****6cd799439011"
+                  },
+                  "responseSLA": {
+                    "type": "integer",
+                    "description": "Expected response timeframe ",
+                    "default": "15"
+                  },
+                  "requestDate": {
+                    "type": "string",
+                    "description": "Timestamp of request creation",
+                    "default": "2026-03-19T12:00:00.000Z"
+                  },
+                  "requestId": {
+                    "type": "string",
+                    "description": "Unique Id for the deletion request",
+                    "default": "123456********-345667"
+                  }
+                },
+                "required": [
+                  "customerId",
+                  "accountId",
+                  "responseSLA",
+                  "requestDate",
+                  "requestId"
+                ]
+              },
+              "examples": {
+                "Deletion Request": {
+                  "summary": "Deletion Request",
+                  "value": "{\n  \"customerId\": \"customer_123\",\n  \"accountId\": \"507f1f77bcf86cd799439011\",\n  \"responseSLA\": 15,\n  \"webhookUrl\": \"https://api.deliverect.com/fulfillment/generic/deleteCustomerDataResponse\",\n  \"requestDate\": \"2025-03-19T12:00:00.000Z\",\n  \"requestId\": \"123456********-345667\",\n}\n"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Deletion Request"
+      }
+    }
+  }
+}

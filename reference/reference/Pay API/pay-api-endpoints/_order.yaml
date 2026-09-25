@@ -1,0 +1,8 @@
+- pay-api-get-payment-gateways
+- token-proxy
+- pay-api-delete-token
+- pay-api-get-customer-tokens
+- request-payment
+- pay_endpoints-request-payment-1
+- pay-api-get-payment
+- pay-api-refund-payment

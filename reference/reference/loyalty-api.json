@@ -1,0 +1,1648 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "loyalty-api",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.staging.deliverect.com"
+    }
+  ],
+  "security": [
+    {
+      "oauth2ClientCredentials": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "oauth2ClientCredentials": {
+        "type": "oauth2",
+        "description": "Obtain an access token using the partner client ID and client secret. Send the returned token with each API request in the Authorization header as a Bearer token.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/oauth/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true,
+    "oauth-options": {
+      "useInsecureClientAuthentication": true
+    }
+  },
+  "x-readme-fauxas": true,
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "This endpoint allows you to exchange client credentials for a Bearer access token, required when authenticating API requests made to Deliverect."
+    },
+    {
+      "name": "Endpoints",
+      "description": "Deliverect Endpoints"
+    }
+  ],
+  "paths": {
+    "/loyalty/{channelLinkId}/customer": {
+      "post": {
+        "summary": "Create Loyalty Customer",
+        "description": "",
+        "operationId": "loyalty-channel-create-loyalty-customer",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "email of the end customer"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "phone number of the end customer in E164 format"
+                  },
+                  "firstName": {
+                    "type": "string",
+                    "description": "first name of the end customer"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "description": "last name of the end customer"
+                  },
+                  "dateOfBirth": {
+                    "type": "string",
+                    "description": "date of birth of the end customer in ISO format"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "- without tier": {
+                    "value": {
+                      "providerId": "68964",
+                      "firstName": "John",
+                      "lastName": "Doe",
+                      "email": "john.doe@email.com",
+                      "phoneNumber": "+32411222333",
+                      "dateOfBirth": "1970-01-01T00:00:00.000000+00:00",
+                      "lifetimePointsBalance": 0,
+                      "tier": null
+                    }
+                  },
+                  "with tier": {
+                    "value": {
+                      "providerId": "234567",
+                      "firstName": "John",
+                      "lastName": "Doe",
+                      "email": "john.doe@email.com",
+                      "phoneNumber": "+32411222333",
+                      "dateOfBirth": "1970-01-01T00:00:00.000000+00:00",
+                      "lifetimePointsBalance": 0,
+                      "status": "active",
+                      "tier": {
+                        "name": "Bronze",
+                        "description": "This is a bronze tier",
+                        "media": {
+                          "url": "https://deliverect.com/image.png",
+                          "mediaType": "image",
+                          "requirements": {
+                            "minLifetimePoints": 0,
+                            "maxLifetimePoints": 1000
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "providerId": {
+                      "type": "string",
+                      "example": "234567"
+                    },
+                    "firstName": {
+                      "type": "string",
+                      "example": "John"
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "example": "Doe"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "john.doe@email.com"
+                    },
+                    "phoneNumber": {
+                      "type": "string",
+                      "example": "+32411222333"
+                    },
+                    "dateOfBirth": {
+                      "type": "string",
+                      "example": "1970-01-01T00:00:00.000000+00:00"
+                    },
+                    "lifetimePointsBalance": {
+                      "type": "integer",
+                      "example": 0,
+                      "default": 0
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "active"
+                    },
+                    "tier": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "Bronze"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "This is a bronze tier"
+                        },
+                        "media": {
+                          "type": "object",
+                          "properties": {
+                            "url": {
+                              "type": "string",
+                              "example": "https://deliverect.com/image.png"
+                            },
+                            "mediaType": {
+                              "type": "string",
+                              "example": "image"
+                            },
+                            "requirements": {
+                              "type": "object",
+                              "properties": {
+                                "minLifetimePoints": {
+                                  "type": "integer",
+                                  "example": 0,
+                                  "default": 0
+                                },
+                                "maxLifetimePoints": {
+                                  "type": "integer",
+                                  "example": 1000,
+                                  "default": 0
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"error\": \"no active loyalty profile found\",\n    \"http_code\": 400,\n    \"description\": \"no active loyalty profile found\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "no active loyalty profile found"
+                    },
+                    "http_code": {
+                      "type": "integer",
+                      "example": 400,
+                      "default": 0
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "no active loyalty profile found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get Loyalty Customer",
+        "description": "",
+        "operationId": "loyalty-channel-get-customer",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "email of the end customer",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "phoneNumber",
+            "in": "query",
+            "description": "phone number of the end customer in E164 format",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "providerId",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The customer's unique identifier within the loyalty provider's system, QR codes can also be passed via this parameter where supported on the Loyalty platform"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "without tier": {
+                    "value": {
+                      "firstName": "John",
+                      "lastName": "Doe",
+                      "email": "john.doe@email.com",
+                      "phoneNumber": "+32411222333",
+                      "dateOfBirth": "1970-01-01T00:00:00.000000+00:00",
+                      "lifetimePointsBalance": 0,
+                      "status": "activation_pending",
+                      "tier": null,
+                      "providerId": "376483"
+                    }
+                  },
+                  "with tier": {
+                    "value": {
+                      "providerId": "83885",
+                      "firstName": "John",
+                      "lastName": "Doe",
+                      "email": "john.doe@email.com",
+                      "phoneNumber": "+32411222333",
+                      "dateOfBirth": "1970-01-01T00:00:00.000000+00:00",
+                      "lifetimePointsBalance": 0,
+                      "status": "active",
+                      "tier": {
+                        "name": "Bronze",
+                        "description": "This is a bronze tier",
+                        "media": {
+                          "url": "https://deliverect.com/image.png",
+                          "mediaType": "image",
+                          "requirements": {
+                            "minLifetimePoints": 0,
+                            "maxLifetimePoints": 1000
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "without tier",
+                      "type": "object",
+                      "properties": {
+                        "firstName": {
+                          "type": "string",
+                          "example": "John"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "example": "Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "john.doe@email.com"
+                        },
+                        "phoneNumber": {
+                          "type": "string",
+                          "example": "+32411222333"
+                        },
+                        "dateOfBirth": {
+                          "type": "string",
+                          "example": "1970-01-01T00:00:00.000000+00:00"
+                        },
+                        "lifetimePointsBalance": {
+                          "type": "integer",
+                          "example": 0,
+                          "default": 0
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "activation_pending"
+                        },
+                        "tier": {},
+                        "providerId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "providerId"
+                      ]
+                    },
+                    {
+                      "title": "with tier",
+                      "type": "object",
+                      "properties": {
+                        "firstName": {
+                          "type": "string",
+                          "example": "John"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "example": "Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "john.doe@email.com"
+                        },
+                        "phoneNumber": {
+                          "type": "string",
+                          "example": "+32411222333"
+                        },
+                        "dateOfBirth": {
+                          "type": "string",
+                          "example": "1970-01-01T00:00:00.000000+00:00"
+                        },
+                        "lifetimePointsBalance": {
+                          "type": "integer",
+                          "example": 0,
+                          "default": 0
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "active"
+                        },
+                        "tier": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "example": "Bronze"
+                            },
+                            "description": {
+                              "type": "string",
+                              "example": "This is a bronze tier"
+                            },
+                            "media": {
+                              "type": "object",
+                              "properties": {
+                                "url": {
+                                  "type": "string",
+                                  "example": "https://deliverect.com/image.png"
+                                },
+                                "mediaType": {
+                                  "type": "string",
+                                  "example": "image"
+                                },
+                                "requirements": {
+                                  "type": "object",
+                                  "properties": {
+                                    "minLifetimePoints": {
+                                      "type": "integer",
+                                      "example": 0,
+                                      "default": 0
+                                    },
+                                    "maxLifetimePoints": {
+                                      "type": "integer",
+                                      "example": 1000,
+                                      "default": 0
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "providerId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "providerId"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"error\": \"no active loyalty profile found\",\n    \"http_code\": 400,\n    \"description\": \"no active loyalty profile found\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "no active loyalty profile found"
+                    },
+                    "http_code": {
+                      "type": "integer",
+                      "example": 400,
+                      "default": 0
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "no active loyalty profile found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "404",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"error\": \"loyalty customer not found\",\n    \"http_code\": 404,\n    \"description\": \"loyalty customer not found\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "loyalty customer not found"
+                    },
+                    "http_code": {
+                      "type": "integer",
+                      "example": 404,
+                      "default": 0
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "loyalty customer not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/loyalty/{channelLinkId}/tiers": {
+      "get": {
+        "summary": "Get Loyalty Tiers",
+        "description": "",
+        "operationId": "get-loyalty-tiers",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "[\n    {\n        \"name\": \"Bronze\",\n        \"description\": \"Way to go!\",\n        \"media\": {\n            \"url\": \"https://deliverect.com/icon1.png\",\n            \"mediaType\": \"image\"\n        },\n        \"requirements\": {\n            \"minLifetimePoints\": 0,\n            \"maxLifetimePoints\": 1000\n        }\n    },\n    {\n        \"name\": \"Silver\",\n        \"description\": \"This is a higher tier!\",\n        \"media\": {\n            \"url\": \"https://deliverect.com/icon2.png\",\n            \"mediaType\": \"image\"\n        },\n        \"requirements\": {\n            \"minLifetimePoints\": 1000,\n            \"maxLifetimePoints\": 2000\n        }\n    }\n]"
+                  }
+                },
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "Bronze"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "Way to go!"
+                      },
+                      "media": {
+                        "type": "object",
+                        "properties": {
+                          "url": {
+                            "type": "string",
+                            "example": "https://deliverect.com/icon1.png"
+                          },
+                          "mediaType": {
+                            "type": "string",
+                            "example": "image"
+                          }
+                        }
+                      },
+                      "requirements": {
+                        "type": "object",
+                        "properties": {
+                          "minLifetimePoints": {
+                            "type": "integer",
+                            "example": 0,
+                            "default": 0
+                          },
+                          "maxLifetimePoints": {
+                            "type": "integer",
+                            "example": 1000,
+                            "default": 0
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/loyalty/{channelLinkId}/programs/retrieve": {
+      "post": {
+        "summary": "Get Loyalty Programs",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Customer and order details used to retrieve available loyalty programs.",
+          "content": {
+            "application/json": {
+              "examples": {
+                "Customer + basket": {
+                  "summary": "Customer with basket",
+                  "value": {
+                    "sessionId": "mysessionId123",
+                    "order": {
+                      "customer": {
+                        "name": "{{loyaltyCustomerFirstName}} {{loyaltyCustomerLastName}}",
+                        "email": "{{loyaltyCustomerEmail}}",
+                        "phoneNumber": "{{loyaltyCustomerPhone}}",
+                        "loyaltyProviderCustomerId": "{{loyaltyCustomerProviderId}}"
+                      },
+                      "orderType": 2,
+                      "items": [
+                        {
+                          "plu": "P-TE-zxb3-2",
+                          "name": "Burger",
+                          "price": 10000,
+                          "quantity": 1,
+                          "subItems": [],
+                          "productType": 1
+                        }
+                      ],
+                      "payment": {
+                        "amount": 10000
+                      },
+                      "discounts": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A list of loyalty programs available to the customer.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "programId": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "applicable": {
+                        "type": "boolean"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "cost": {
+                        "type": "number"
+                      },
+                      "media": {
+                        "type": "object",
+                        "nullable": true
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "discount": {
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "itemPLU": {
+                        "type": "string",
+                        "nullable": true
+                      },
+                      "quantity": {
+                        "type": "number",
+                        "nullable": true
+                      },
+                      "minOrderValue": {
+                        "type": "number",
+                        "nullable": true
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Programs for basket": {
+                    "summary": "Programs for basket",
+                    "value": [
+                      {
+                        "programId": "1",
+                        "title": "$2 OFF",
+                        "type": "discount_amount",
+                        "applicable": true,
+                        "description": "",
+                        "cost": 10,
+                        "media": {
+                          "url": "...",
+                          "mediaType": "image"
+                        },
+                        "expiresAt": null,
+                        "discount": 200,
+                        "itemPLU": null,
+                        "quantity": null,
+                        "minOrderValue": 1000
+                      },
+                      {
+                        "programId": "2",
+                        "title": "Free Dessert",
+                        "type": "free_item",
+                        "applicable": false,
+                        "description": "Requires a minimum order value of $150.00",
+                        "cost": 50,
+                        "media": {
+                          "url": "...",
+                          "mediaType": "image"
+                        },
+                        "expiresAt": null,
+                        "discount": null,
+                        "itemPLU": null,
+                        "quantity": null,
+                        "minOrderValue": 15000
+                      }
+                    ]
+                  },
+                  "No accessible programs": {
+                    "summary": "No accessible programs",
+                    "value": []
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request body failed schema validation."
+          },
+          "403": {
+            "description": "The customer has no matching profile with the loyalty provider."
+          },
+          "404": {
+            "description": "The channel link does not exist or is not accessible to the caller."
+          },
+          "422": {
+            "description": "The is missing or not a recognized value, or a referenced product is no longer available."
+          }
+        }
+      }
+    },
+    "/loyalty/{channelLinkId}/sso": {
+      "get": {
+        "summary": "Loyalty SSO - redirect to ordering channel",
+        "description": "",
+        "operationId": "loyalty-partner-sso-redirect",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "description": "authorization code coming from an oauth flow",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "returnUrl",
+            "in": "query",
+            "description": "Encoded URL of the store to redirect to after logging in",
+            "schema": {
+              "type": "string",
+              "default": "null"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "302 Found",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": ""
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/loyalty/{channelLinkId}/programs/validate": {
+      "post": {
+        "description": "",
+        "operationId": "post_new-endpoint",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "validationErrors": [],
+                      "discounts": [
+                        {
+                          "externalId": null,
+                          "provider": "loyalty",
+                          "scope": {
+                            "type": "order"
+                          },
+                          "offer": {
+                            "type": "flat_off",
+                            "value": 500
+                          }
+                        }
+                      ],
+                      "maxRedeemableAmount": 1000
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "validationErrors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {}
+                      }
+                    },
+                    "discounts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "externalId": {},
+                          "provider": {
+                            "type": "string",
+                            "example": "loyalty"
+                          },
+                          "scope": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "example": "order"
+                              }
+                            }
+                          },
+                          "offer": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "example": "flat_off"
+                              },
+                              "value": {
+                                "type": "integer",
+                                "example": 500,
+                                "default": 0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "maxRedeemableAmount": {
+                      "type": "integer",
+                      "example": 1000,
+                      "default": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "channelLinkId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "sec0": []
+          }
+        ],
+        "x-readme": {},
+        "summary": "Validate Loyalty Programs",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "examples": {
+                "Validate Program Example": {
+                  "summary": "Validate Program Example",
+                  "value": {
+                    "sessionId": "test",
+                    "programIds": [
+                      "1"
+                    ],
+                    "order": {
+                      "accountId": "6798b2b2a030bcf7dd6c1ee0",
+                      "channelLinkId": "684940251579e410c7792352",
+                      "locationId": "684940131579e410c7792348",
+                      "orderType": 2,
+                      "paymentAmount": 0,
+                      "customer": {
+                        "email": "test@deliverect.com",
+                        "phoneNumber": "+32474081356",
+                        "loyaltyProviderCustomerId": "88017991",
+                        "name": "John Doe"
+                      },
+                      "items": [
+                        {
+                          "plu": "3726",
+                          "name": "Sisi No Bubbles mango",
+                          "price": 10000,
+                          "quantity": 1,
+                          "subItems": []
+                        }
+                      ],
+                      "subTotal": 10000,
+                      "discounts": [],
+                      "decimalDigits": 2,
+                      "serviceCharge": 0,
+                      "deliveryCost": 0,
+                      "bagFee": 0,
+                      "tip": 0,
+                      "driverTip": 0,
+                      "smallOrderFee": 0
+                    },
+                    "wallet": {
+                      "type": "cash",
+                      "amount": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/loyalty/{channelLinkId}/configuration": {
+      "get": {
+        "summary": "Get Loyalty Configuration",
+        "description": "",
+        "operationId": "loyalty-channel-get-configuration",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "enabled": true,
+                      "providerName": "Generic",
+                      "providerId": 10000,
+                      "externalSignUpUrl": "https://deliverect.com/signup",
+                      "features": {
+                        "supportsSSO": false,
+                        "supportsExternalSignUpUrl": true,
+                        "supportsWalletPointsBalance": true,
+                        "supportsWalletCashBalance": false,
+                        "supportsBOGOFPrograms": true,
+                        "supportsFreeItemPrograms": true,
+                        "supportsFlatPrograms": true,
+                        "requiresEmail": true,
+                        "requiresPhoneNumber": false,
+                        "supportsDynamicConfiguration": false
+                      },
+                      "cashbackConfig": {
+                        "title": "VIP Customers",
+                        "description": "Exclusive rewards for our VIP customers",
+                        "earningRules": [
+                          {
+                            "type": "cash_back",
+                            "reward": {
+                              "type": "percentage",
+                              "value": 1000
+                            }
+                          },
+                          {
+                            "type": "sign_up",
+                            "reward": {
+                              "type": "fixed",
+                              "value": 1000
+                            }
+                          }
+                        ],
+                        "burningRules": [
+                          {
+                            "type": "purchase",
+                            "cost": {
+                              "type": "percentage",
+                              "value": 5000,
+                              "maxBurningAmount": 500
+                            }
+                          },
+                          {
+                            "type": "purchase",
+                            "cost": {
+                              "type": "fixed",
+                              "value": 500
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean",
+                      "example": true,
+                      "default": true
+                    },
+                    "providerName": {
+                      "type": "string",
+                      "example": "Generic"
+                    },
+                    "providerId": {
+                      "type": "integer",
+                      "example": 10000,
+                      "default": 0
+                    },
+                    "externalSignUpUrl": {
+                      "type": "string",
+                      "example": "https://deliverect.com/signup"
+                    },
+                    "features": {
+                      "type": "object",
+                      "properties": {
+                        "supportsSSO": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        },
+                        "supportsExternalSignUpUrl": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        },
+                        "supportsWalletPointsBalance": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        },
+                        "supportsWalletCashBalance": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        },
+                        "supportsBOGOFPrograms": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        },
+                        "supportsFreeItemPrograms": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        },
+                        "supportsFlatPrograms": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        },
+                        "requiresEmail": {
+                          "type": "boolean",
+                          "example": true,
+                          "default": true
+                        },
+                        "requiresPhoneNumber": {
+                          "type": "boolean",
+                          "example": false,
+                          "default": true
+                        },
+                        "supportsDynamicConfiguration": {
+                          "type": "string",
+                          "default": "false"
+                        }
+                      }
+                    },
+                    "cashbackConfig": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "earningRules": {
+                          "type": "array",
+                          "items": {
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "cash_back",
+                                  "sign_up"
+                                ]
+                              },
+                              "reward": {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "percentage",
+                                      "fixed"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "integer"
+                                  }
+                                },
+                                "required": [
+                                  "value",
+                                  "type"
+                                ]
+                              }
+                            },
+                            "type": "object",
+                            "required": [
+                              "reward",
+                              "type"
+                            ]
+                          }
+                        },
+                        "burningRules": {
+                          "type": "array",
+                          "items": {
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "percentage",
+                                  "fixed"
+                                ]
+                              },
+                              "cost": {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "percentage",
+                                      "fixed"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "string"
+                                  },
+                                  "maxBurningAmount": {
+                                    "type": "string",
+                                    "description": "Only available for percentage driven rules"
+                                  }
+                                },
+                                "required": [
+                                  "value",
+                                  "type"
+                                ]
+                              }
+                            },
+                            "type": "object",
+                            "required": [
+                              "cost",
+                              "type"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "burningRules",
+                        "earningRules",
+                        "description",
+                        "title"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "cashbackConfig",
+                    "features",
+                    "externalSignUpUrl",
+                    "providerId",
+                    "providerName",
+                    "enabled"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/loyalty/{channelLinkId}/customer/wallet": {
+      "get": {
+        "summary": "Get Loyalty Customer Wallet",
+        "description": "",
+        "operationId": "get-loyalty-customer-wallet",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "phoneNumber",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK - Generic": {
+                    "value": {
+                      "cash": {
+                        "balance": 4.45,
+                        "expirations": [
+                          {
+                            "amount": 2.5,
+                            "date": "2020-01-01"
+                          }
+                        ]
+                      },
+                      "points": {
+                        "balance": 10.5,
+                        "expirations": [
+                          {
+                            "amount": 5,
+                            "date": "YYYY-MM-DD"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "cash": {
+                      "type": "object",
+                      "properties": {
+                        "balance": {
+                          "type": "integer",
+                          "example": 5,
+                          "default": 0
+                        },
+                        "expirations": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "amount": {
+                                "type": "integer",
+                                "example": 5,
+                                "default": 0
+                              },
+                              "date": {
+                                "type": "string",
+                                "example": "YYYY-MM-DD"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "points": {
+                      "type": "object",
+                      "properties": {
+                        "balance": {
+                          "type": "number",
+                          "example": 10.5,
+                          "default": 0
+                        },
+                        "expirations": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "amount": {
+                                "type": "integer",
+                                "example": 5,
+                                "default": 0
+                              },
+                              "date": {
+                                "type": "string",
+                                "example": "YYYY-MM-DD"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "404",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/loyalty/{channelLinkId}/compensationCards/validate": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": [
+                      {
+                        "compensationCardId": "CARD_ID_1",
+                        "discounts": {
+                          "externalId": "CARD_ID_1",
+                          "offer": {
+                            "type": "flat_off",
+                            "value": 1000
+                          },
+                          "provider": "loyalty",
+                          "scope": {
+                            "type": "order"
+                          }
+                        },
+                        "expiresAt": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                        "validationErrors": []
+                      }
+                    ]
+                  }
+                },
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "compensationCardId": {
+                        "type": "string",
+                        "example": "CARD_ID_1"
+                      },
+                      "discounts": {
+                        "type": "object",
+                        "properties": {
+                          "externalId": {
+                            "type": "string",
+                            "example": "CARD_ID_1"
+                          },
+                          "offer": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "example": "flat_off"
+                              },
+                              "value": {
+                                "type": "integer",
+                                "example": 1000,
+                                "default": 0
+                              }
+                            }
+                          },
+                          "provider": {
+                            "type": "string",
+                            "example": "loyalty"
+                          },
+                          "scope": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "example": "order"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "expiresAt": {
+                        "type": "string",
+                        "example": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                      },
+                      "validationErrors": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "summary": "Unauthorized",
+                    "value": "{}"
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Forbidden": {
+                    "summary": "Forbidden",
+                    "value": "{}"
+                  }
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Not Found": {
+                    "summary": "Not Found",
+                    "value": "{}"
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "channelLinkId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "post_loyalty-channellinkid-compensationcards-validate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              },
+              "examples": {
+                "Validate Compensation Card Example": {
+                  "summary": "Validate Compensation Card Example",
+                  "value": {
+                    "sessionId": "abc-123-session",
+                    "compensationCardIds": [
+                      "PROMO2024",
+                      "GIFT_50"
+                    ],
+                    "order": {
+                      "orderType": 1,
+                      "customer": {
+                        "loyaltyProviderCustomerId": "loyalty-customer-id",
+                        "name": "John Doe",
+                        "email": "john@doe.com",
+                        "phoneNumber": "+32474000000"
+                      },
+                      "items": [
+                        {
+                          "plu": "3726",
+                          "name": "Coke",
+                          "price": 1000,
+                          "quantity": 1,
+                          "subItems": [],
+                          "productType": 1
+                        }
+                      ],
+                      "discounts": [
+                        {
+                          "provider": "loyalty",
+                          "type": "compensation_card",
+                          "programId": "PROMO2024",
+                          "amount": 1000
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Validate Compensation Cards"
+      }
+    }
+  }
+}

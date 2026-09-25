@@ -1,0 +1,12 @@
+- create_customer
+- customer_by_email
+- post_crm-accountid-customers-lookup-1
+- customer_by_id
+- update_customer
+- update_deliveryaddresses
+- update_vehicles
+- update_customer_favorites
+- customer_order_history
+- order_by_id
+- favorite_orders
+- get_crm-channel-channellinkid-orders-crmorderid

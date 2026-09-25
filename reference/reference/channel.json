@@ -1,0 +1,1970 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Channel API",
+    "description": "Deliverect Channel API."
+  },
+  "servers": [
+    {
+      "url": "https://api.staging.deliverect.com"
+    }
+  ],
+  "security": [
+    {
+      "oauth2ClientCredentials": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "oauth2ClientCredentials": {
+        "type": "oauth2",
+        "description": "Obtain an access token using the partner client ID and client secret. Send the returned token with each API request in the Authorization header as a Bearer token.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/oauth/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true,
+    "oauth-options": {
+      "useInsecureClientAuthentication": true
+    }
+  },
+  "x-readme-fauxas": true,
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "This endpoint allows you to exchange client credentials for a Bearer access token, required when authenticating API requests made to Deliverect."
+    },
+    {
+      "name": "Endpoints",
+      "description": "Deliverect Endpoints"
+    }
+  ],
+  "paths": {
+    "/{channelName}/order/{channelLinkId}": {
+      "post": {
+        "summary": "Create / Cancel Order",
+        "description": "",
+        "operationId": "post_channelname-order-channellinkid",
+        "parameters": [
+          {
+            "name": "channelName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "{channelName}"
+            },
+            "description": "This is provided as a '<Glossary>Scope</Glossary>' to grants permission to create orders within linked accounts only. This value must be provided in lowercase."
+          },
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "{channelLinkId}"
+            },
+            "description": "The unique identifier for the channel configured on a restaurant location. This value is provided in the [Channel Registration](ref:channel_register) request."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "channelOrderId": {
+                    "type": "string",
+                    "description": "The full unique ID for the order from the ordering channel. This value cannot be reused within 48 hours after pickup, across all accounts."
+                  },
+                  "channelOrderDisplayId": {
+                    "type": "string",
+                    "description": "A more human-readable order reference to provide to the customer or restaurant."
+                  },
+                  "validationId": {
+                    "type": "string",
+                    "description": "The validation ID returned from the <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/reference/post_fulfillment-validate\" target=\"_blank\" rel=\"noopener noreferrer\">dispatch availability</a> endpoint. This value cannot be reused and is valid for 10 minutes from generation. If an expired `validationId` is sent, the request fails with error 417."
+                  },
+                  "orderType": {
+                    "type": "integer",
+                    "enum": [
+                      1,
+                      2,
+                      3,
+                      4
+                    ],
+                    "description": "The type of order being placed. See the <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/reference/create-channel-order#order-types\" target=\"_blank\" rel=\"noopener noreferrer\">Order Types</a> guide for full details.<br><br>`1` = Pickup<br>`2` = Delivery<br>`3` = Eat-in<br>`4` = Curbside"
+                  },
+                  "deliveryIsAsap": {
+                    "type": "boolean",
+                    "description": "Indicates whether the delivery or pickup is ASAP. If `pickupTime` is within 30 minutes, this should be `true`."
+                  },
+                  "pickupTime": {
+                    "type": "string",
+                    "description": "Timestamp in UTC (`yyyy-MM-ddTHH:mm:ssZ`). All time values in this API are in UTC, as per <a href=\"https://en.wikipedia.org/wiki/ISO_8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a>. Required for delivery, pickup, and any non-ASAP order."
+                  },
+                  "deliveryTime": {
+                    "type": "string",
+                    "description": "Timestamp in UTC (`yyyy-MM-ddTHH:mm:ssZ`). All time values in this API are in UTC, as per <a href=\"https://en.wikipedia.org/wiki/ISO_8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a>. Required for non-ASAP delivery orders."
+                  },
+                  "placedTime": {
+                    "type": "string",
+                    "description": "The time the order was placed. Timestamp in UTC (`yyyy-MM-ddTHH:mm:ssZ`), as per <a href=\"https://en.wikipedia.org/wiki/ISO_8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a>."
+                  },
+                  "estimatedPickupTime": {
+                    "type": "string",
+                    "description": "**Legacy parameter.** Timestamp in UTC (`yyyy-MM-ddTHH:mm:ssZ`), as per <a href=\"https://en.wikipedia.org/wiki/ISO_8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a>. If your channel doesn't use a separate estimate for the pickup time, reuse the `pickupTime` value here."
+                  },
+                  "courier": {
+                    "type": "string",
+                    "description": "Specifies who is delivering the order. There are two possible values: the channel's own name, sent when the channel itself handles delivery for the restaurant, or `restaurant`, sent when the restaurant is arranging its own delivery — this is also required where orders are fulfilled by an integrated Dispatch partner. See the <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/reference/create-channel-order#create-orders-for-dispatch--last-mile-fulfillment\" target=\"_blank\" rel=\"noopener noreferrer\">Dispatch / last-mile fulfillment</a> guide for more information."
+                  },
+                  "ageCheck": {
+                    "type": "boolean",
+                    "description": "Indicates whether the driver should verify the customer's age."
+                  },
+                  "deliveryAddress": {
+                    "type": "object",
+                    "description": "The delivery address. Required if delivery is fulfilled by the restaurant or by a dispatch provider via Deliverect.",
+                    "properties": {
+                      "street": {
+                        "type": "string",
+                        "description": "The full street address, as a single-line string. Required if delivery is done by the restaurant or a dispatch provider via Deliverect."
+                      },
+                      "streetNumber": {
+                        "type": "string",
+                        "description": "The numerical address assigned to the home, business, or other property. Required if delivery is done by the restaurant or a dispatch provider via Deliverect."
+                      },
+                      "postalCode": {
+                        "type": "string",
+                        "description": "The postal or zip code. Required if delivery is done by the restaurant or a dispatch provider via Deliverect."
+                      },
+                      "area": {
+                        "type": "string",
+                        "description": "The name of a geographic area or locality that groups addressable objects together, without being an administrative unit."
+                      },
+                      "city": {
+                        "type": "string",
+                        "description": "City. Required if delivery is done by the restaurant or a dispatch provider via Deliverect."
+                      },
+                      "country": {
+                        "type": "string",
+                        "description": "Country. Required if delivery is done by the restaurant or a dispatch provider via Deliverect."
+                      },
+                      "extraAddressInfo": {
+                        "type": "string",
+                        "description": "Additional instructions for locating the customer's location, e.g. floor, unit, or access notes."
+                      },
+                      "coordinates": {
+                        "type": "object",
+                        "description": "The geographic coordinates of the delivery address.",
+                        "properties": {
+                          "latitude": {
+                            "type": "number",
+                            "format": "float"
+                          },
+                          "longitude": {
+                            "type": "number",
+                            "format": "float"
+                          }
+                        }
+                      },
+                      "verification": {
+                        "type": "object",
+                        "description": "Address verification details.",
+                        "properties": {
+                          "pincode": {
+                            "type": "string",
+                            "description": "A verification pin code used to confirm the delivery address."
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "deliveryInfo": {
+                    "type": "object",
+                    "description": "Delivery information.",
+                    "properties": {
+                      "packageSize": {
+                        "type": "string",
+                        "description": "The size of the package."
+                      },
+                      "transportType": {
+                        "type": "string",
+                        "description": "The mode of transport used for delivery, e.g. `bicycle`, `car`, `motorbike`."
+                      }
+                    }
+                  },
+                  "decimalDigits": {
+                    "type": "integer",
+                    "description": "The number of decimal digits used for all monetary values in the order (typically `2`)."
+                  },
+                  "payment": {
+                    "type": "object",
+                    "description": "Payment details for the order. See the <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/payments#payments\" target=\"_blank\" rel=\"noopener noreferrer\">Payments</a> guide for full details.",
+                    "properties": {
+                      "amount": {
+                        "type": "integer",
+                        "description": "The total amount paid, sent as an integer with 2 decimal digits (e.g. $5.00 is sent as `500`). Always pass the payment amount, whether or not the order is already paid.<br><br>`amount` = sum of the prices of all products in the order + `deliveryCost` + `serviceCharge` + `deliveryCostTax` + `serviceChargeTax` + the sum of all tax amounts in the `taxes` array."
+                      },
+                      "type": {
+                        "type": "integer",
+                        "enum": [
+                          0,
+                          1
+                        ],
+                        "description": "The method of payment used. See the <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/payments#payments\" target=\"_blank\" rel=\"noopener noreferrer\">Payments</a> guide for full details.<br><br>`0` = Credit card (online)<br>`1` = Cash"
+                      },
+                      "due": {
+                        "type": "integer",
+                        "description": "The outstanding amount due."
+                      },
+                      "rebate": {
+                        "type": "integer",
+                        "description": "The rebate amount applied to the payment, where applicable."
+                      },
+                      "commissionType": {
+                        "type": "string",
+                        "description": "The type of commission charged by the channel for its services. Each type corresponds to an agreed percentage of the order value taken as commission. This is only provided by some channels."
+                      }
+                    },
+                    "required": [
+                      "amount",
+                      "type"
+                    ]
+                  },
+                  "taxes": {
+                    "type": "array",
+                    "description": "A consumption tax imposed by the relevant government on the sale of goods and services.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "taxClassId": {
+                          "type": "integer",
+                          "description": "An ID corresponding to this tax class. Not currently needed."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "The display name for this tax category, as it should be printed on a receipt. Not currently needed."
+                        },
+                        "total": {
+                          "type": "integer",
+                          "description": "The tax total, for tax-exclusive locations, sent as an integer with 2 decimal digits (e.g. $1.00 is sent as `100`). See the <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-process-taxes\" target=\"_blank\" rel=\"noopener noreferrer\">Tax Exclusive Orders</a> guide for more details."
+                        }
+                      },
+                      "required": [
+                        "total"
+                      ]
+                    }
+                  },
+                  "taxRemitted": {
+                    "type": "integer",
+                    "description": "In regions where the channel is responsible for charging tax, e.g. where it is a 'Marketplace Facilitator', this is the total tax remitted. This value should be sent outside the `taxes` array."
+                  },
+                  "items": {
+                    "type": "array",
+                    "description": "The list of products included in the order.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "plu": {
+                          "type": "string",
+                          "description": "Stands for Price Look Up — the unique code of the product."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "The name of the product or modifier."
+                        },
+                        "price": {
+                          "type": "integer",
+                          "description": "The unit price for the item, sent as an integer with 2 decimal digits (e.g. $1.00 is sent as `100`)."
+                        },
+                        "quantity": {
+                          "type": "integer",
+                          "description": "The number of items."
+                        },
+                        "remark": {
+                          "type": "string",
+                          "description": "Item-level notes."
+                        },
+                        "itemUnavailableActions": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "For ordering platforms in the retail space, customers can specify a preferred action to take if an item is unavailable. See the <a href=\"https://developers.deliverect.com/v2.0-retail/docs/how-to-handle-item-availability-actions\" target=\"_blank\" rel=\"noopener noreferrer\">item availability actions</a> guide for details."
+                        },
+                        "discountReferenceIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          },
+                          "description": "References the discount(s) to apply to this specific item. Each ID must be referenced in the `discounts` array. See the <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-apply-discounts#discounts-reference-to-specific-items\" target=\"_blank\" rel=\"noopener noreferrer\">discounts</a> guide for details."
+                        },
+                        "subItems": {
+                          "type": "array",
+                          "description": "Modifiers or sub-items for this item, where applicable.",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "plu": {
+                                "type": "string",
+                                "description": "Stands for Price Look Up — the unique code of the sub-item."
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "The name of the sub-item."
+                              },
+                              "price": {
+                                "type": "integer",
+                                "description": "The unit price for the sub-item, sent as an integer with 2 decimal digits (e.g. $1.00 is sent as `100`)."
+                              },
+                              "quantity": {
+                                "type": "integer",
+                                "description": "The number of sub-items."
+                              },
+                              "remark": {
+                                "type": "string",
+                                "description": "Sub-item-level notes."
+                              },
+                              "subItems": {
+                                "type": "array",
+                                "description": "Nested modifiers or sub-items, where applicable.",
+                                "items": {
+                                  "type": "object"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "plu",
+                        "name",
+                        "price",
+                        "quantity"
+                      ]
+                    }
+                  },
+                  "includeCutlery": {
+                    "type": "boolean",
+                    "description": "Indicates whether cutlery/utensils have been requested."
+                  },
+                  "table": {
+                    "type": "string",
+                    "description": "For 'Eat-in' orders, a table number can be provided."
+                  },
+                  "orderIsAlreadyPaid": {
+                    "type": "boolean",
+                    "description": "Confirms whether the order has already been fully paid. Set to `false` where a customer can check out without processing payment (e.g. pickup orders paid by cash on collection); otherwise set to `true`. Always pass the `payment.amount`, whether or not the order is already paid."
+                  },
+                  "note": {
+                    "type": "string",
+                    "description": "Order-level note."
+                  },
+                  "numberOfCustomers": {
+                    "type": "integer",
+                    "description": "The number of customers for the order."
+                  },
+                  "customer": {
+                    "type": "object",
+                    "description": "Details about the customer placing the order.",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the customer."
+                      },
+                      "companyName": {
+                        "type": "string",
+                        "description": "A company name from which the order is placed."
+                      },
+                      "phoneNumber": {
+                        "type": "string",
+                        "description": "The customer's contact phone number."
+                      },
+                      "phoneAccessCode": {
+                        "type": "string",
+                        "description": "Used where a contact centre routes calls using a unique code."
+                      },
+                      "email": {
+                        "type": "string",
+                        "description": "The customer's contact email address."
+                      },
+                      "tin": {
+                        "type": "string",
+                        "description": "Tax Identification Number."
+                      },
+                      "note": {
+                        "type": "string",
+                        "description": "An additional note about the customer."
+                      }
+                    }
+                  },
+                  "deliveryCost": {
+                    "type": "integer",
+                    "description": "The cost of delivery applied, sent as an integer with 2 decimal digits (e.g. €1.00 is sent as `100`)."
+                  },
+                  "deliveryCostTax": {
+                    "type": "integer",
+                    "description": "The tax applied to the delivery cost, sent as an integer with 2 decimal digits (e.g. €1.00 is sent as `100`)."
+                  },
+                  "serviceCharge": {
+                    "type": "integer",
+                    "description": "The cost of any service charges applied, sent as an integer with 2 decimal digits (e.g. €1.00 is sent as `100`)."
+                  },
+                  "serviceChargeTax": {
+                    "type": "integer",
+                    "description": "The tax applied to the service charge."
+                  },
+                  "tip": {
+                    "type": "integer",
+                    "description": "A tip intended for the restaurant. Not all POS partners handle this; a toggle setting is available to exclude it if unsupported."
+                  },
+                  "driverTip": {
+                    "type": "integer",
+                    "description": "A tip intended for the driver. Not all POS partners handle this; a toggle setting is available to exclude it if unsupported."
+                  },
+                  "bagFee": {
+                    "type": "integer",
+                    "description": "A charge (mandatory in certain regions) against the packaging used, sent as an integer with 2 decimal digits (e.g. $1.20 is sent as `120`). Appears as a line item on the integrated POS when included."
+                  },
+                  "discountTotal": {
+                    "type": "integer",
+                    "description": "The total discount, sent as a negative value. Required when applying a discount to the order — see the <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-apply-discounts#introduction\" target=\"_blank\" rel=\"noopener noreferrer\">discounts</a> guide for more detail."
+                  },
+                  "discounts": {
+                    "type": "array",
+                    "description": "Optional, more detailed information about a discount, provided alongside `discountTotal`. See the <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-apply-discounts#introduction\" target=\"_blank\" rel=\"noopener noreferrer\">discounts</a> guide for full details.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "description": "The mapped channel discount type. See the <a href=\"https://developers.deliverect.com/page/list-of-discount-types\" target=\"_blank\" rel=\"noopener noreferrer\">list of Discount Types</a> in Deliverect."
+                        },
+                        "provider": {
+                          "type": "string",
+                          "description": "The issuer of the discount — i.e. the party that bears the discounted amount."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "The name given to the discount."
+                        },
+                        "channelDiscountCode": {
+                          "type": "string",
+                          "description": "The unique discount code used by the channel."
+                        },
+                        "referenceId": {
+                          "type": "integer",
+                          "description": "A reference ID for this discount, used to link it from an item's `discountReferenceIds`."
+                        },
+                        "value": {
+                          "type": "integer",
+                          "description": "The value of the discount."
+                        },
+                        "amount": {
+                          "type": "integer",
+                          "description": "The actual discounted amount."
+                        }
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "channelOrderId",
+                  "channelOrderDisplayId",
+                  "orderType",
+                  "deliveryIsAsap",
+                  "decimalDigits",
+                  "courier",
+                  "orderIsAlreadyPaid",
+                  "payment",
+                  "items"
+                ]
+              },
+              "examples": {
+                "Create Order (Tax inclusive)": {
+                  "summary": "Create Order (Tax inclusive)",
+                  "value": {
+                    "channelOrderId": "TEST****628",
+                    "channelOrderDisplayId": "T**628",
+                    "validationId": "62********************3w",
+                    "orderType": 1,
+                    "deliveryIsAsap": true,
+                    "pickupTime": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                    "deliveryTime": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                    "placedTime": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                    "courier": "restaurant",
+                    "ageCheck": false,
+                    "deliveryAddress": {
+                      "street": "Folgate Street",
+                      "streetNumber": "35",
+                      "postalCode": "E1 6BX",
+                      "area": "Spitalfields",
+                      "city": "London",
+                      "country": "United Kingdom",
+                      "extraAddressInfo": "Ground Floor, near Spitalfields Market",
+                      "coordinates": {
+                        "latitude": 51.51942,
+                        "longitude": -0.07771
+                      },
+                      "verification": {
+                        "pincode": "1234"
+                      }
+                    },
+                    "deliveryInfo": {
+                      "packageSize": "small",
+                      "transportType": "bicycle"
+                    },
+                    "decimalDigits": 2,
+                    "payment": {
+                      "amount": 1800,
+                      "type": 0,
+                      "due": 0
+                    },
+                    "taxes": [],
+                    "taxRemitted": 0,
+                    "items": [
+                      {
+                        "plu": "P-SATE",
+                        "name": "Chicken Sate",
+                        "price": 450,
+                        "quantity": 1,
+                        "remark": "well done",
+                        "discountReferenceIds": [
+                          1
+                        ],
+                        "subItems": [
+                          {
+                            "plu": "RICE-01",
+                            "name": "White Rice",
+                            "price": 450,
+                            "quantity": 1,
+                            "subItems": [
+                              {
+                                "plu": "SAUCE-01",
+                                "name": "Sate Sauce",
+                                "price": 50,
+                                "quantity": 2,
+                                "subItems": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "includeCutlery": false,
+                    "table": "",
+                    "orderIsAlreadyPaid": true,
+                    "note": "",
+                    "numberOfCustomers": 1,
+                    "customer": {
+                      "name": "John",
+                      "companyName": "Doe",
+                      "phoneNumber": "0618776767",
+                      "phoneAccessCode": "2105",
+                      "email": "test@test.com",
+                      "tin": "1234",
+                      "note": "call once you arrive"
+                    },
+                    "deliveryCost": 300,
+                    "deliveryCostTax": 0,
+                    "serviceCharge": 400,
+                    "serviceChargeTax": 0,
+                    "tip": 200,
+                    "driverTip": 0,
+                    "bagFee": 0,
+                    "discountTotal": -100,
+                    "discounts": [
+                      {
+                        "type": "order_flat_off",
+                        "provider": "channel",
+                        "name": "Test discount",
+                        "channelDiscountCode": "test 1234",
+                        "referenceId": 1,
+                        "value": 100,
+                        "amount": 100
+                      }
+                    ]
+                  }
+                },
+                "Create Order (Tax Exclusive)": {
+                  "summary": "Create Order (Tax Exclusive)",
+                  "value": {
+                    "channelOrderId": "TEST****629",
+                    "channelOrderDisplayId": "T**629",
+                    "validationId": "62********************3x",
+                    "orderType": 1,
+                    "deliveryIsAsap": true,
+                    "pickupTime": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                    "deliveryTime": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                    "placedTime": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                    "courier": "restaurant",
+                    "ageCheck": false,
+                    "deliveryAddress": {
+                      "street": "Adelaide Street East",
+                      "streetNumber": "207",
+                      "postalCode": "M5A1N4",
+                      "area": "Distillery District",
+                      "city": "Toronto",
+                      "country": "Canada",
+                      "extraAddressInfo": "1st floor",
+                      "coordinates": {
+                        "latitude": 43.65152,
+                        "longitude": -79.37128
+                      },
+                      "verification": {
+                        "pincode": ""
+                      }
+                    },
+                    "deliveryInfo": {
+                      "packageSize": "small",
+                      "transportType": "bicycle"
+                    },
+                    "decimalDigits": 2,
+                    "payment": {
+                      "amount": 1800,
+                      "type": 0,
+                      "due": 0
+                    },
+                    "taxes": [
+                      {
+                        "taxClassId": 0,
+                        "name": "taxes",
+                        "total": 77
+                      }
+                    ],
+                    "taxRemitted": 77,
+                    "items": [
+                      {
+                        "plu": "P-SATE",
+                        "name": "Chicken Sate",
+                        "price": 450,
+                        "quantity": 1,
+                        "remark": "well done",
+                        "discountReferenceIds": [
+                          1
+                        ],
+                        "subItems": [
+                          {
+                            "plu": "RICE-01",
+                            "name": "White Rice",
+                            "price": 450,
+                            "quantity": 1,
+                            "subItems": [
+                              {
+                                "plu": "SAUCE-01",
+                                "name": "Sate Sauce",
+                                "price": 50,
+                                "quantity": 2,
+                                "subItems": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "includeCutlery": false,
+                    "table": "",
+                    "orderIsAlreadyPaid": true,
+                    "note": "",
+                    "numberOfCustomers": 1,
+                    "customer": {
+                      "name": "Jane",
+                      "companyName": "Doe",
+                      "phoneNumber": "0618776767",
+                      "phoneAccessCode": "5040",
+                      "email": "test@test.com",
+                      "tin": "1234",
+                      "note": "call once you arrive"
+                    },
+                    "deliveryCost": 300,
+                    "deliveryCostTax": 0,
+                    "serviceCharge": 400,
+                    "serviceChargeTax": 0,
+                    "tip": 200,
+                    "driverTip": 0,
+                    "bagFee": 0,
+                    "discountTotal": -100,
+                    "discounts": [
+                      {
+                        "type": "order_flat_off",
+                        "provider": "channel",
+                        "name": "Test discount",
+                        "channelDiscountCode": "test 1234",
+                        "referenceId": 1,
+                        "value": 100,
+                        "amount": 100
+                      }
+                    ]
+                  }
+                },
+                "Cancel Order": {
+                  "summary": "Cancel Order",
+                  "value": {
+                    "channelOrderId": "{{channelOrderId}}",
+                    "channelOrderDisplayId": "{{channelOrderDisplayId}}",
+                    "cancellationReason": "CANCELLATION",
+                    "status": 100
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Created": {
+                    "summary": "Created",
+                    "value": "{}"
+                  }
+                }
+              }
+            },
+            "description": "Created"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Bad Request": {
+                    "summary": "Bad Request",
+                    "value": {
+                      "orderFieldsErrors": {
+                        "channelOrderId": "Missing from the payload.",
+                        "channelOrderDisplayId": "Missing from the payload.",
+                        "items": "Missing from the payload.",
+                        "decimalDigits": "Missing from the payload."
+                      },
+                      "orderPaymentErrors": {
+                        "amount": "Missing from the payload.",
+                        "type": "Missing from the payload."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "summary": "Unauthorized",
+                    "value": {
+                      "code": "token_expired",
+                      "description": "token is expired"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Not Found": {
+                    "summary": "Not Found",
+                    "value": {
+                      "message": "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again."
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Internal Server Error": {
+                    "summary": "Internal Server Error",
+                    "value": {
+                      "error": {
+                        "code": "internal_server_error",
+                        "message": "Internal server error"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/{channelName}/menuStatus/{_id}": {
+      "post": {
+        "summary": "Menu Update (Async)",
+        "description": "",
+        "operationId": "post_channelname-menustatus-id",
+        "parameters": [
+          {
+            "name": "channelName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "my-channel"
+            }
+          },
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "menu-update-id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "status"
+                ]
+              },
+              "examples": {
+                "Menu Update - FAILED": {
+                  "summary": "Menu Update - FAILED",
+                  "value": {
+                    "status": "FAILED",
+                    "comment": "maximum menu size exceeded"
+                  }
+                },
+                "Menu Update - ONLINE": {
+                  "summary": "Menu Update - ONLINE",
+                  "value": {
+                    "status": "ONLINE",
+                    "comment": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": "{}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Bad Request": {
+                    "summary": "Bad Request",
+                    "value": "{}"
+                  }
+                }
+              }
+            },
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/{channelName}/updateStoreStatus/{channelLinkId}": {
+      "post": {
+        "summary": "Update Store Status",
+        "description": "",
+        "operationId": "post_channelname-updatestorestatus-channellinkid",
+        "parameters": [
+          {
+            "name": "channelName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "my-channel"
+            }
+          },
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "61bcc34f657cc48c23eb60d5"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "open",
+                      "closed"
+                    ]
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "status",
+                  "reason"
+                ]
+              },
+              "examples": {
+                "Close Store": {
+                  "summary": "Close Store",
+                  "value": {
+                    "status": "closed",
+                    "reason": "Too many failed orders"
+                  }
+                },
+                "Open Store": {
+                  "summary": "Open Store",
+                  "value": {
+                    "status": "open",
+                    "reason": "Channel is opened"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "message": "Changed store status"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Bad Request": {
+                    "summary": "Bad Request",
+                    "value": {
+                      "message": "Invalid value passed in status field: 'invalidStatus'"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Forbidden": {
+                    "summary": "Forbidden",
+                    "value": {
+                      "message": "You don't have permissions to perform this action"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Not Found": {
+                    "summary": "Not Found",
+                    "value": {
+                      "message": "Channel link id {channelLinkId} not found."
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/{channelName}/courierUpdate/{channelLinkId}": {
+      "post": {
+        "summary": "Update Courier / Guest Status",
+        "description": "",
+        "operationId": "post_channelname-courierupdate-channellinkid",
+        "parameters": [
+          {
+            "name": "channelName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "{channelName}"
+            }
+          },
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "{channelLinkId}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "channelOrderId": {
+                    "type": "string"
+                  },
+                  "courierUpdate": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "integer"
+                      },
+                      "arrivalTime": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "deliveryTime": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "courier": {
+                        "type": "object",
+                        "properties": {
+                          "firstName": {
+                            "type": "string"
+                          },
+                          "lastName": {
+                            "type": "string"
+                          },
+                          "phoneNumber": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "required": [
+                      "status"
+                    ]
+                  }
+                },
+                "required": [
+                  "channelOrderId",
+                  "courierUpdate"
+                ]
+              },
+              "examples": {
+                "Courier Update": {
+                  "summary": "Courier Update",
+                  "value": {
+                    "channelOrderId": "63171d0000000d34b5efe",
+                    "courierUpdate": {
+                      "status": 85,
+                      "arrivalTime": "2022-10-25T16:24:40.482Z",
+                      "deliveryTime": "2022-10-25T16:54:40.482Z",
+                      "courier": {
+                        "firstName": "Joe",
+                        "lastName": "Driver",
+                        "phoneNumber": "+44 20 3936 1162"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": "{}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{channelName}/updateRating": {
+      "post": {
+        "summary": "Order Rating Update",
+        "description": "Update rating for a previously placed order.",
+        "operationId": "post_channelname-updaterating",
+        "parameters": [
+          {
+            "name": "channelName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "my-channel"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "channelOrderId": {
+                    "type": "string"
+                  },
+                  "orderDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "channelLinkId": {
+                    "type": "string"
+                  },
+                  "rating": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "subject": {
+                          "type": "integer"
+                        },
+                        "rating": {
+                          "type": "integer"
+                        },
+                        "comment": {
+                          "type": "string"
+                        },
+                        "reason": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "subject",
+                        "rating"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "channelOrderId",
+                  "orderDate",
+                  "channelLinkId",
+                  "rating"
+                ]
+              },
+              "examples": {
+                "Order Rating Update": {
+                  "summary": "Order Rating Update",
+                  "value": {
+                    "channelOrderId": "CXTDBKMZ-1229",
+                    "orderDate": "2021-04-13T11:53:34.453Z",
+                    "channelLinkId": "606d8489fcd8eddf13b121a6",
+                    "rating": [
+                      {
+                        "reason": 10000,
+                        "rating": 5,
+                        "comment": "Food was amazing.",
+                        "subject": 1
+                      },
+                      {
+                        "rating": 5,
+                        "subject": 2
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/tables/{locationId}": {
+      "get": {
+        "summary": "Tables and Floors",
+        "description": "",
+        "operationId": "get_tables-locationid",
+        "parameters": [
+          {
+            "name": "locationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tables": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "table#1"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Table #1"
+                          },
+                          "floorId": {
+                            "type": "string",
+                            "example": "restaurant"
+                          },
+                          "seats": {
+                            "type": "integer",
+                            "example": 6,
+                            "default": 0
+                          },
+                          "type": {
+                            "type": "string",
+                            "example": "unknown"
+                          }
+                        }
+                      }
+                    },
+                    "floors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "restaurant"
+                          },
+                          "name": {
+                            "type": "string",
+                            "example": "Restaurant"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "GET POS tables": {
+                    "summary": "GET POS tables",
+                    "value": {
+                      "tables": [
+                        {
+                          "id": "table#1",
+                          "name": "Table #1",
+                          "floorId": "restaurant",
+                          "seats": 6,
+                          "type": "unknown"
+                        }
+                      ],
+                      "floors": [
+                        {
+                          "id": "restaurant",
+                          "name": "Restaurant"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Bad Request": {
+                    "summary": "Bad Request",
+                    "value": {
+                      "error": "failed to get tables: Error message"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Unprocessable Entity": {
+                    "summary": "Unprocessable Entity",
+                    "value": {
+                      "error": "Get tables action is not supported for this location."
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/fulfillment/location/{orderId}": {
+      "get": {
+        "summary": "Order Delivery Update",
+        "operationId": "order-delivery-update",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "updated": {
+                      "type": "string",
+                      "example": "2026-07-20T09:48:01.903299Z"
+                    },
+                    "deliveryJobId": {
+                      "type": "string",
+                      "example": "6a5decb4a5b690ce729c6322"
+                    },
+                    "externalJobId": {
+                      "type": "integer",
+                      "example": 618442304,
+                      "default": 0
+                    },
+                    "orderId": {
+                      "type": "string",
+                      "example": "6a5decb4a5b690ce729c62f9"
+                    },
+                    "channelOrderId": {
+                      "type": "string",
+                      "example": "260720-405714"
+                    },
+                    "location": {
+                      "type": "string",
+                      "example": "64104b5b9b78f10a4253898d"
+                    },
+                    "status": {
+                      "type": "integer",
+                      "example": 50,
+                      "default": 0
+                    },
+                    "pickupTime": {
+                      "type": "string",
+                      "example": "2026-07-20T09:59:00Z"
+                    },
+                    "pickupETA": {
+                      "type": "string",
+                      "example": "2026-07-20T09:42:47.722000Z"
+                    },
+                    "deliveryTime": {
+                      "type": "string",
+                      "example": "2026-07-20T10:16:00Z"
+                    },
+                    "deliveryETA": {
+                      "type": "string",
+                      "example": "2026-07-20T09:41:47.722000Z"
+                    },
+                    "courier": {
+                      "type": "object",
+                      "properties": {
+                        "longitude": {
+                          "type": "number",
+                          "example": 47.99113649,
+                          "default": 0
+                        },
+                        "latitude": {
+                          "type": "number",
+                          "example": 29.36413944,
+                          "default": 0
+                        }
+                      }
+                    },
+                    "globalETA": {
+                      "type": "string",
+                      "example": "2026-07-20T09:59:00.302000Z"
+                    }
+                  }
+                },
+                "examples": {
+                  "Result": {
+                    "summary": "Result",
+                    "value": {
+                      "updated": "2026-07-20T09:48:01.903299Z",
+                      "deliveryJobId": "6a5decb4a5b690ce729c6322",
+                      "externalJobId": 618442304,
+                      "orderId": "6a5decb4a5b690ce729c62f9",
+                      "channelOrderId": "260720-405714",
+                      "location": "64104b5b9b78f10a4253898d",
+                      "status": 50,
+                      "pickupTime": "2026-07-20T09:59:00Z",
+                      "pickupETA": "2026-07-20T09:42:47.722000Z",
+                      "deliveryTime": "2026-07-20T10:16:00Z",
+                      "deliveryETA": "2026-07-20T09:41:47.722000Z",
+                      "courier": {
+                        "longitude": 47.99113649,
+                        "latitude": 29.36413944
+                      },
+                      "globalETA": "2026-07-20T09:59:00.302000Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-internal": true
+      }
+    },
+    "/fulfillment/validate": {
+      "post": {
+        "summary": "Dispatch Availability",
+        "description": "",
+        "operationId": "post_fulfillment-validate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "channelLinkId": {
+                    "type": "string",
+                    "description": "The unique identifier of the channel (merchant store) in Deliverect. Provide either this field or `channelLinkIds` — if `channelLinkIds` is provided, this field is disregarded."
+                  },
+                  "channelLinkIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "An array of `channelLinkId` values, used to validate delivery availability across multiple pickup locations. Deliverect will determine the best possible pickup location for the delivery, based on price and distance. When this array is provided, the singular `channelLinkId` field is disregarded."
+                  },
+                  "pickupTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Expected time for the order to be picked up from the restaurant. Required only for future orders — if not provided, the current time is used. Time format is UTC `YYYY-MM-DDTHH:mm:ss.SSSSSSZ` (all time values in this API are in UTC, as per <a href=\"https://en.wikipedia.org/wiki/ISO_8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a>)."
+                  },
+                  "deliveryLocations": {
+                    "type": "object",
+                    "description": "Delivery details for the customer or end-user.",
+                    "properties": {
+                      "deliveryTime": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Expected delivery time for the order (UTC). Time format is `yyyy-MM-ddTHH:mm:ssZ` (all time values in this API are in UTC, as per <a href=\"https://en.wikipedia.org/wiki/ISO_8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a>). If `deliveryTime` is less than 30 minutes from now, Deliverect will treat this as an ASAP order request."
+                      },
+                      "streetNumber": {
+                        "type": "string",
+                        "description": "The street number. If the number has already been included in the `street` field, it should not be repeated here."
+                      },
+                      "street": {
+                        "type": "string",
+                        "description": "The street name, including the street number where provided."
+                      },
+                      "postalCode": {
+                        "type": "string",
+                        "description": "The postal or zip code. Required, unless excluded regionally."
+                      },
+                      "city": {
+                        "type": "string",
+                        "description": "The city of the delivery address."
+                      },
+                      "country": {
+                        "type": "string",
+                        "description": "The country of the delivery address."
+                      },
+                      "coordinates": {
+                        "type": "object",
+                        "description": "The geographic coordinates of the delivery location.",
+                        "properties": {
+                          "longitude": {
+                            "type": "number",
+                            "format": "double",
+                            "description": "Longitude of the delivery location.",
+                            "example": 3.73361
+                          },
+                          "latitude": {
+                            "type": "number",
+                            "format": "double",
+                            "description": "Latitude of the delivery location.",
+                            "example": 51.03111
+                          }
+                        },
+                        "required": [
+                          "longitude",
+                          "latitude"
+                        ]
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "The name of the customer or recipient."
+                      },
+                      "phone": {
+                        "type": "string",
+                        "description": "The contact phone number for the customer or recipient."
+                      },
+                      "packageSize": {
+                        "type": "string",
+                        "enum": [
+                          "small",
+                          "large",
+                          "extraLarge",
+                          "unknown"
+                        ],
+                        "default": "unknown",
+                        "description": "The size of the package for the delivery. Not all Dispatch providers can adjust transport according to size requirements — verify with Deliverect whether the Dispatch provider in use supports `packageSize`. See the <a href=\"https://developers.deliverect.com/page/dispatch-delivery-job-model#package-sizes\" target=\"_blank\" rel=\"noopener noreferrer\">supported package sizes</a> for details.<br><br>`small` = 22 x 42 x 45 cm — standard delivery with a courier on a bicycle or scooter<br>`large` = 30 x 124 x 80 cm — delivery necessary by car or van<br>`extraLarge` = larger than 30 x 124 x 80 cm — for large catering orders with many trays, delivered by van<br>`unknown` = default, applied when `packageSize` is not provided"
+                      }
+                    },
+                    "required": [
+                      "deliveryTime",
+                      "street",
+                      "postalCode",
+                      "city",
+                      "coordinates"
+                    ]
+                  }
+                },
+                "required": [
+                  "deliveryLocations"
+                ]
+              },
+              "examples": {
+                "Dispatch Availability Example": {
+                  "summary": "Dispatch Availability Example",
+                  "value": {
+                    "channelLinkId": "62********************7c",
+                    "pickupTime": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                    "deliveryLocations": {
+                      "deliveryTime": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "packageSize": "unknown",
+                      "name": "customer name",
+                      "street": "customer street and number",
+                      "city": "customer city",
+                      "country": "customer country",
+                      "postalCode": "postal code",
+                      "source": "customer address",
+                      "phone": "+111111111",
+                      "coordinates": {
+                        "longitude": 3.73361,
+                        "latitude": 51.03111
+                      }
+                    }
+                  }
+                },
+                "Dispatch Availability - Multiple Locations": {
+                  "summary": "Dispatch Availability - Multiple Locations",
+                  "value": {
+                    "channelLinkIds": [
+                      "62********************7c",
+                      "62********************7d"
+                    ],
+                    "deliveryLocations": {
+                      "deliveryTime": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "packageSize": "unknown",
+                      "name": "customer name",
+                      "street": "customer street and number",
+                      "city": "customer city",
+                      "country": "customer country",
+                      "postalCode": "postal code",
+                      "phone": "+111111111",
+                      "coordinates": {
+                        "latitude": 12.345678,
+                        "longitude": -98.765432
+                      },
+                      "source": "customer address"
+                    },
+                    "channelLinkId": "62********************7c",
+                    "pickupTime": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Offers Not Available": {
+                    "summary": "Offers Not Available",
+                    "value": "{\n  \"available\": False, \n  \"errors\": \"No valid offers available\"\n}"
+                  },
+                  "Offers Available": {
+                    "summary": "Offers Available",
+                    "value": {
+                      "validationId": "62********************3e",
+                      "available": true,
+                      "expiresAt": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "deliveryTimeETA": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "price": 0
+                    }
+                  },
+                  "Offers Available - Multiple Stores": {
+                    "summary": "Offers Available - Multiple Stores",
+                    "value": {
+                      "channelLinkIds": [
+                        "61bcc34**57cc48c23eb65"
+                      ],
+                      "validationId": "62********************3e",
+                      "available": true,
+                      "expiresAt": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "deliveryTimeETA": "2022-08-08 11:00:00",
+                      "pickupTimeEta": "2022-08-08 10:00:00",
+                      "price": 0
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "channelLinkIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "61bcc34**57cc48c23eb65"
+                      }
+                    },
+                    "validationId": {
+                      "type": "string",
+                      "example": "62********************3e"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "example": true,
+                      "default": true
+                    },
+                    "expiresAt": {
+                      "type": "string",
+                      "example": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                    },
+                    "deliveryTimeETA": {
+                      "type": "string",
+                      "example": "2022-08-08 11:00:00"
+                    },
+                    "pickupTimeEta": {
+                      "type": "string",
+                      "example": "2022-08-08 10:00:00"
+                    },
+                    "price": {
+                      "type": "integer",
+                      "example": 0,
+                      "default": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Bad Request": {
+                    "summary": "Bad Request",
+                    "value": [
+                      {
+                        "loc": [
+                          "channelLinkId"
+                        ],
+                        "msg": "field required",
+                        "type": "value_error.missing"
+                      },
+                      {
+                        "loc": [
+                          "deliveryLocations",
+                          "deliveryTime"
+                        ],
+                        "msg": "field required",
+                        "type": "value_error.missing"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Unauthorized": {
+                    "summary": "Unauthorized",
+                    "value": {
+                      "code": "token_expired",
+                      "description": "token is expired"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Forbidden": {
+                    "summary": "Forbidden",
+                    "value": {
+                      "error": "ChannelLinkId sent is not linked to the account"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Not Found": {
+                    "summary": "Not Found",
+                    "value": {
+                      "error": "ChannelLinkId sent is not found"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "x-readme": {}
+      }
+    },
+    "/fulfillment/orders/{orderId}": {
+      "get": {
+        "summary": "Dispatch Details",
+        "operationId": "order-delivery-update-1",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orderId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "The unique Deliverect order Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "account": {
+                      "type": "string",
+                      "example": "695ec3074bc6b43f8465e3b1"
+                    },
+                    "location": {
+                      "type": "string",
+                      "example": "6a034f0e94b35afc9da3997d"
+                    },
+                    "pickupTime": {
+                      "type": "string",
+                      "example": "2026-08-08T19:12:57Z"
+                    },
+                    "pickupTimeETA": {
+                      "type": "string",
+                      "example": "2026-08-08T19:12:57Z"
+                    },
+                    "transportType": {
+                      "type": "string",
+                      "example": "unknown"
+                    },
+                    "price": {
+                      "type": "integer",
+                      "example": 550,
+                      "default": 0
+                    },
+                    "trackingURL": {
+                      "type": "string",
+                      "example": "https://www.doordash.com/orders/drive?urlCode=2f5a5b92-7be3-4d6a-8788-125254ff7dc4"
+                    },
+                    "deliverectTrackingURL": {},
+                    "deliveryTimeETA": {
+                      "type": "string",
+                      "example": "2026-08-08T19:17:01Z"
+                    }
+                  }
+                },
+                "examples": {
+                  "Result": {
+                    "summary": "Result",
+                    "value": {
+                      "account": "62********************7c",
+                      "location": "61********************a1",
+                      "pickupTime": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "pickupTimeETA": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "transportType": "car",
+                      "price": 550,
+                      "trackingURL": "https://www.dispatch_provider.com?url=2f7dc4",
+                      "deliverectTrackingURL": null,
+                      "deliveryTimeETA": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Not Found": {
+                    "summary": "Not Found",
+                    "value": {
+                      "error": "No delivery jobs associated with the order."
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  }
+}

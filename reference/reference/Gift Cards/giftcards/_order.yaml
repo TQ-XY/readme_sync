@@ -1,0 +1,6 @@
+- get_giftcards-channel-channellinkid-providerprofilelinks
+- giftcards_apply_gift_card
+- giftcards_get_balance
+- post_giftcards-reverse
+- post_giftcards-redeem
+- post_giftcards-validategiftcard

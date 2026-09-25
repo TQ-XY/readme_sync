@@ -1,0 +1,633 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "payPlatform",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://yourwebhook.com/"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Deliverect Endpoints"
+    }
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "summary": "Register Profile",
+        "description": "",
+        "operationId": "payplatform_payments_profile_register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "gatewayProfileId",
+                  "accountId",
+                  "apiKey",
+                  "webhookUrl"
+                ],
+                "properties": {
+                  "gatewayProfileId": {
+                    "type": "string",
+                    "description": "Unique identifier of the payment gateway within a Deliverect customer account"
+                  },
+                  "accountId": {
+                    "type": "string"
+                  },
+                  "apiKey": {
+                    "type": "string",
+                    "description": "API key is the unique identifier of the customer within the payment gateway"
+                  },
+                  "webhookUrl": {
+                    "type": "string",
+                    "description": "Webhook URL which partners will send payment related update events"
+                  }
+                }
+              },
+              "examples": {
+                "Request Example": {
+                  "value": {
+                    "gatewayProfileId": "66d721b3df0f5a9fda62dd8b",
+                    "accountId": "66570956c77ccc6b9d75e445",
+                    "apiKey": "api-key",
+                    "webhookUrl": "https://api.staging.deliverect.com/pay/events/integrationName/gatewayProfiles/66d721b3df0f5a9fda62dd8b"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"requestPaymentURL\": \"https://yourwebhook.com/payments/request\",\n    \"refundPaymentURL\": \"https://yourwebhook.com/payments/refund\",\n    \"unregisterGatewayProfileURL\": \"https://yourwebhook.com/payments/unregister-profile\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "requestPaymentURL": {
+                      "type": "string",
+                      "example": "https://yourwebhook.com/payments/request"
+                    },
+                    "refundPaymentURL": {
+                      "type": "string",
+                      "example": "https://yourwebhook.com/payments/refund"
+                    },
+                    "unregisterGatewayProfileURL": {
+                      "type": "string",
+                      "example": "https://yourwebhook.com/payments/unregister-profile"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/refund": {
+      "post": {
+        "summary": "Refund Payment",
+        "description": "",
+        "operationId": "payplatform_payments_refund",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "paymentId",
+                  "amount"
+                ],
+                "properties": {
+                  "paymentId": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "examples": {
+                "Request Example": {
+                  "value": {
+                    "paymentId": "gateway-payment-id",
+                    "amount": 1234
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Succeeded": {
+                    "value": "{\n    \"gatewayId\": \"gateway-refund-id\",\n    \"status\": \"succeeded\"\n}"
+                  },
+                  "Pending": {
+                    "value": "{\n    \"gatewayId\": \"gateway-refund-id\",\n    \"status\": \"pending\"\n}"
+                  },
+                  "Failed": {
+                    "value": "{\n    \"gatewayId\": null,\n    \"status\": \"failed\"\n}"
+                  }
+                },
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Succeeded",
+                      "type": "object",
+                      "properties": {
+                        "gatewayId": {
+                          "type": "string",
+                          "example": "gateway-refund-id"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "succeeded"
+                        }
+                      },
+                      "required": [
+                        "gatewayId",
+                        "status"
+                      ]
+                    },
+                    {
+                      "title": "Pending",
+                      "type": "object",
+                      "properties": {
+                        "gatewayId": {
+                          "type": "string",
+                          "example": "gateway-refund-id"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "pending"
+                        }
+                      },
+                      "required": [
+                        "gatewayId",
+                        "status"
+                      ]
+                    },
+                    {
+                      "title": "Failed",
+                      "type": "object",
+                      "properties": {
+                        "gatewayId": {},
+                        "status": {
+                          "type": "string",
+                          "example": "failed"
+                        }
+                      },
+                      "required": [
+                        "gatewayId",
+                        "status"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/request": {
+      "post": {
+        "summary": "Request Payment",
+        "description": "",
+        "operationId": "payplatform_payments_request",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "gatewayProfileId",
+                  "amount",
+                  "currency",
+                  "returnUrl",
+                  "reference"
+                ],
+                "properties": {
+                  "gatewayProfileId": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "currency": {
+                    "type": "string"
+                  },
+                  "returnUrl": {
+                    "type": "string"
+                  },
+                  "reference": {
+                    "type": "string"
+                  },
+                  "logoUrl": {
+                    "type": "string"
+                  },
+                  "payer": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "reference": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Request Example": {
+                  "value": {
+                    "gatewayProfileId": "66d721b3df0f5a9fda62dd8b",
+                    "amount": "1234",
+                    "currency": "EUR",
+                    "reference": "order-123456",
+                    "payer": {
+                      "name": "Customer Name",
+                      "email": "email@customer.com",
+                      "reference": "customer_external_id_123"
+                    },
+                    "returnUrl": "https://ordering-system/order",
+                    "logoUrl": "https://ordering-system/logo.jpeg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Pending": {
+                    "value": "{\n    \"update\": {\n        \"gatewayId\": \"payment_id_123456\",\n        \"status\": \"pending\"\n    },\n    \"action\": {\n        \"type\": \"redirect\",\n        \"url\": \"https://generic-gateway.com/complete-payment\"\n    }      \n}"
+                  },
+                  "Authorized": {
+                    "value": "{\n    \"update\": {\n        \"gatewayId\": \"payment_id_123456\",\n        \"status\": \"authorized\",\n        \"method\": \"visa\"\n    },\n    \"action\": null\n}"
+                  },
+                  "Refused": {
+                    "value": "{\n    \"update\": {\n        \"gatewayId\": null,\n        \"status\": \"refused\",\n        \"method\": \"visa\"  \n    },\n    \"action\": null\n}"
+                  }
+                },
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Pending",
+                      "type": "object",
+                      "properties": {
+                        "update": {
+                          "type": "object",
+                          "properties": {
+                            "gatewayId": {
+                              "type": "string",
+                              "example": "payment_id_123456"
+                            },
+                            "status": {
+                              "type": "string",
+                              "example": "pending"
+                            }
+                          }
+                        },
+                        "action": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "redirect"
+                            },
+                            "url": {
+                              "type": "string",
+                              "example": "https://generic-gateway.com/complete-payment"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "title": "Authorized",
+                      "type": "object",
+                      "properties": {
+                        "update": {
+                          "type": "object",
+                          "properties": {
+                            "gatewayId": {
+                              "type": "string",
+                              "example": "payment_id_123456"
+                            },
+                            "status": {
+                              "type": "string",
+                              "example": "authorized"
+                            },
+                            "method": {
+                              "type": "string",
+                              "example": "visa"
+                            }
+                          }
+                        },
+                        "action": {}
+                      }
+                    },
+                    {
+                      "title": "Refused",
+                      "type": "object",
+                      "properties": {
+                        "update": {
+                          "type": "object",
+                          "properties": {
+                            "gatewayId": {},
+                            "status": {
+                              "type": "string",
+                              "example": "refused"
+                            },
+                            "method": {
+                              "type": "string",
+                              "example": "visa"
+                            }
+                          }
+                        },
+                        "action": {}
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/unregister-profile": {
+      "post": {
+        "summary": "Unregister Profile Event",
+        "description": "",
+        "operationId": "payplatform_payments_unregister_profile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "accountId",
+                  "gatewayProfileId"
+                ],
+                "properties": {
+                  "accountId": {
+                    "type": "string",
+                    "description": "The ID of the account the gateway profile belongs to."
+                  },
+                  "gatewayProfileId": {
+                    "type": "string",
+                    "description": "The ID of the profile being unregistered."
+                  }
+                }
+              },
+              "examples": {
+                "Unregister profile": {
+                  "value": {
+                    "accountId": "account-123",
+                    "gatewayProfileId": "gateway-profile-123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}

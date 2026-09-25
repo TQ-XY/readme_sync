@@ -1,0 +1,1221 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "endpoints-1",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.staging.deliverect.com"
+    }
+  ],
+  "security": [
+    {
+      "oauth2ClientCredentials": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "oauth2ClientCredentials": {
+        "type": "oauth2",
+        "description": "Obtain an access token using the partner client ID and client secret. Send the returned token with each API request in the Authorization header as a Bearer token.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/oauth/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true,
+    "oauth-options": {
+      "useInsecureClientAuthentication": true
+    }
+  },
+  "x-readme-fauxas": true,
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "This endpoint allows you to exchange client credentials for a Bearer access token, required when authenticating API requests made to Deliverect."
+    },
+    {
+      "name": "Endpoints",
+      "description": "Deliverect Endpoints"
+    }
+  ],
+  "paths": {
+    "/pay/channel/{channelLinkId}/tokens/customer/{customerId}": {
+      "get": {
+        "summary": "Get Customer Tokens",
+        "description": "",
+        "operationId": "pay_endpoints-get-payment-gateways-1",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "channelLinkId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "customerId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "default": "1"
+            },
+            "description": "Page number"
+          },
+          {
+            "in": "query",
+            "name": "size",
+            "schema": {
+              "type": "integer",
+              "default": "50"
+            },
+            "description": "Page size"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "total": 1,
+                      "page": 1,
+                      "size": 50,
+                      "items": [
+                        {
+                          "id": "69**********************04",
+                          "accountId": "67**********************30",
+                          "customerId": "customer_123",
+                          "card": {
+                            "brand": "visa",
+                            "last4": "1111",
+                            "expirationMonth": 3,
+                            "expirationYear": 2030,
+                            "bin": "41111111",
+                            "funding": "credit"
+                          },
+                          "provider": "basis_theory",
+                          "providerId": "35**********************34",
+                          "status": "verified",
+                          "verification": {
+                            "paymentId": "69**********************05",
+                            "providerTokenIntentId": "a7**********************3c"
+                          },
+                          "gateway": 4,
+                          "paymentGatewayToken": null
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "example": 1,
+                      "default": 0
+                    },
+                    "page": {
+                      "type": "integer",
+                      "example": 1,
+                      "default": 0
+                    },
+                    "size": {
+                      "type": "integer",
+                      "example": 50,
+                      "default": 0
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "69**********************04"
+                          },
+                          "accountId": {
+                            "type": "string",
+                            "example": "67**********************30"
+                          },
+                          "customerId": {
+                            "type": "string",
+                            "example": "customer_123"
+                          },
+                          "card": {
+                            "type": "object",
+                            "properties": {
+                              "brand": {
+                                "type": "string",
+                                "example": "visa"
+                              },
+                              "last4": {
+                                "type": "string",
+                                "example": "1111"
+                              },
+                              "expirationMonth": {
+                                "type": "integer",
+                                "example": 3,
+                                "default": 0
+                              },
+                              "expirationYear": {
+                                "type": "integer",
+                                "example": 2030,
+                                "default": 0
+                              },
+                              "bin": {
+                                "type": "string",
+                                "example": "41111111"
+                              },
+                              "funding": {
+                                "type": "string",
+                                "example": "credit"
+                              }
+                            }
+                          },
+                          "provider": {
+                            "type": "string",
+                            "example": "basis_theory"
+                          },
+                          "providerId": {
+                            "type": "string",
+                            "example": "35**********************34"
+                          },
+                          "status": {
+                            "type": "string",
+                            "example": "verified"
+                          },
+                          "verification": {
+                            "type": "object",
+                            "properties": {
+                              "paymentId": {
+                                "type": "string",
+                                "example": "69**********************05"
+                              },
+                              "providerTokenIntentId": {
+                                "type": "string",
+                                "example": "a7**********************3c"
+                              }
+                            }
+                          },
+                          "gateway": {
+                            "type": "integer",
+                            "example": 4,
+                            "default": 0
+                          },
+                          "paymentGatewayToken": {}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Not Found": {
+                    "summary": "Not Found",
+                    "value": {
+                      "error": "Channel link not found"
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Channel link not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/pay/channel/{channelLinkId}/payments/{paymentId}/reauthorize": {
+      "post": {
+        "summary": "Request Payment Re-authorization",
+        "description": "",
+        "operationId": "pay_endpoints-request-payment-1",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "paymentId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "reference": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "Pre-authorization Expiry Extension": {
+                  "value": {},
+                  "summary": "Pre-authorization Expiry Extension"
+                },
+                "Pre-authorization Amount Change": {
+                  "summary": "Pre-authorization Amount Change",
+                  "value": {
+                    "amount": 5000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "pending",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "pending": {
+                    "summary": "pending",
+                    "value": {
+                      "id": "69**********************41",
+                      "paymentId": "69**********************f4",
+                      "amount": 2500,
+                      "currency": "EUR",
+                      "status": "pending",
+                      "reference": null,
+                      "failureReason": null
+                    }
+                  },
+                  "succeeded": {
+                    "summary": "succeeded",
+                    "value": {
+                      "id": "69**********************41",
+                      "paymentId": "69**********************f4",
+                      "amount": 2500,
+                      "currency": "EUR",
+                      "status": "succeeded",
+                      "reference": null,
+                      "failureReason": null
+                    }
+                  },
+                  "failed": {
+                    "summary": "failed",
+                    "value": {
+                      "id": "69**********************41",
+                      "paymentId": "69**********************f4",
+                      "amount": 2500,
+                      "currency": "EUR",
+                      "status": "failed",
+                      "reference": null,
+                      "failureReason": "payment re-authorization failed"
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "69**********************41"
+                    },
+                    "paymentId": {
+                      "type": "string",
+                      "example": "69**********************f4"
+                    },
+                    "amount": {
+                      "type": "integer",
+                      "example": 2500,
+                      "default": 0
+                    },
+                    "currency": {
+                      "type": "string",
+                      "example": "EUR"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "pending"
+                    },
+                    "reference": {},
+                    "failureReason": {}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "bad request": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-readme": {},
+        "x-internal": false
+      }
+    },
+    "/pay/channel/{channelLinkId}/payments/request": {
+      "post": {
+        "summary": "Request Payment",
+        "description": "",
+        "operationId": "pay_endpoints-request-payment",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "gatewayProfileId",
+                  "mode",
+                  "amount",
+                  "currency",
+                  "payable"
+                ],
+                "properties": {
+                  "gatewayProfileId": {
+                    "type": "string",
+                    "description": "\"id\" retrieved via Get Payment Gateways endpoint"
+                  },
+                  "mode": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "offline",
+                          "redirect",
+                          "terminal",
+                          "token"
+                        ]
+                      },
+                      "returnUrl": {
+                        "type": "string"
+                      },
+                      "tokenId": {
+                        "type": "string",
+                        "description": "\"id\" retrieved via [Get Customer Tokens endpoint](https://developers.deliverect.com/reference/pay_endpoints-get-customer-tokens). Used only when `type=\"token\"`"
+                      }
+                    }
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "currency": {
+                    "type": "string"
+                  },
+                  "payableReference": {
+                    "type": "string",
+                    "description": "This field is deprecated. Use the `payable` field instead."
+                  },
+                  "payer": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "reference": {
+                        "type": "string"
+                      },
+                      "ip": {
+                        "type": "string",
+                        "description": "The payer's IP address"
+                      }
+                    }
+                  },
+                  "payable": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "A unique reference to the payable subject."
+                      }
+                    }
+                  },
+                  "billingAddress": {
+                    "type": "object",
+                    "properties": {
+                      "country": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "postalCode": {
+                        "type": "string"
+                      },
+                      "street": {
+                        "type": "string"
+                      },
+                      "houseNumber": {
+                        "type": "string"
+                      },
+                      "stateOrProvince": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "captureMode": {
+                    "type": "string",
+                    "default": "immediate",
+                    "enum": [
+                      "immediate",
+                      "manual"
+                    ]
+                  }
+                }
+              },
+              "examples": {
+                "Request Token": {
+                  "summary": "Request Token",
+                  "value": {
+                    "gatewayProfileId": "66********************cr",
+                    "mode": {
+                      "type": "token",
+                      "tokenId": "token-1"
+                    },
+                    "captureMode": "immediate",
+                    "amount": 1000,
+                    "currency": "USD",
+                    "payer": {
+                      "name": "John Doe",
+                      "reference": "customer-1"
+                    }
+                  }
+                },
+                "Re-direct": {
+                  "summary": "Re-direct",
+                  "value": {
+                    "gatewayProfileId": "66********************cd",
+                    "mode": {
+                      "type": "redirect",
+                      "returnUrl": "https://ordering-system/order",
+                      "logoUrl": "https://ordering-system/logo.jpeg"
+                    },
+                    "amount": "1234",
+                    "currency": "EUR",
+                    "payableReference": "order-123456",
+                    "payer": {
+                      "name": "John Doe",
+                      "email": "john.doe@acme.com",
+                      "reference": "crm-id-1234",
+                      "ip": "102.129.200.16"
+                    },
+                    "payable": {
+                      "id": "order-12345",
+                      "items": [
+                        {
+                          "quantity": 1,
+                          "plu": "burger-1",
+                          "name": "The burger",
+                          "description": "The best burger",
+                          "unitPrice": 3000,
+                          "total": 3000,
+                          "taxTotal": 0,
+                          "discountTotal": 0
+                        }
+                      ]
+                    },
+                    "billingAddress": {
+                      "country": "US",
+                      "city": "New York",
+                      "stateOrProvince": "NY",
+                      "postalCode": "19087",
+                      "street": "5th Avenue",
+                      "houseNumber": "826"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "pending - redirect": {
+                    "value": "{\n    \"paymentId\": \"66608ce6406d23da081e1716\",\n    \"paymentStatus\": \"pending\",\n    \"action\": {\n        \"type\": \"redirect\",\n        \"url\": \"https://payment-gateway/complete-payment\"\n    }\n}"
+                  },
+                  "authorized": {
+                    "value": "{\n    \"paymentId\": \"66608ce6406d23da081e1716\",\n    \"paymentStatus\": \"authorized\",\n    \"action\": null\n}"
+                  },
+                  "refused": {
+                    "value": "{\n    \"paymentId\": \"66608ce6406d23da081e1716\",\n    \"paymentStatus\": \"refused\",\n    \"action\": null\n}"
+                  },
+                  "pending - terminal": {
+                    "value": "{\n    \"paymentId\": \"66608ce6406d23da081e1716\",\n    \"paymentStatus\": \"pending\",\n    \"action\": {\n        \"type\": \"terminal\"\n    }\n}"
+                  }
+                },
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "pending - redirect",
+                      "type": "object",
+                      "properties": {
+                        "paymentId": {
+                          "type": "string",
+                          "example": "66608ce6406d23da081e1716"
+                        },
+                        "paymentStatus": {
+                          "type": "string",
+                          "example": "pending"
+                        },
+                        "action": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "redirect"
+                            },
+                            "url": {
+                              "type": "string",
+                              "example": "https://payment-gateway/complete-payment"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "title": "authorized",
+                      "type": "object",
+                      "properties": {
+                        "paymentId": {
+                          "type": "string",
+                          "example": "66608ce6406d23da081e1716"
+                        },
+                        "paymentStatus": {
+                          "type": "string",
+                          "example": "authorized"
+                        },
+                        "action": {}
+                      }
+                    },
+                    {
+                      "title": "refused",
+                      "type": "object",
+                      "properties": {
+                        "paymentId": {
+                          "type": "string",
+                          "example": "66608ce6406d23da081e1716"
+                        },
+                        "paymentStatus": {
+                          "type": "string",
+                          "example": "refused"
+                        },
+                        "action": {}
+                      }
+                    },
+                    {
+                      "title": "pending - terminal",
+                      "type": "object",
+                      "properties": {
+                        "paymentId": {
+                          "type": "string",
+                          "example": "66608ce6406d23da081e1716"
+                        },
+                        "paymentStatus": {
+                          "type": "string",
+                          "example": "pending"
+                        },
+                        "action": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "example": "terminal"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "bad request": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-readme": {}
+      }
+    },
+    "/pay/channel/{channelLinkId}/payments/{paymentId}": {
+      "get": {
+        "summary": "Get Payment",
+        "description": "",
+        "operationId": "pay_endpoints-get-payment",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "paymentId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "id": "66********************96",
+                      "payableReference": "order-123456",
+                      "amount": 1000,
+                      "currency": "EUR",
+                      "payer": {
+                        "name": "John Doe",
+                        "email": "john@doe.com",
+                        "reference": "cus-123456"
+                      },
+                      "status": "authorized",
+                      "failureReason": null
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "66********************96"
+                    },
+                    "payableReference": {
+                      "type": "string",
+                      "example": "order-123456"
+                    },
+                    "amount": {
+                      "type": "integer",
+                      "example": 1000,
+                      "default": 0
+                    },
+                    "currency": {
+                      "type": "string",
+                      "example": "EUR"
+                    },
+                    "payer": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "john@doe.com"
+                        },
+                        "reference": {
+                          "type": "string",
+                          "example": "cus-123456"
+                        }
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "authorized"
+                    },
+                    "failureReason": {}
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/pay/channel/{channelLinkId}/tokens/{tokenId}": {
+      "delete": {
+        "summary": "Delete Token",
+        "description": "",
+        "operationId": "pay_endpoints-get-payment-gateways-1-1",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "channelLinkId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": ""
+          },
+          {
+            "in": "path",
+            "name": "tokenId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": ""
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "204",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "No Content": {
+                    "summary": "No Content",
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Unprocessable Entity": {
+                    "summary": "Unprocessable Entity",
+                    "value": {
+                      "error": "An error happened when trying to delete the token"
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Channel link not found",
+                      "default": "An error happened when trying to delete the token"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-internal": false
+      }
+    },
+    "/pay/events/{integrationName}/gatewayProfiles/{gatewayProfileId}": {
+      "post": {
+        "summary": "Payment Events",
+        "description": "",
+        "operationId": "post_pay-events-integrationname-gatewayprofiles-gatewayprofileid",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "integrationName",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "gatewayProfileId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "title": "Payment update",
+                    "type": "object",
+                    "required": [
+                      "eventType",
+                      "gatewayId",
+                      "status",
+                      "method"
+                    ],
+                    "properties": {
+                      "eventType": {
+                        "type": "string",
+                        "enum": [
+                          "payment_update"
+                        ]
+                      },
+                      "gatewayId": {
+                        "type": "string",
+                        "example": "pay_gateway_123456"
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "refused",
+                          "authorized"
+                        ]
+                      },
+                      "failureReason": {
+                        "type": "string",
+                        "example": "Insufficient Funds"
+                      },
+                      "method": {
+                        "type": "string",
+                        "example": "visa"
+                      }
+                    }
+                  },
+                  {
+                    "title": "Refund update",
+                    "type": "object",
+                    "required": [
+                      "eventType",
+                      "gatewayId",
+                      "status"
+                    ],
+                    "properties": {
+                      "eventType": {
+                        "type": "string",
+                        "enum": [
+                          "refund_update"
+                        ]
+                      },
+                      "gatewayId": {
+                        "type": "string",
+                        "example": "refund_gateway_123456"
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "failed",
+                          "succeeded"
+                        ]
+                      },
+                      "failureReason": {
+                        "type": "string",
+                        "example": "reason for refund failure"
+                      }
+                    }
+                  }
+                ]
+              },
+              "examples": {
+                "Refund Failed": {
+                  "summary": "Refund Failed",
+                  "value": {
+                    "eventType": "refund_update",
+                    "gatewayId": "refund_gateway_123456",
+                    "status": "failed",
+                    "failureReason": "reason for refund failure"
+                  }
+                },
+                "Refunded": {
+                  "summary": "Refunded",
+                  "value": {
+                    "eventType": "refund_update",
+                    "gatewayId": "refund_gateway_123456",
+                    "status": "succeeded"
+                  }
+                },
+                "Refused": {
+                  "summary": "Refused",
+                  "value": {
+                    "eventType": "payment_update",
+                    "gatewayId": "pay_gateway_123456",
+                    "status": "refused",
+                    "failureReason": "Insufficient Funds",
+                    "method": "visa"
+                  }
+                },
+                "Authorized": {
+                  "summary": "Authorized",
+                  "value": {
+                    "eventType": "payment_update",
+                    "gatewayId": "pay_gateway_123456",
+                    "status": "authorized",
+                    "method": "visa"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": "{}"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Bad Request": {
+                    "summary": "Bad Request",
+                    "value": "{}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pay/channel/{channelLinkId}/payments/{paymentId}/refund": {
+      "post": {
+        "summary": "Refund Payment",
+        "description": "",
+        "operationId": "pay_endpoints-refund-payment",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "paymentId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "amount"
+                ]
+              },
+              "examples": {
+                "Example": {
+                  "summary": "Example",
+                  "value": {
+                    "amount": 100
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200"
+          }
+        },
+        "x-internal": false
+      }
+    },
+    "/pay/channel/{channelLinkId}/gatewayProfiles": {
+      "get": {
+        "summary": "Get Payment Gateways",
+        "description": "",
+        "operationId": "pay_endpoints-get-payment-gateways",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "channelLinkId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": [
+                      {
+                        "id": "66********************cf",
+                        "type": "online"
+                      },
+                      {
+                        "id": "66********************4d",
+                        "type": "card"
+                      }
+                    ]
+                  }
+                },
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "66********************cf"
+                      },
+                      "type": {
+                        "type": "string",
+                        "example": "online"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  }
+}

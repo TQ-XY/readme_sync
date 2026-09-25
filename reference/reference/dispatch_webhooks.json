@@ -1,0 +1,1021 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "dispatch",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://yourwebhook.com/"
+    }
+  ],
+  "paths": {
+    "/dispatch/priceJob": {
+      "post": {
+        "summary": "Price Delivery Job",
+        "description": "",
+        "operationId": "dispatch_pricejob",
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/dispatch/cancel_job": {
+      "post": {
+        "summary": "Cancel Delivery Job",
+        "description": "",
+        "operationId": "dispatch_cancel_job",
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "status": "confirmed",
+                      "reason": "",
+                      "price": 0
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "confirmed"
+                    },
+                    "reason": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "price": {
+                      "type": "integer",
+                      "example": 0,
+                      "default": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/validate_job": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Can Deliver": {
+                    "summary": "Can Deliver",
+                    "value": {
+                      "jobId": "62*****************9a",
+                      "canDeliver": true,
+                      "distance": 10,
+                      "pickupTimeETA": "2022-05-10T14:47:31.649000Z",
+                      "deliveryLocations": [
+                        {
+                          "deliveryId": "AB**67",
+                          "orderId": "62*******************37",
+                          "deliveryTimeETA": "2022-05-10T14:57:31.649000Z"
+                        }
+                      ],
+                      "price": {
+                        "price": 750,
+                        "taxRate": 10000
+                      }
+                    }
+                  },
+                  "Cannot Deliver": {
+                    "summary": "Cannot Deliver",
+                    "value": {
+                      "jobId": "651******************22a",
+                      "canDeliver": false,
+                      "errors": [
+                        {
+                          "deliveryId": "J****FI",
+                          "orderId": "651******************215",
+                          "channelOrderDisplayId": "",
+                          "reason": 20,
+                          "description": "No drivers available at this time"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "oneOf": [
+                    {
+                      "title": "Deliverable job",
+                      "type": "object",
+                      "required": [
+                        "jobId",
+                        "canDeliver",
+                        "distance",
+                        "pickupTimeETA",
+                        "deliveryLocations",
+                        "price"
+                      ],
+                      "properties": {
+                        "jobId": {
+                          "type": "string",
+                          "example": "62*****************9a"
+                        },
+                        "canDeliver": {
+                          "type": "boolean",
+                          "enum": [
+                            true
+                          ],
+                          "description": "Whether a courier is available for the delivery job.",
+                          "example": true
+                        },
+                        "distance": {
+                          "type": "integer",
+                          "example": 10
+                        },
+                        "pickupTimeETA": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2022-05-10T14:47:31.649000Z"
+                        },
+                        "deliveryLocations": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "deliveryId",
+                              "orderId",
+                              "deliveryTimeETA"
+                            ],
+                            "properties": {
+                              "deliveryId": {
+                                "type": "string",
+                                "example": "AB**67"
+                              },
+                              "orderId": {
+                                "type": "string",
+                                "example": "62*******************37"
+                              },
+                              "deliveryTimeETA": {
+                                "type": "string",
+                                "format": "date-time",
+                                "example": "2022-05-10T14:57:31.649000Z"
+                              }
+                            }
+                          }
+                        },
+                        "price": {
+                          "type": "object",
+                          "required": [
+                            "price",
+                            "taxRate"
+                          ],
+                          "properties": {
+                            "price": {
+                              "type": "integer",
+                              "example": 750
+                            },
+                            "taxRate": {
+                              "type": "integer",
+                              "example": 10000
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "title": "Undeliverable job",
+                      "type": "object",
+                      "required": [
+                        "jobId",
+                        "canDeliver",
+                        "errors"
+                      ],
+                      "properties": {
+                        "jobId": {
+                          "type": "string",
+                          "example": "651******************22a"
+                        },
+                        "canDeliver": {
+                          "type": "boolean",
+                          "enum": [
+                            false
+                          ],
+                          "description": "Whether a courier is available for the delivery job.",
+                          "example": false
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "deliveryId",
+                              "orderId",
+                              "channelOrderDisplayId",
+                              "reason",
+                              "description"
+                            ],
+                            "properties": {
+                              "deliveryId": {
+                                "type": "string",
+                                "example": "J****FI"
+                              },
+                              "orderId": {
+                                "type": "string",
+                                "example": "651******************215"
+                              },
+                              "channelOrderDisplayId": {
+                                "type": "string",
+                                "example": ""
+                              },
+                              "reason": {
+                                "type": "integer",
+                                "example": 20
+                              },
+                              "description": {
+                                "type": "string",
+                                "example": "No drivers available at this time"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Bad Request": {
+                    "summary": "Bad Request",
+                    "value": "{}"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "422",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Unprocessable Entity": {
+                    "summary": "Unprocessable Entity",
+                    "value": "{}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Validate Delivery Job",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/dispatch/create_job": {
+      "post": {
+        "summary": "Create Delivery Job",
+        "description": "",
+        "operationId": "dispatch_create_job",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "jobId": {
+                    "type": "string"
+                  },
+                  "account": {
+                    "type": "string"
+                  },
+                  "pickupTime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "transportType": {
+                    "type": "string"
+                  },
+                  "driverTip": {
+                    "type": "integer"
+                  },
+                  "pickupLocation": {
+                    "type": "object",
+                    "properties": {
+                      "location": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "remarks": {
+                        "type": "string"
+                      },
+                      "street": {
+                        "type": "string"
+                      },
+                      "streetNumber": {
+                        "type": "string"
+                      },
+                      "postalCode": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "latitude": {
+                        "type": "string"
+                      },
+                      "longitude": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "deliveryLocations": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "orderId": {
+                          "type": "string"
+                        },
+                        "channelOrderDisplayId": {
+                          "type": "string"
+                        },
+                        "deliveryTime": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "packageSize": {
+                          "type": "string"
+                        },
+                        "orderDescription": {
+                          "type": "string"
+                        },
+                        "company": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "street": {
+                          "type": "string"
+                        },
+                        "streetNumber": {
+                          "type": "string"
+                        },
+                        "postalCode": {
+                          "type": "string"
+                        },
+                        "city": {
+                          "type": "string"
+                        },
+                        "phone": {
+                          "type": "string"
+                        },
+                        "phoneAccessCode": {
+                          "type": "string"
+                        },
+                        "deliveryRemarks": {
+                          "type": "string"
+                        },
+                        "latitude": {
+                          "type": "string"
+                        },
+                        "longitude": {
+                          "type": "string"
+                        },
+                        "payment": {
+                          "type": "object",
+                          "properties": {
+                            "orderIsAlreadyPaid": {
+                              "type": "boolean"
+                            },
+                            "amount": {
+                              "type": "integer"
+                            },
+                            "paymentType": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "ageCheck": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "examples": {
+                "Create Job Sample": {
+                  "summary": "Create Job Sample",
+                  "value": {
+                    "jobId": "60*****************2e",
+                    "account": "5f*****************31",
+                    "pickupTime": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                    "transportType": "unknown",
+                    "driverTip": 500,
+                    "pickupLocation": {
+                      "location": "60*****************55",
+                      "name": "The Pizza Place",
+                      "remarks": "please use the backdoor for order pickup",
+                      "street": "Steinway Street",
+                      "streetNumber": "31",
+                      "postalCode": "11103",
+                      "city": "Astoria",
+                      "latitude": "40.7644231",
+                      "longitude": "-73.9235849"
+                    },
+                    "deliveryLocations": [
+                      {
+                        "orderId": "60*****************dd",
+                        "channelOrderDisplayId": "MT4YVTPL",
+                        "deliveryTime": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                        "packageSize": "medium",
+                        "orderDescription": "",
+                        "company": "",
+                        "name": "John Doe",
+                        "street": "31st Avenue",
+                        "streetNumber": "12",
+                        "postalCode": "11106",
+                        "city": "Astoria",
+                        "phone": "+1 (212) 555-0148",
+                        "phoneAccessCode": "342241214",
+                        "deliveryRemarks": "Ring door bell.",
+                        "latitude": "40.7691234",
+                        "longitude": "-73.9256789",
+                        "payment": {
+                          "orderIsAlreadyPaid": true,
+                          "amount": 1100,
+                          "paymentType": 0
+                        }
+                      }
+                    ],
+                    "ageCheck": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "jobId": {
+                      "type": "string",
+                      "example": "60*****************2e"
+                    },
+                    "canDeliver": {
+                      "type": "boolean",
+                      "example": true,
+                      "default": true
+                    },
+                    "pickupTimeETA": {
+                      "type": "string",
+                      "example": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                    },
+                    "externalJobId": {
+                      "type": "string",
+                      "example": "DJ123456"
+                    },
+                    "distance": {
+                      "type": "integer",
+                      "example": 4200,
+                      "default": 0
+                    },
+                    "price": {
+                      "type": "object",
+                      "properties": {
+                        "price": {
+                          "type": "integer",
+                          "example": 750,
+                          "default": 0
+                        },
+                        "taxRate": {
+                          "type": "integer",
+                          "example": 10000,
+                          "default": 0
+                        }
+                      }
+                    },
+                    "courier": {
+                      "type": "object",
+                      "properties": {
+                        "courierId": {
+                          "type": "string",
+                          "example": "D1234"
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "example": "Delivery"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "example": "Rider"
+                        },
+                        "phoneNumber": {
+                          "type": "string",
+                          "example": "0032494112233"
+                        },
+                        "transportType": {
+                          "type": "string",
+                          "example": "bicycle"
+                        }
+                      }
+                    },
+                    "deliveryLocations": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "deliveryId": {
+                            "type": "string",
+                            "example": "AB*****67"
+                          },
+                          "orderId": {
+                            "type": "string",
+                            "example": "60*****************dd"
+                          },
+                          "channelOrderDisplayId": {
+                            "type": "string",
+                            "example": "MT4YVTPL"
+                          },
+                          "deliveryTimeETA": {
+                            "type": "string",
+                            "example": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                          },
+                          "deliveryRemarks": {
+                            "type": "string",
+                            "example": ""
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "jobId": "60*****************2e",
+                      "canDeliver": true,
+                      "pickupTimeETA": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "externalJobId": "DJ123456",
+                      "distance": 4200,
+                      "price": {
+                        "price": 750,
+                        "taxRate": 10000
+                      },
+                      "courier": {
+                        "courierId": "D1234",
+                        "firstName": "Delivery",
+                        "lastName": "Rider",
+                        "phoneNumber": "0032494112233",
+                        "transportType": "bicycle"
+                      },
+                      "deliveryLocations": [
+                        {
+                          "deliveryId": "AB*****67",
+                          "orderId": "60*****************dd",
+                          "channelOrderDisplayId": "MT4YVTPL",
+                          "deliveryTimeETA": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                          "deliveryRemarks": ""
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "422",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n\t[{\n\t\t“reason”: DeliveryJobErrorReason,\n\t\t“description”: string,\n\t\t“extraDetails”: string\n\t}]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/dispatch/updateJob": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "jobId": {
+                    "type": "string"
+                  },
+                  "account": {
+                    "type": "string"
+                  },
+                  "pickupTime": {
+                    "type": "string"
+                  },
+                  "transportType": {
+                    "type": "string"
+                  },
+                  "driverTip": {
+                    "type": "integer"
+                  },
+                  "pickupLocation": {
+                    "type": "object",
+                    "properties": {
+                      "location": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "remarks": {
+                        "type": "string"
+                      },
+                      "street": {
+                        "type": "string"
+                      },
+                      "streetNumber": {
+                        "type": "string"
+                      },
+                      "postalCode": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "latitude": {
+                        "type": "string"
+                      },
+                      "longitude": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "deliveryLocations": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "orderId": {
+                          "type": "string"
+                        },
+                        "channelOrderDisplayId": {
+                          "type": "string"
+                        },
+                        "deliveryTime": {
+                          "type": "string"
+                        },
+                        "packageSize": {
+                          "type": "string"
+                        },
+                        "orderDescription": {
+                          "type": "string"
+                        },
+                        "company": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "street": {
+                          "type": "string"
+                        },
+                        "streetNumber": {
+                          "type": "string"
+                        },
+                        "postalCode": {
+                          "type": "string"
+                        },
+                        "city": {
+                          "type": "string"
+                        },
+                        "phone": {
+                          "type": "string"
+                        },
+                        "phoneAccessCode": {
+                          "type": "string"
+                        },
+                        "deliveryRemarks": {
+                          "type": "string"
+                        },
+                        "latitude": {
+                          "type": "string"
+                        },
+                        "longitude": {
+                          "type": "string"
+                        },
+                        "payment": {
+                          "type": "object",
+                          "properties": {
+                            "orderIsAlreadyPaid": {
+                              "type": "boolean"
+                            },
+                            "amount": {
+                              "type": "integer"
+                            },
+                            "paymentType": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "ageCheck": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Job Update",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "description": "This API enables the deletion of the customer data flow between Deliverect and the DSP system.",
+    "title": "Delete Customer"
+  },
+  "servers": [
+    {
+      "url": "https://api.staging.deliverect.com"
+    }
+  ],
+  "security": [
+    {
+      "oauth2ClientCredentials": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "oauth2ClientCredentials": {
+        "type": "oauth2",
+        "description": "Obtain an access token using the partner client ID and client secret. Send the returned token with each API request in the Authorization header as a Bearer token.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/oauth/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true,
+    "oauth-options": {
+      "useInsecureClientAuthentication": true
+    }
+  },
+  "x-readme-fauxas": true,
+  "paths": {
+    "/fulfillment/deleteUserData/outcome": {
+      "post": {
+        "summary": "Customer Deletion Status",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        },
+        "operationId": "post_fulfillment-deleteuserdata-outcome",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "requestId": {
+                    "type": "string",
+                    "default": "123e****a456-174**0"
+                  },
+                  "requestOutcome": {
+                    "type": "string",
+                    "enum": [
+                      "completed",
+                      "failed",
+                      "incomplete",
+                      "pending"
+                    ]
+                  },
+                  "rejectionReason": {
+                    "type": "string",
+                    "default": "not processed"
+                  }
+                },
+                "required": [
+                  "requestId",
+                  "requestOutcome"
+                ]
+              },
+              "examples": {
+                "Request result": {
+                  "summary": "Request result",
+                  "value": {
+                    "requestId": "123e4567-e89b-12d3-a456-426614174000",
+                    "requestOutcome": "Completed",
+                    "rejectionReason": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

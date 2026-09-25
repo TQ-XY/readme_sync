@@ -1,0 +1,454 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Gift Cards API",
+    "description": "Gift Cards API documentation for Deliverect integrations.",
+    "version": "",
+    "x-feedbackLink": {}
+  },
+  "servers": [
+    {
+      "url": "https://api.staging.deliverect.com"
+    }
+  ],
+  "security": [
+    {
+      "oauth2ClientCredentials": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "oauth2ClientCredentials": {
+        "type": "oauth2",
+        "description": "Obtain an access token using the partner client ID and client secret. Send the returned token with each API request in the Authorization header as a Bearer token.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/oauth/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true,
+    "oauth-options": {
+      "useInsecureClientAuthentication": true
+    }
+  },
+  "x-readme-fauxas": true,
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "This endpoint allows you to exchange client credentials for a Bearer access token, required when authenticating API requests made to Deliverect."
+    },
+    {
+      "name": "Endpoints",
+      "description": "Deliverect Endpoints"
+    }
+  ],
+  "paths": {
+    "/giftCards/channel/{channelLinkId}/providerProfileLinks": {
+      "get": {
+        "summary": "Get Profile Links",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{channelLinkId}}"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "giftCardProviderProfileLinks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "giftCardProviderProfileLinks": [
+                        {
+                          "id": "{{giftCardProviderProfileLinkId}}",
+                          "name": "string"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Deliverect Endpoints"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "operationId": "get_giftcards-channel-channellinkid-providerprofilelinks"
+      }
+    },
+    "/giftCards/channel/{channelLinkId}/profileLink/{giftCardProviderProfileLinkId}/applyGiftCard": {
+      "post": {
+        "summary": "Apply Gift Card",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{channelLinkId}}"
+          },
+          {
+            "name": "giftCardProviderProfileLinkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{giftCardProviderProfileLinkId}}"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Deliverect Endpoints"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "number": {
+                    "type": "string",
+                    "format": "color"
+                  },
+                  "verificationCode": {
+                    "type": "string",
+                    "format": "utc-millisec"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "example": {
+                "number": "ABC",
+                "verificationCode": "1234",
+                "amount": 100
+              }
+            }
+          }
+        },
+        "operationId": "post_giftcards-channel-channellinkid-profilelink-giftcardproviderprofilelinkid-applygiftcard"
+      }
+    },
+    "/giftCards/reverse": {
+      "post": {
+        "summary": "Reverse Redemption",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "giftCardNumber": "125476349806",
+                      "giftCardVerificationCode": "1234",
+                      "amount": 100
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "error": "Invalid request"
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": [
+          "Partner Webhooks"
+        ],
+        "parameters": []
+      }
+    },
+    "/giftCards/redeem": {
+      "post": {
+        "summary": "Redeem Gift Cards",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "giftCardNumber": "125476349806",
+                      "giftCardVerificationCode": "1234",
+                      "amount": 100
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "error": "Not enough balance"
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": [
+          "Partner Webhooks"
+        ],
+        "parameters": []
+      }
+    },
+    "/giftCards/validateGiftCard": {
+      "post": {
+        "summary": "Validate Gift Card ",
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "number": {
+                    "type": "string"
+                  },
+                  "verificationCode": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "Result": {
+                  "value": {
+                    "number": "125476349806",
+                    "verificationCode": "1234"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "error": "Invalid gift card"
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "tags": [
+          "Partner Webhooks"
+        ],
+        "parameters": []
+      }
+    },
+    "/giftCards/channel/{channelLinkId}/profileLink/{giftCardProviderProfileLinkId}/getGiftCardBalance": {
+      "post": {
+        "summary": "Get Balance",
+        "parameters": [
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{channelLinkId}}"
+          },
+          {
+            "name": "giftCardProviderProfileLinkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{giftCardProviderProfileLinkId}}"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balance": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "examples": {
+                  "Balance Example": {
+                    "value": {
+                      "amount": 6346,
+                      "giftCardNumber": "6000101001050148"
+                    },
+                    "summary": "Balance Example"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Deliverect Endpoints"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "number": {
+                    "type": "string",
+                    "format": "color"
+                  },
+                  "verificationCode": {
+                    "type": "string",
+                    "format": "utc-millisec"
+                  }
+                }
+              },
+              "example": {
+                "number": "ABC",
+                "verificationCode": "1234"
+              }
+            }
+          }
+        },
+        "operationId": "post_giftcards-channel-channellinkid-profilelink-giftcardproviderprofilelinkid-getgiftcardbalance"
+      }
+    }
+  }
+}

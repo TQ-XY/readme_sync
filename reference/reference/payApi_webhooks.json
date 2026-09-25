@@ -1,0 +1,144 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "payApi",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://yourwebhook.com/"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/payment-update": {
+      "post": {
+        "description": "",
+        "operationId": "payapi_payment_update",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ],
+        "x-readme": {},
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "paymentId": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "authorized",
+                      "refused"
+                    ]
+                  },
+                  "gatewayProfilelinkId": {
+                    "type": "string"
+                  },
+                  "methodRaw": {
+                    "type": "string",
+                    "enum": [
+                      "visa"
+                    ]
+                  }
+                },
+                "required": [
+                  "paymentId",
+                  "status",
+                  "gatewayProfilelinkId",
+                  "methodRaw"
+                ]
+              },
+              "examples": {
+                "Payment Refused": {
+                  "summary": "Payment Refused",
+                  "value": {
+                    "paymentId": "68**********************54",
+                    "status": "refused",
+                    "metadata": {
+                      "gatewayProfileLinkId": "68**********************5c",
+                      "methodRaw": "visa"
+                    }
+                  }
+                },
+                "Payment Authorized": {
+                  "summary": "Payment Authorized",
+                  "value": {
+                    "paymentId": "68**********************54",
+                    "status": "authorized",
+                    "metadata": {
+                      "gatewayProfileLinkId": "68**********************5c",
+                      "methodRaw": "visa"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Payment Update "
+      }
+    }
+  },
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}

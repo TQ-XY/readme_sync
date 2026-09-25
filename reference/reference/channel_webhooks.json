@@ -1,0 +1,2783 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Channel Webhooks",
+    "description": "Recieve real time webhook events for various store operations",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://yourwebhook.com/",
+      "description": "Placeholder for the webhook URL channels will provide to Deliverect during setup."
+    }
+  ],
+  "paths": {
+    "/channel/register": {
+      "post": {
+        "summary": "Channel Registration",
+        "description": "",
+        "operationId": "channel_register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "status",
+                  "channelLocationId",
+                  "channelLinkId",
+                  "locationId",
+                  "channelLinkName"
+                ],
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "register",
+                      "active",
+                      "inactive"
+                    ],
+                    "example": "register"
+                  },
+                  "channelLocationId": {
+                    "type": "string",
+                    "example": "UniqueIdInChannelForThisLocation"
+                  },
+                  "channelLinkId": {
+                    "type": "string",
+                    "example": "{{channelLinkId}}"
+                  },
+                  "locationId": {
+                    "type": "string",
+                    "example": "{{locationId}}"
+                  },
+                  "channelLinkName": {
+                    "type": "string",
+                    "example": "Order Boss"
+                  }
+                }
+              },
+              "examples": {
+                "Register Event Example": {
+                  "summary": "Register Event Example",
+                  "value": {
+                    "status": "register",
+                    "channelLocationId": "UniqueIdInChannelForThisLocation",
+                    "channelLinkId": "{{channelLinkId}}",
+                    "locationId": "{{locationId}}",
+                    "channelLinkName": "Order Boss"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "statusUpdateURL": "https://integrator.com/statusUpdate",
+                      "menuUpdateURL": "https://integrator.com/menuUpdate",
+                      "snoozeUnsnoozeURL": "https://integrator.com/snoozeUnsnooze",
+                      "busyModeURL": "https://integrator.com/busyMode",
+                      "updatePrepTimeURL": "https://integrator.com/updatePrepTimeURL",
+                      "paymentUpdateURL": "https://yourwebhook.com/payment_update",
+                      "courierUpdateURL": "https://yourwebhook.com/courier_update",
+                      "authorizationURL": "https://yourwebhook.com/authorization",
+                      "menuUrl": "https://integrator.com/store"
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusUpdateURL": {
+                      "type": "string",
+                      "example": "https://integrator.com/statusUpdate"
+                    },
+                    "menuUpdateURL": {
+                      "type": "string",
+                      "example": "https://integrator.com/menuUpdate"
+                    },
+                    "snoozeUnsnoozeURL": {
+                      "type": "string",
+                      "example": "https://integrator.com/snoozeUnsnooze"
+                    },
+                    "busyModeURL": {
+                      "type": "string",
+                      "example": "https://integrator.com/busyMode"
+                    },
+                    "updatePrepTimeURL": {
+                      "type": "string",
+                      "example": "https://integrator.com/updatePrepTimeURL"
+                    },
+                    "paymentUpdateURL": {
+                      "type": "string",
+                      "example": "https://yourwebhook.com/payment_update"
+                    },
+                    "courierUpdateURL": {
+                      "type": "string",
+                      "example": "https://yourwebhook.com/courier_update"
+                    },
+                    "authorizationURL": {
+                      "type": "string",
+                      "example": "https://yourwebhook.com/authorization"
+                    },
+                    "menuUrl": {
+                      "type": "string",
+                      "example": "https://integrator.com/store"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-readme": {},
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/channel/order_status": {
+      "post": {
+        "summary": "Order Status Update",
+        "description": "",
+        "operationId": "channel_order_status",
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/channel/courier_update": {
+      "post": {
+        "summary": "Courier Update",
+        "description": "",
+        "operationId": "channel_courier_update",
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/channel/busy_mode": {
+      "post": {
+        "summary": "Busy mode",
+        "description": "",
+        "operationId": "channel_busy_mode",
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/channel/prep_time": {
+      "post": {
+        "summary": "Preparation Time Update",
+        "description": "",
+        "operationId": "channel_prep_time",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "channelOrderId": {
+                    "type": "string",
+                    "example": "X7CESD"
+                  },
+                  "orderId": {
+                    "type": "string",
+                    "example": "5e****abc11dec0001****9b"
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "5e****abc11dec0001****0b"
+                  },
+                  "status": {
+                    "type": "integer",
+                    "example": 20
+                  },
+                  "pickupTime": {
+                    "type": "string",
+                    "format": "date-time",
+                    "example": "2021-04-20T16:20:00Z"
+                  }
+                }
+              },
+              "examples": {
+                "Preparation Time Update Example": {
+                  "summary": "Preparation Time Update Example",
+                  "value": {
+                    "channelOrderId": "X7CESD",
+                    "orderId": "5e****abc11dec0001****9b",
+                    "location": "5e****abc11dec0001****0b",
+                    "status": 20,
+                    "pickupTime": "2021-04-20T16:20:00Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/channel/payment_update": {
+      "post": {
+        "summary": "Payment Update",
+        "description": "",
+        "operationId": "channel_payment_update",
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/channel/authorize": {
+      "post": {
+        "summary": "SSO Authorization",
+        "description": "",
+        "operationId": "channel_authorize",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "channelLink"
+                ],
+                "properties": {
+                  "channelLink": {
+                    "type": "string",
+                    "description": "ID of the channel link requesting the SSO, to be redirected to."
+                  },
+                  "redirectUrl": {
+                    "type": "string",
+                    "description": "url to redirect after the authorization is completed"
+                  },
+                  "customer": {
+                    "type": "string",
+                    "description": "SSO verified customer (firstName, lastName, email, phoneNumber, providerId)"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "email of the customer"
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "phone number of the customer"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "name of the customer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  \"authCode\": \"my-authorization-code\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "authCode": {
+                      "type": "string",
+                      "example": "my-authorization-code"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "302": {
+            "description": "302",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "x-internal": true,
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    },
+    "/channel/menu_update/": {
+      "post": {
+        "summary": "Menu Update",
+        "description": "",
+        "operationId": "channel_menu_update",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "menu": {
+                    "type": "string",
+                    "description": "The name of the menu. Always present."
+                  },
+                  "menuTranslations": {
+                    "type": "object",
+                    "description": "Translation of the menu name with language codes as keys (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-translations\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the menu."
+                  },
+                  "descriptionTranslations": {
+                    "type": "object",
+                    "description": "Translation of the menu description with language codes as keys (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-translations\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                  },
+                  "menuImageURL": {
+                    "type": "string",
+                    "description": "Header/Banner image url of the menu (more info on images <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-images\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                  },
+                  "menuId": {
+                    "type": "string",
+                    "description": "Internal Deliverect menu id. Always present."
+                  },
+                  "menuType": {
+                    "type": "integer",
+                    "description": "Five different types of menus, with each representing the intended ordering type for which the menu is suitable: DELIVERY_AND_PICKUP = `0`, DELIVERY = `1`, PICKUP = `2`, EAT_IN = `3`, CURBSIDE = `4`. Always present.",
+                    "enum": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4
+                    ]
+                  },
+                  "channelLinkId": {
+                    "type": "string",
+                    "description": "The id for the channelLink that this menu is published to. Always present."
+                  },
+                  "nestedModifiers": {
+                    "type": "boolean",
+                    "description": "Indicates if nested modifiers are present in the menu (see section <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-modifer-groups#nested-modifiers\" target=\"_blank\" rel=\"noopener noreferrer\">here</a> for further reference). Always present."
+                  },
+                  "currency": {
+                    "type": "integer",
+                    "description": "<a href=\"https://developers.deliverect.com/page/list-of-currencies\" target=\"_blank\" rel=\"noopener noreferrer\">Currency</a> of the menu."
+                  },
+                  "productTags": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "description": "Array of all tags that exist in the menu (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-product-metadata\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                  },
+                  "availabilities": {
+                    "type": "array",
+                    "description": "The times during which the menu should be available. This will in most cases equate to the store's opening hours.",
+                    "items": {
+                      "type": "object",
+                      "description": "A recurring weekly time window during which the parent entity should be available.",
+                      "properties": {
+                        "dayOfWeek": {
+                          "type": "integer",
+                          "description": "An integer value that indicates the day of the week for this availability (starting at `1` for Monday)."
+                        },
+                        "startTime": {
+                          "type": "string",
+                          "description": "A 24-hour `HH:MM` format notation of the start time of availability expressed in the local time of the location."
+                        },
+                        "endTime": {
+                          "type": "string",
+                          "description": "A 24-hour `HH:MM` format notation of the end time of availability expressed in the local time of the location."
+                        }
+                      }
+                    }
+                  },
+                  "categories": {
+                    "type": "array",
+                    "description": "The categories within a menu.",
+                    "items": {
+                      "type": "object",
+                      "description": "A category within a menu.",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "description": "Internal Deliverect id of the category."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Category name."
+                        },
+                        "nameTranslations": {
+                          "type": "object",
+                          "description": "Translations of the category name with language codes as keys (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-translations\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Description of the category."
+                        },
+                        "descriptionTranslations": {
+                          "type": "object",
+                          "description": "Translation of the category description with language codes as keys (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-translations\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                        },
+                        "imageUrl": {
+                          "type": "string",
+                          "description": "Image url of the category (see more info on images <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-images\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                        },
+                        "availabilities": {
+                          "type": "array",
+                          "description": "Category availabilities.",
+                          "items": {
+                            "type": "object",
+                            "description": "Category availability window.",
+                            "properties": {
+                              "dayOfWeek": {
+                                "type": "integer",
+                                "description": "An integer value that indicates the day of the week for this availability (starting at `1` for Monday)."
+                              },
+                              "startTime": {
+                                "type": "string",
+                                "description": "A 24-hour `HH:MM` format notation of the start time of availability expressed in the local time of the location."
+                              },
+                              "endTime": {
+                                "type": "string",
+                                "description": "A 24-hour `HH:MM` format notation of the end time of availability expressed in the local time of the location."
+                              },
+                              "category": {
+                                "type": "string",
+                                "description": "Unique ID of the menu category."
+                              }
+                            }
+                          }
+                        },
+                        "subProducts": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Products that exist under each category, see <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-sort-categories-items\" target=\"_blank\" rel=\"noopener noreferrer\">guide here</a> for more context on correct sorting."
+                        },
+                        "menu": {
+                          "type": "string",
+                          "description": "The unique ID of the menu this category belongs to."
+                        },
+                        "account": {
+                          "type": "string",
+                          "description": "The unique ID of the account this category belongs to."
+                        },
+                        "subCategories": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of child category IDs, present in retail catalogs."
+                        },
+                        "posLocationId": {
+                          "type": "string",
+                          "description": "Deprecated.",
+                          "deprecated": true
+                        },
+                        "products": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Deprecated. For correct sorting of products in categories, see `subProducts`.",
+                          "deprecated": true
+                        },
+                        "posCategoryType": {
+                          "type": "string",
+                          "description": "Deprecated.",
+                          "deprecated": true
+                        },
+                        "posCategoryId": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Deprecated.",
+                          "deprecated": true
+                        },
+                        "sortedChannelProductIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Deprecated. For correct sorting of products in categories, see `subProducts`.",
+                          "deprecated": true
+                        },
+                        "subProductSortOrder": {
+                          "type": "string",
+                          "description": "Deprecated. For correct sorting of products in categories, see `subProducts`.",
+                          "deprecated": true
+                        },
+                        "level": {
+                          "type": "integer",
+                          "description": "Deprecated.",
+                          "deprecated": true
+                        }
+                      }
+                    }
+                  },
+                  "products": {
+                    "type": "object",
+                    "description": "Keyed object of products, keyed by product `_id`. Shares a common attribute structure with `modifiers` and `modifierGroups` (collectively referred to as *items* below).",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Identifier of a particular item and its location in the menu structure."
+                      },
+                      "plu": {
+                        "type": "string",
+                        "description": "Unique identifier of the item, to be used when creating orders."
+                      },
+                      "gtin": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "GTIN (Global Trade Item Number) for product, which could be an EAN code. NB: these are not validated as yet."
+                      },
+                      "imageUrl": {
+                        "type": "string",
+                        "description": "Image associated with the item (see more info on images <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-images\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Item name."
+                      },
+                      "price": {
+                        "type": "integer",
+                        "description": "Price of the item with 2 decimal digits, e.g. 1 euro is stored as 100."
+                      },
+                      "bottleDepositPrice": {
+                        "type": "integer",
+                        "description": "Deprecated. See `supplementalInfo.deposit`.",
+                        "deprecated": true
+                      },
+                      "nameTranslations": {
+                        "type": "object",
+                        "description": "Translation of an item name with language codes as keys (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-translations\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "productType": {
+                        "type": "integer",
+                        "description": "PRODUCT = `1`, MODIFIER = `2`, MODIFIER GROUP = `3`.",
+                        "enum": [
+                          1,
+                          2,
+                          3
+                        ]
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Item description."
+                      },
+                      "descriptionTranslations": {
+                        "type": "object",
+                        "description": "Translation of the item description with language codes as keys (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-translations\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "deliveryTax": {
+                        "type": "integer",
+                        "description": "Sales tax specific on order type of 'Delivery' for the item. Tax rates are always stored as an int with 3 decimal digits, e.g. 5% would be sent as `5000`."
+                      },
+                      "takeawayTax": {
+                        "type": "integer",
+                        "description": "Sales tax specific on order type of 'Takeaway' for the item. Tax rates are always sent as an int with 3 decimal digits, e.g. 5% would be sent as `5000`."
+                      },
+                      "eatInTax": {
+                        "type": "integer",
+                        "description": "Sales tax specific on order type of 'Eat-in' for the item. Tax rates are always sent as an int with 3 decimal digits, e.g. 5% would be sent as `5000`."
+                      },
+                      "max": {
+                        "type": "integer",
+                        "description": "Maximum number of items under a group to be purchased."
+                      },
+                      "min": {
+                        "type": "integer",
+                        "description": "Minimum number of items under a group to be purchased."
+                      },
+                      "multiMax": {
+                        "type": "integer",
+                        "description": "Maximum quantity of any single item which can be purchased within a group (modifier group). Also applicable to products, where it should control how many items can be added to a basket, e.g. Paracetamol."
+                      },
+                      "defaultQuantity": {
+                        "type": "integer",
+                        "description": "Controls the behaviour of 'pre-selected' items, where a quantity >0 should be automatically selected (typically '1'); higher default quantities can also be set."
+                      },
+                      "multiply": {
+                        "type": "integer",
+                        "description": "Used in a modifier group to show this product multiple times in the GUI; `1` means one entry (so no copies)."
+                      },
+                      "isCombo": {
+                        "type": "boolean",
+                        "description": "Indicates if a product is a combo item/meal deal."
+                      },
+                      "isVariant": {
+                        "type": "boolean",
+                        "description": "Applicable to a **product** to indicate if it is a variant or not (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-variants\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "isVariantGroup": {
+                        "type": "boolean",
+                        "description": "Applicable to a **modifier group** to indicate if it is a variant or not (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-variants\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "snoozed": {
+                        "type": "boolean",
+                        "description": "Indicates whether an item is snoozed at the point of a menu being published."
+                      },
+                      "visible": {
+                        "type": "boolean",
+                        "description": "Deprecated. The value will always be set to `true` as disabled items won't appear in the menu payload.",
+                        "deprecated": true
+                      },
+                      "productTags": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        },
+                        "description": "All tags which apply to this item, see complete list <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-product-metadata\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>."
+                      },
+                      "account": {
+                        "type": "string",
+                        "description": "Unique customer account ID where the item is stored."
+                      },
+                      "referenceId": {
+                        "type": "string",
+                        "description": "The original PLU of the item, only for tracking sales, e.g. for loyalty purposes. Not to be included in the payload for order creation."
+                      },
+                      "location": {
+                        "type": "string",
+                        "description": "Unique customer location ID where the item is stored."
+                      },
+                      "capacityUsages": {
+                        "type": "array",
+                        "items": {},
+                        "description": "Deprecated.",
+                        "deprecated": true
+                      },
+                      "isUpsell": {
+                        "type": "boolean",
+                        "description": "Indicates if the **modifier group** is an Upsell group."
+                      },
+                      "subProducts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "List of items belonging to the group."
+                      },
+                      "beverageInfo": {
+                        "type": "object",
+                        "description": "Information specific to beverages.",
+                        "properties": {
+                          "caffeine": {
+                            "type": "integer",
+                            "description": "Expressed in mg."
+                          },
+                          "alcohol": {
+                            "type": "integer",
+                            "description": "Expressed in mg."
+                          }
+                        }
+                      },
+                      "calories": {
+                        "type": "integer",
+                        "description": "Expressed in kcal / Cals."
+                      },
+                      "caloriesRangeHigh": {
+                        "type": "integer",
+                        "description": "If a range is supported, the minimum is `calories` and maximum is `caloriesRangeHigh`."
+                      },
+                      "nutritionalInfo": {
+                        "type": "object",
+                        "description": "Expressed in grams, e.g. `fat`, `sugar`, `saturatedFat`, `carbohydrates`, `protein`, `salt`, etc (see this section of the product guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-product-metadata\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>).",
+                        "properties": {
+                          "servingSize": {
+                            "type": "object",
+                            "description": "Details of a serving size.",
+                            "properties": {
+                              "amount": {
+                                "type": "integer",
+                                "description": "The serving size amount."
+                              },
+                              "unitType": {
+                                "type": "integer",
+                                "description": "What the serving size unit type is; Weight (in grams) = `1`, Volume (in milliliter) = `2`, Count (i.e., piece, slice, capsule, cookie, etc) = `3`.",
+                                "enum": [
+                                  1,
+                                  2,
+                                  3
+                                ]
+                              },
+                              "countUnitDescription": {
+                                "type": "string",
+                                "description": "The serving size unit description."
+                              }
+                            }
+                          },
+                          "netQuantity": {
+                            "type": "object",
+                            "description": "Details on quantity.",
+                            "properties": {
+                              "amount": {
+                                "type": "integer",
+                                "description": "The net quantity amount."
+                              },
+                              "unitType": {
+                                "type": "integer",
+                                "description": "What the net quantity unit type is; Weight (in grams) = `1`, Volume (in milliliter) = `2`, Count (i.e., piece, slice, capsule, cookie, etc) = `3`.",
+                                "enum": [
+                                  1,
+                                  2,
+                                  3
+                                ]
+                              },
+                              "countUnitDescription": {
+                                "type": "string",
+                                "description": "The net quantity unit description."
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "packaging": {
+                        "type": "object",
+                        "description": "Details on the packaging.",
+                        "properties": {
+                          "count": {
+                            "type": "integer",
+                            "description": "Quantity of packaging."
+                          },
+                          "reusable": {
+                            "type": "boolean",
+                            "description": "Whether packaging is re-usable or not."
+                          },
+                          "storageInstructions": {
+                            "type": "string",
+                            "description": "Instructions for storage."
+                          }
+                        }
+                      },
+                      "supplementalInfo": {
+                        "type": "object",
+                        "description": "Additional information about an item, for more information see <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-product-metadata\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
+                        "properties": {
+                          "legalName": {
+                            "type": "string",
+                            "description": "Legal name of the item."
+                          },
+                          "instructionsForUse": {
+                            "type": "string",
+                            "description": "Any specific instructions for use."
+                          },
+                          "ingredients": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Array of ingredients."
+                          },
+                          "additives": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Array of additives."
+                          },
+                          "prepackaged": {
+                            "type": "boolean",
+                            "description": "Specifies whether the item is prepackaged."
+                          },
+                          "deposit": {
+                            "type": "integer",
+                            "description": "In certain regions a deposit is required for e.g. bottled drinks; this will be included in the price, yet the deposit should be clearly displayed to the consumer. Deposit expressed to 2 decimal digits, e.g. 1 euro is stored as 100 (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-set-bottle-deposits\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                          },
+                          "fbo": {
+                            "type": "object",
+                            "description": "Details of the food business operator.",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Food business operator name."
+                              },
+                              "address": {
+                                "type": "string",
+                                "description": "Food business operator address."
+                              },
+                              "brand": {
+                                "type": "string",
+                                "description": "Food business operator brand name."
+                              },
+                              "countryOfOrigin": {
+                                "type": "string",
+                                "description": "Food business operator country of origin."
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "parentId": {
+                        "type": "string",
+                        "description": "Deprecated. Follow each `subProducts` array recursively from the top level down to determine nesting. `parentId` is legacy and shouldn't be used.",
+                        "deprecated": true
+                      },
+                      "posCategoryIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "The POS ID of the category this product belongs to in the POS."
+                      },
+                      "posProductCategoryId": {
+                        "type": "string",
+                        "description": "The ID of this product in the POS, internal to POS, not to be used when creating orders."
+                      },
+                      "posProductId": {
+                        "type": "string",
+                        "description": "The ID of this product in the POS, internal to POS, not to be used when creating orders."
+                      },
+                      "subProductSortOrder": {
+                        "type": "string",
+                        "description": "A list of product PLUs belonging to this product that preserves the order of these sub-products."
+                      },
+                      "metadata": {
+                        "type": "array",
+                        "description": "A list of custom key/value pairings added to product data, e.g. `\"metadata\": [{\"key\": \"highlight\", \"value\": \"true\"}]`.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "displayLabels": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "List of labels for marketing purposes applied to products, e.g. `{\"displayLabels\": [\"new\", \"popular\"]}`."
+                      }
+                    }
+                  },
+                  "modifiers": {
+                    "type": "object",
+                    "description": "Keyed object of modifiers, keyed by modifier `_id`. Shares a common attribute structure with `products` and `modifierGroups` (collectively referred to as *items* below).",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Identifier of a particular item and its location in the menu structure."
+                      },
+                      "plu": {
+                        "type": "string",
+                        "description": "Unique identifier of the item, to be used when creating orders."
+                      },
+                      "gtin": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "GTIN (Global Trade Item Number) for product, which could be an EAN code. NB: these are not validated as yet."
+                      },
+                      "imageUrl": {
+                        "type": "string",
+                        "description": "Image associated with the item (see more info on images <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-images\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Item name."
+                      },
+                      "price": {
+                        "type": "integer",
+                        "description": "Price of the item with 2 decimal digits, e.g. 1 euro is stored as 100."
+                      },
+                      "bottleDepositPrice": {
+                        "type": "integer",
+                        "description": "Deprecated. See `supplementalInfo.deposit`.",
+                        "deprecated": true
+                      },
+                      "nameTranslations": {
+                        "type": "object",
+                        "description": "Translation of an item name with language codes as keys (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-translations\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "productType": {
+                        "type": "integer",
+                        "description": "PRODUCT = `1`, MODIFIER = `2`, MODIFIER GROUP = `3`.",
+                        "enum": [
+                          1,
+                          2,
+                          3
+                        ]
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Item description."
+                      },
+                      "descriptionTranslations": {
+                        "type": "object",
+                        "description": "Translation of the item description with language codes as keys (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-translations\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "deliveryTax": {
+                        "type": "integer",
+                        "description": "Sales tax specific on order type of 'Delivery' for the item. Tax rates are always stored as an int with 3 decimal digits, e.g. 5% would be sent as `5000`."
+                      },
+                      "takeawayTax": {
+                        "type": "integer",
+                        "description": "Sales tax specific on order type of 'Takeaway' for the item. Tax rates are always sent as an int with 3 decimal digits, e.g. 5% would be sent as `5000`."
+                      },
+                      "eatInTax": {
+                        "type": "integer",
+                        "description": "Sales tax specific on order type of 'Eat-in' for the item. Tax rates are always sent as an int with 3 decimal digits, e.g. 5% would be sent as `5000`."
+                      },
+                      "max": {
+                        "type": "integer",
+                        "description": "Maximum number of items under a group to be purchased."
+                      },
+                      "min": {
+                        "type": "integer",
+                        "description": "Minimum number of items under a group to be purchased."
+                      },
+                      "multiMax": {
+                        "type": "integer",
+                        "description": "Maximum quantity of any single item which can be purchased within a group (modifier group). Also applicable to products, where it should control how many items can be added to a basket, e.g. Paracetamol."
+                      },
+                      "defaultQuantity": {
+                        "type": "integer",
+                        "description": "Controls the behaviour of 'pre-selected' items, where a quantity >0 should be automatically selected (typically '1'); higher default quantities can also be set."
+                      },
+                      "multiply": {
+                        "type": "integer",
+                        "description": "Used in a modifier group to show this product multiple times in the GUI; `1` means one entry (so no copies)."
+                      },
+                      "isCombo": {
+                        "type": "boolean",
+                        "description": "Indicates if a product is a combo item/meal deal."
+                      },
+                      "isVariant": {
+                        "type": "boolean",
+                        "description": "Applicable to a **product** to indicate if it is a variant or not (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-variants\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "isVariantGroup": {
+                        "type": "boolean",
+                        "description": "Applicable to a **modifier group** to indicate if it is a variant or not (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-variants\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "snoozed": {
+                        "type": "boolean",
+                        "description": "Indicates whether an item is snoozed at the point of a menu being published."
+                      },
+                      "visible": {
+                        "type": "boolean",
+                        "description": "Deprecated. The value will always be set to `true` as disabled items won't appear in the menu payload.",
+                        "deprecated": true
+                      },
+                      "productTags": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        },
+                        "description": "All tags which apply to this item, see complete list <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-product-metadata\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>."
+                      },
+                      "account": {
+                        "type": "string",
+                        "description": "Unique customer account ID where the item is stored."
+                      },
+                      "referenceId": {
+                        "type": "string",
+                        "description": "The original PLU of the item, only for tracking sales, e.g. for loyalty purposes. Not to be included in the payload for order creation."
+                      },
+                      "location": {
+                        "type": "string",
+                        "description": "Unique customer location ID where the item is stored."
+                      },
+                      "capacityUsages": {
+                        "type": "array",
+                        "items": {},
+                        "description": "Deprecated.",
+                        "deprecated": true
+                      },
+                      "isUpsell": {
+                        "type": "boolean",
+                        "description": "Indicates if the **modifier group** is an Upsell group."
+                      },
+                      "subProducts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "List of items belonging to the group."
+                      },
+                      "beverageInfo": {
+                        "type": "object",
+                        "description": "Information specific to beverages.",
+                        "properties": {
+                          "caffeine": {
+                            "type": "integer",
+                            "description": "Expressed in mg."
+                          },
+                          "alcohol": {
+                            "type": "integer",
+                            "description": "Expressed in mg."
+                          }
+                        }
+                      },
+                      "calories": {
+                        "type": "integer",
+                        "description": "Expressed in kcal / Cals."
+                      },
+                      "caloriesRangeHigh": {
+                        "type": "integer",
+                        "description": "If a range is supported, the minimum is `calories` and maximum is `caloriesRangeHigh`."
+                      },
+                      "nutritionalInfo": {
+                        "type": "object",
+                        "description": "Expressed in grams, e.g. `fat`, `sugar`, `saturatedFat`, `carbohydrates`, `protein`, `salt`, etc (see this section of the product guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-product-metadata\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>).",
+                        "properties": {
+                          "servingSize": {
+                            "type": "object",
+                            "description": "Details of a serving size.",
+                            "properties": {
+                              "amount": {
+                                "type": "integer",
+                                "description": "The serving size amount."
+                              },
+                              "unitType": {
+                                "type": "integer",
+                                "description": "What the serving size unit type is; Weight (in grams) = `1`, Volume (in milliliter) = `2`, Count (i.e., piece, slice, capsule, cookie, etc) = `3`.",
+                                "enum": [
+                                  1,
+                                  2,
+                                  3
+                                ]
+                              },
+                              "countUnitDescription": {
+                                "type": "string",
+                                "description": "The serving size unit description."
+                              }
+                            }
+                          },
+                          "netQuantity": {
+                            "type": "object",
+                            "description": "Details on quantity.",
+                            "properties": {
+                              "amount": {
+                                "type": "integer",
+                                "description": "The net quantity amount."
+                              },
+                              "unitType": {
+                                "type": "integer",
+                                "description": "What the net quantity unit type is; Weight (in grams) = `1`, Volume (in milliliter) = `2`, Count (i.e., piece, slice, capsule, cookie, etc) = `3`.",
+                                "enum": [
+                                  1,
+                                  2,
+                                  3
+                                ]
+                              },
+                              "countUnitDescription": {
+                                "type": "string",
+                                "description": "The net quantity unit description."
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "packaging": {
+                        "type": "object",
+                        "description": "Details on the packaging.",
+                        "properties": {
+                          "count": {
+                            "type": "integer",
+                            "description": "Quantity of packaging."
+                          },
+                          "reusable": {
+                            "type": "boolean",
+                            "description": "Whether packaging is re-usable or not."
+                          },
+                          "storageInstructions": {
+                            "type": "string",
+                            "description": "Instructions for storage."
+                          }
+                        }
+                      },
+                      "supplementalInfo": {
+                        "type": "object",
+                        "description": "Additional information about an item, for more information see <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-product-metadata\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
+                        "properties": {
+                          "legalName": {
+                            "type": "string",
+                            "description": "Legal name of the item."
+                          },
+                          "instructionsForUse": {
+                            "type": "string",
+                            "description": "Any specific instructions for use."
+                          },
+                          "ingredients": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Array of ingredients."
+                          },
+                          "additives": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Array of additives."
+                          },
+                          "prepackaged": {
+                            "type": "boolean",
+                            "description": "Specifies whether the item is prepackaged."
+                          },
+                          "deposit": {
+                            "type": "integer",
+                            "description": "In certain regions a deposit is required for e.g. bottled drinks; this will be included in the price, yet the deposit should be clearly displayed to the consumer. Deposit expressed to 2 decimal digits, e.g. 1 euro is stored as 100 (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-set-bottle-deposits\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                          },
+                          "fbo": {
+                            "type": "object",
+                            "description": "Details of the food business operator.",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Food business operator name."
+                              },
+                              "address": {
+                                "type": "string",
+                                "description": "Food business operator address."
+                              },
+                              "brand": {
+                                "type": "string",
+                                "description": "Food business operator brand name."
+                              },
+                              "countryOfOrigin": {
+                                "type": "string",
+                                "description": "Food business operator country of origin."
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "parentId": {
+                        "type": "string",
+                        "description": "Deprecated. Follow each `subProducts` array recursively from the top level down to determine nesting. `parentId` is legacy and shouldn't be used.",
+                        "deprecated": true
+                      },
+                      "posCategoryIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "The POS ID of the category this product belongs to in the POS."
+                      },
+                      "posProductCategoryId": {
+                        "type": "string",
+                        "description": "The ID of this product in the POS, internal to POS, not to be used when creating orders."
+                      },
+                      "posProductId": {
+                        "type": "string",
+                        "description": "The ID of this product in the POS, internal to POS, not to be used when creating orders."
+                      },
+                      "subProductSortOrder": {
+                        "type": "string",
+                        "description": "A list of product PLUs belonging to this product that preserves the order of these sub-products."
+                      },
+                      "metadata": {
+                        "type": "array",
+                        "description": "A list of custom key/value pairings added to product data, e.g. `\"metadata\": [{\"key\": \"highlight\", \"value\": \"true\"}]`.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "displayLabels": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "List of labels for marketing purposes applied to products, e.g. `{\"displayLabels\": [\"new\", \"popular\"]}`."
+                      }
+                    }
+                  },
+                  "modifierGroups": {
+                    "type": "object",
+                    "description": "Keyed object of modifier groups, keyed by modifier group `_id`. Shares a common attribute structure with `products` and `modifiers` (collectively referred to as *items* below).",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Identifier of a particular item and its location in the menu structure."
+                      },
+                      "plu": {
+                        "type": "string",
+                        "description": "Unique identifier of the item, to be used when creating orders."
+                      },
+                      "gtin": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "GTIN (Global Trade Item Number) for product, which could be an EAN code. NB: these are not validated as yet."
+                      },
+                      "imageUrl": {
+                        "type": "string",
+                        "description": "Image associated with the item (see more info on images <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-images\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Item name."
+                      },
+                      "price": {
+                        "type": "integer",
+                        "description": "Price of the item with 2 decimal digits, e.g. 1 euro is stored as 100."
+                      },
+                      "bottleDepositPrice": {
+                        "type": "integer",
+                        "description": "Deprecated. See `supplementalInfo.deposit`.",
+                        "deprecated": true
+                      },
+                      "nameTranslations": {
+                        "type": "object",
+                        "description": "Translation of an item name with language codes as keys (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-translations\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "productType": {
+                        "type": "integer",
+                        "description": "PRODUCT = `1`, MODIFIER = `2`, MODIFIER GROUP = `3`.",
+                        "enum": [
+                          1,
+                          2,
+                          3
+                        ]
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Item description."
+                      },
+                      "descriptionTranslations": {
+                        "type": "object",
+                        "description": "Translation of the item description with language codes as keys (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-translations\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "deliveryTax": {
+                        "type": "integer",
+                        "description": "Sales tax specific on order type of 'Delivery' for the item. Tax rates are always stored as an int with 3 decimal digits, e.g. 5% would be sent as `5000`."
+                      },
+                      "takeawayTax": {
+                        "type": "integer",
+                        "description": "Sales tax specific on order type of 'Takeaway' for the item. Tax rates are always sent as an int with 3 decimal digits, e.g. 5% would be sent as `5000`."
+                      },
+                      "eatInTax": {
+                        "type": "integer",
+                        "description": "Sales tax specific on order type of 'Eat-in' for the item. Tax rates are always sent as an int with 3 decimal digits, e.g. 5% would be sent as `5000`."
+                      },
+                      "max": {
+                        "type": "integer",
+                        "description": "Maximum number of items under a group to be purchased."
+                      },
+                      "min": {
+                        "type": "integer",
+                        "description": "Minimum number of items under a group to be purchased."
+                      },
+                      "multiMax": {
+                        "type": "integer",
+                        "description": "Maximum quantity of any single item which can be purchased within a group (modifier group). Also applicable to products, where it should control how many items can be added to a basket, e.g. Paracetamol."
+                      },
+                      "defaultQuantity": {
+                        "type": "integer",
+                        "description": "Controls the behaviour of 'pre-selected' items, where a quantity >0 should be automatically selected (typically '1'); higher default quantities can also be set."
+                      },
+                      "multiply": {
+                        "type": "integer",
+                        "description": "Used in a modifier group to show this product multiple times in the GUI; `1` means one entry (so no copies)."
+                      },
+                      "isCombo": {
+                        "type": "boolean",
+                        "description": "Indicates if a product is a combo item/meal deal."
+                      },
+                      "isVariant": {
+                        "type": "boolean",
+                        "description": "Applicable to a **product** to indicate if it is a variant or not (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-variants\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "isVariantGroup": {
+                        "type": "boolean",
+                        "description": "Applicable to a **modifier group** to indicate if it is a variant or not (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-variants\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                      },
+                      "snoozed": {
+                        "type": "boolean",
+                        "description": "Indicates whether an item is snoozed at the point of a menu being published."
+                      },
+                      "visible": {
+                        "type": "boolean",
+                        "description": "Deprecated. The value will always be set to `true` as disabled items won't appear in the menu payload.",
+                        "deprecated": true
+                      },
+                      "productTags": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        },
+                        "description": "All tags which apply to this item, see complete list <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-product-metadata\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>."
+                      },
+                      "account": {
+                        "type": "string",
+                        "description": "Unique customer account ID where the item is stored."
+                      },
+                      "referenceId": {
+                        "type": "string",
+                        "description": "The original PLU of the item, only for tracking sales, e.g. for loyalty purposes. Not to be included in the payload for order creation."
+                      },
+                      "location": {
+                        "type": "string",
+                        "description": "Unique customer location ID where the item is stored."
+                      },
+                      "capacityUsages": {
+                        "type": "array",
+                        "items": {},
+                        "description": "Deprecated.",
+                        "deprecated": true
+                      },
+                      "isUpsell": {
+                        "type": "boolean",
+                        "description": "Indicates if the **modifier group** is an Upsell group."
+                      },
+                      "subProducts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "List of items belonging to the group."
+                      },
+                      "beverageInfo": {
+                        "type": "object",
+                        "description": "Information specific to beverages.",
+                        "properties": {
+                          "caffeine": {
+                            "type": "integer",
+                            "description": "Expressed in mg."
+                          },
+                          "alcohol": {
+                            "type": "integer",
+                            "description": "Expressed in mg."
+                          }
+                        }
+                      },
+                      "calories": {
+                        "type": "integer",
+                        "description": "Expressed in kcal / Cals."
+                      },
+                      "caloriesRangeHigh": {
+                        "type": "integer",
+                        "description": "If a range is supported, the minimum is `calories` and maximum is `caloriesRangeHigh`."
+                      },
+                      "nutritionalInfo": {
+                        "type": "object",
+                        "description": "Expressed in grams, e.g. `fat`, `sugar`, `saturatedFat`, `carbohydrates`, `protein`, `salt`, etc (see this section of the product guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-product-metadata\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>).",
+                        "properties": {
+                          "servingSize": {
+                            "type": "object",
+                            "description": "Details of a serving size.",
+                            "properties": {
+                              "amount": {
+                                "type": "integer",
+                                "description": "The serving size amount."
+                              },
+                              "unitType": {
+                                "type": "integer",
+                                "description": "What the serving size unit type is; Weight (in grams) = `1`, Volume (in milliliter) = `2`, Count (i.e., piece, slice, capsule, cookie, etc) = `3`.",
+                                "enum": [
+                                  1,
+                                  2,
+                                  3
+                                ]
+                              },
+                              "countUnitDescription": {
+                                "type": "string",
+                                "description": "The serving size unit description."
+                              }
+                            }
+                          },
+                          "netQuantity": {
+                            "type": "object",
+                            "description": "Details on quantity.",
+                            "properties": {
+                              "amount": {
+                                "type": "integer",
+                                "description": "The net quantity amount."
+                              },
+                              "unitType": {
+                                "type": "integer",
+                                "description": "What the net quantity unit type is; Weight (in grams) = `1`, Volume (in milliliter) = `2`, Count (i.e., piece, slice, capsule, cookie, etc) = `3`.",
+                                "enum": [
+                                  1,
+                                  2,
+                                  3
+                                ]
+                              },
+                              "countUnitDescription": {
+                                "type": "string",
+                                "description": "The net quantity unit description."
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "packaging": {
+                        "type": "object",
+                        "description": "Details on the packaging.",
+                        "properties": {
+                          "count": {
+                            "type": "integer",
+                            "description": "Quantity of packaging."
+                          },
+                          "reusable": {
+                            "type": "boolean",
+                            "description": "Whether packaging is re-usable or not."
+                          },
+                          "storageInstructions": {
+                            "type": "string",
+                            "description": "Instructions for storage."
+                          }
+                        }
+                      },
+                      "supplementalInfo": {
+                        "type": "object",
+                        "description": "Additional information about an item, for more information see <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-handle-product-metadata\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
+                        "properties": {
+                          "legalName": {
+                            "type": "string",
+                            "description": "Legal name of the item."
+                          },
+                          "instructionsForUse": {
+                            "type": "string",
+                            "description": "Any specific instructions for use."
+                          },
+                          "ingredients": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Array of ingredients."
+                          },
+                          "additives": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Array of additives."
+                          },
+                          "prepackaged": {
+                            "type": "boolean",
+                            "description": "Specifies whether the item is prepackaged."
+                          },
+                          "deposit": {
+                            "type": "integer",
+                            "description": "In certain regions a deposit is required for e.g. bottled drinks; this will be included in the price, yet the deposit should be clearly displayed to the consumer. Deposit expressed to 2 decimal digits, e.g. 1 euro is stored as 100 (see guide <a href=\"https://developers.deliverect.com/v3.0-ordering-experience/docs/how-to-set-bottle-deposits\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>)."
+                          },
+                          "fbo": {
+                            "type": "object",
+                            "description": "Details of the food business operator.",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "description": "Food business operator name."
+                              },
+                              "address": {
+                                "type": "string",
+                                "description": "Food business operator address."
+                              },
+                              "brand": {
+                                "type": "string",
+                                "description": "Food business operator brand name."
+                              },
+                              "countryOfOrigin": {
+                                "type": "string",
+                                "description": "Food business operator country of origin."
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "parentId": {
+                        "type": "string",
+                        "description": "Deprecated. Follow each `subProducts` array recursively from the top level down to determine nesting. `parentId` is legacy and shouldn't be used.",
+                        "deprecated": true
+                      },
+                      "posCategoryIds": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "The POS ID of the category this product belongs to in the POS."
+                      },
+                      "posProductCategoryId": {
+                        "type": "string",
+                        "description": "The ID of this product in the POS, internal to POS, not to be used when creating orders."
+                      },
+                      "posProductId": {
+                        "type": "string",
+                        "description": "The ID of this product in the POS, internal to POS, not to be used when creating orders."
+                      },
+                      "subProductSortOrder": {
+                        "type": "string",
+                        "description": "A list of product PLUs belonging to this product that preserves the order of these sub-products."
+                      },
+                      "metadata": {
+                        "type": "array",
+                        "description": "A list of custom key/value pairings added to product data, e.g. `\"metadata\": [{\"key\": \"highlight\", \"value\": \"true\"}]`.",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "key": {
+                              "type": "string"
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "displayLabels": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "List of labels for marketing purposes applied to products, e.g. `{\"displayLabels\": [\"new\", \"popular\"]}`."
+                      }
+                    }
+                  },
+                  "snoozedProducts": {
+                    "type": "object",
+                    "description": "PLUs of products and modifiers that are currently snoozed and should be unavailable on the menu, keyed by a unique snooze reference.",
+                    "properties": {
+                      "location": {
+                        "type": "string",
+                        "description": "Deliverect location ID where the item is snoozed."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Item name."
+                      },
+                      "plu": {
+                        "type": "string",
+                        "description": "Item reference."
+                      },
+                      "snoozeStart": {
+                        "type": "string",
+                        "description": "Timestamp in UTC when snooze begins, format `yyyy-MM-dd HH:mm:ss.SSSSSSZ`."
+                      },
+                      "snoozeEnd": {
+                        "type": "string",
+                        "description": "Timestamp in UTC when snooze ends, format `yyyy-MM-dd HH:mm:ss.SSSSSSZ`."
+                      }
+                    }
+                  },
+                  "validations": {
+                    "type": "array",
+                    "items": {},
+                    "description": "Deprecated.",
+                    "deprecated": true
+                  },
+                  "bundles": {
+                    "type": "object",
+                    "deprecated": true
+                  }
+                }
+              },
+              "examples": {
+                "Menu Example": {
+                  "summary": "Menu Example",
+                  "value": {
+                    "availabilities": [
+                      {
+                        "dayOfWeek": 1,
+                        "endTime": "17:00",
+                        "startTime": "09:00"
+                      },
+                      {
+                        "dayOfWeek": 2,
+                        "endTime": "17:00",
+                        "startTime": "09:00"
+                      },
+                      {
+                        "dayOfWeek": 3,
+                        "endTime": "17:00",
+                        "startTime": "09:00"
+                      },
+                      {
+                        "dayOfWeek": 4,
+                        "endTime": "17:00",
+                        "startTime": "09:00"
+                      },
+                      {
+                        "dayOfWeek": 5,
+                        "endTime": "17:00",
+                        "startTime": "09:00"
+                      },
+                      {
+                        "dayOfWeek": 6,
+                        "endTime": "17:00",
+                        "startTime": "09:00"
+                      },
+                      {
+                        "dayOfWeek": 6,
+                        "endTime": "22:00",
+                        "startTime": "19:00"
+                      },
+                      {
+                        "dayOfWeek": 7,
+                        "endTime": "17:00",
+                        "startTime": "09:00"
+                      }
+                    ],
+                    "bundles": {},
+                    "categories": [
+                      {
+                        "_id": "65********************87",
+                        "name": "Steaks",
+                        "description": "",
+                        "descriptionTranslations": {},
+                        "nameTranslations": {},
+                        "account": "62********************f1",
+                        "posLocationId": "",
+                        "posCategoryType": "",
+                        "posCategoryId": "",
+                        "imageUrl": "",
+                        "subCategories": [],
+                        "products": [],
+                        "availabilities": [],
+                        "level": 1,
+                        "menu": "65********************79",
+                        "sortedChannelProductIds": [],
+                        "subProducts": [
+                          "65********************30"
+                        ],
+                        "subProductSortOrder": []
+                      }
+                    ],
+                    "channelLinkId": "65********************7f",
+                    "currency": 3,
+                    "description": "",
+                    "descriptionTranslations": {
+                      "fr": "Un exemple de menu de diffu00e9rentes configurations de produits, profitez-enu00a0!"
+                    },
+                    "menu": "Example Menu",
+                    "menuId": "65********************79",
+                    "menuImageURL": "",
+                    "menuType": 0,
+                    "modifierGroups": {
+                      "65********************31": {
+                        "_id": "65********************31",
+                        "name": "Cooking instructions",
+                        "description": "",
+                        "descriptionTranslations": {},
+                        "nameTranslations": {
+                          "es": "Cocinado",
+                          "fr": "Cuisson"
+                        },
+                        "account": "62********************f1",
+                        "capacityUsages": [],
+                        "deliveryTax": 9000,
+                        "eatInTax": 9000,
+                        "takeawayTax": 9000,
+                        "location": "65********************32",
+                        "max": 1,
+                        "min": 1,
+                        "multiply": 1,
+                        "plu": "MOD-01",
+                        "posCategoryIds": [],
+                        "posProductCategoryId": "",
+                        "posProductId": "",
+                        "productTags": [],
+                        "productType": 3,
+                        "subProducts": [
+                          "65********************32",
+                          "65********************33"
+                        ],
+                        "parentId": "65********************30",
+                        "snoozed": false,
+                        "subProductSortOrder": []
+                      }
+                    },
+                    "modifiers": {
+                      "65********************32": {
+                        "_id": "65********************32",
+                        "name": "Rare",
+                        "description": "",
+                        "descriptionTranslations": {},
+                        "nameTranslations": {
+                          "es": "Poco hecho",
+                          "fr": "Saignant"
+                        },
+                        "account": "62********************f1",
+                        "capacityUsages": [],
+                        "deliveryTax": 9000,
+                        "eatInTax": 9000,
+                        "takeawayTax": 9000,
+                        "location": "65********************32",
+                        "max": 0,
+                        "min": 0,
+                        "multiply": 1,
+                        "plu": "COOK-01",
+                        "posCategoryIds": [],
+                        "posProductCategoryId": "",
+                        "posProductId": "",
+                        "price": 0,
+                        "productTags": [],
+                        "productType": 2,
+                        "subProducts": [],
+                        "parentId": "65********************31",
+                        "snoozed": false,
+                        "subProductSortOrder": []
+                      },
+                      "65********************34": {
+                        "_id": "65********************34",
+                        "name": "Well Done",
+                        "description": "",
+                        "descriptionTranslations": {},
+                        "nameTranslations": {
+                          "es": "Muy hecho",
+                          "fr": "Bien cuit"
+                        },
+                        "account": "62********************f1",
+                        "capacityUsages": [],
+                        "deliveryTax": 9000,
+                        "eatInTax": 9000,
+                        "takeawayTax": 9000,
+                        "location": "65********************32",
+                        "max": 0,
+                        "min": 0,
+                        "multiply": 1,
+                        "plu": "COOK-03",
+                        "posCategoryIds": [],
+                        "posProductCategoryId": "",
+                        "posProductId": "",
+                        "price": 0,
+                        "productTags": [],
+                        "productType": 2,
+                        "subProducts": [],
+                        "parentId": "65********************31",
+                        "snoozed": false,
+                        "subProductSortOrder": []
+                      }
+                    },
+                    "menuTranslations": {
+                      "fr": "Exemple de Menu"
+                    },
+                    "nestedModifiers": true,
+                    "products": {
+                      "65********************30": {
+                        "_id": "65********************30",
+                        "name": "Delicious Steak and Frites ud83dude0b",
+                        "description": "",
+                        "descriptionTranslations": {
+                          "fr": "Exemple de produit de base avec - groupes de modificateurs - variables min/max - su00e9lection par du00e9faut - traductions"
+                        },
+                        "nameTranslations": {
+                          "es": "Deliciosos Bistecs Fritos",
+                          "fr": "Steak Frites Du00e9licieux"
+                        },
+                        "account": "62********************f1",
+                        "capacityUsages": [],
+                        "deliveryTax": 9000,
+                        "eatInTax": 9000,
+                        "takeawayTax": 9000,
+                        "imageUrl": "",
+                        "location": "65********************32",
+                        "max": 0,
+                        "min": 0,
+                        "multiply": 1,
+                        "plu": "STK-01",
+                        "posCategoryIds": [],
+                        "posProductCategoryId": "",
+                        "posProductId": "",
+                        "price": 1500,
+                        "productTags": [],
+                        "productType": 1,
+                        "subProducts": [
+                          "65********************31",
+                          "65********************35"
+                        ],
+                        "parentId": "65********************87",
+                        "snoozed": false,
+                        "subProductSortOrder": [],
+                        "referenceId": "STK-01"
+                      }
+                    },
+                    "productTags": [
+                      104,
+                      108
+                    ],
+                    "snoozedProducts": {},
+                    "validations": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/channel/oauth/authorize?client_id={integration_id}&state={state_id}&redirect_uri={redirect_uri}&response_type={response_type}&metadata={metadata}": {
+      "post": {
+        "summary": "Oauth flow",
+        "description": "",
+        "operationId": "channel_oauth_authorize?client_id=integration_id&state=state_id&redirect_uri=redirect_uri&response_type=response_type&metadata=metadata",
+        "parameters": [
+          {
+            "name": "integration_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "state_id",
+            "in": "path",
+            "description": "The state parameter protects against XSRF attacks",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "redirect_uri",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "response_type",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "metadata",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "client_id",
+                  "client_secret",
+                  "code",
+                  "grant_type"
+                ],
+                "properties": {
+                  "client_id": {
+                    "type": "string"
+                  },
+                  "client_secret": {
+                    "type": "string"
+                  },
+                  "code": {
+                    "type": "string"
+                  },
+                  "grant_type": {
+                    "type": "string",
+                    "default": "authorization_code"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "access_token": "",
+                      "refresh_token": "",
+                      "token_type": "",
+                      "expires_in": 10,
+                      "refresh_token_expires_in": 10,
+                      "scope": "venue orders"
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "refresh_token": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "example": 10,
+                      "default": 0
+                    },
+                    "refresh_token_expires_in": {
+                      "type": "integer",
+                      "example": 10,
+                      "default": 0
+                    },
+                    "scope": {
+                      "type": "string",
+                      "example": "venue orders"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"error\": \"access_denied\",\n    \"error_description\": \"Unauthorized\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "access_denied"
+                    },
+                    "error_description": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/channel/snooze": {
+      "post": {
+        "summary": "Snooze / Unsnooze Products",
+        "operationId": "channel_snooze",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "accountId",
+                  "locationId",
+                  "channelLinkId",
+                  "operations"
+                ],
+                "properties": {
+                  "accountId": {
+                    "type": "string",
+                    "description": "ID of the customer account."
+                  },
+                  "locationId": {
+                    "type": "string",
+                    "description": "ID of a location in the customer account."
+                  },
+                  "channelLinkId": {
+                    "type": "string",
+                    "description": "Unique ID of the store on the channel platform."
+                  },
+                  "operations": {
+                    "type": "array",
+                    "minItems": 1,
+                    "description": "Snooze or unsnooze operations to apply.",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "action",
+                        "data"
+                      ],
+                      "properties": {
+                        "action": {
+                          "type": "string",
+                          "enum": [
+                            "snooze",
+                            "unsnooze"
+                          ],
+                          "description": "Action to apply to the listed items."
+                        },
+                        "data": {
+                          "type": "object",
+                          "required": [
+                            "items",
+                            "allSnoozedItems"
+                          ],
+                          "properties": {
+                            "items": {
+                              "type": "array",
+                              "description": "Items affected by this operation.",
+                              "items": {
+                                "type": "object",
+                                "required": [
+                                  "plu",
+                                  "snoozeStart",
+                                  "snoozeEnd"
+                                ],
+                                "properties": {
+                                  "plu": {
+                                    "type": "string",
+                                    "description": "Product lookup code (PLU) for the item."
+                                  },
+                                  "snoozeStart": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "description": "UTC timestamp at which the snooze period starts."
+                                  },
+                                  "snoozeEnd": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "description": "UTC timestamp at which the snooze period ends."
+                                  }
+                                }
+                              }
+                            },
+                            "allSnoozedItems": {
+                              "type": "array",
+                              "description": "Complete list of items that should currently be snoozed.",
+                              "items": {
+                                "type": "object",
+                                "required": [
+                                  "plu",
+                                  "snoozeStart",
+                                  "snoozeEnd"
+                                ],
+                                "properties": {
+                                  "plu": {
+                                    "type": "string",
+                                    "description": "Product lookup code (PLU) for the item."
+                                  },
+                                  "snoozeStart": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "description": "UTC timestamp at which the snooze period starts."
+                                  },
+                                  "snoozeEnd": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "description": "UTC timestamp at which the snooze period ends."
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Unsooze Request": {
+                  "summary": "Unsooze Request",
+                  "value": {
+                    "accountId": "5b********************d4",
+                    "locationId": "5c********************b8",
+                    "channelLinkId": "5e********************9b",
+                    "operations": [
+                      {
+                        "action": "unsnooze",
+                        "data": {
+                          "items": [
+                            {
+                              "plu": "PIE1",
+                              "snoozeStart": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                              "snoozeEnd": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                            },
+                            {
+                              "plu": "MSB1",
+                              "snoozeStart": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                              "snoozeEnd": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                            }
+                          ],
+                          "allSnoozedItems": []
+                        }
+                      }
+                    ]
+                  }
+                },
+                "Snooze Request": {
+                  "summary": "Snooze Request",
+                  "value": {
+                    "accountId": "5b********************d4",
+                    "locationId": "5c********************b8",
+                    "channelLinkId": "5e********************9b",
+                    "operations": [
+                      {
+                        "action": "snooze",
+                        "data": {
+                          "items": [
+                            {
+                              "plu": "PIE1",
+                              "snoozeStart": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                              "snoozeEnd": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                            },
+                            {
+                              "plu": "MSB1",
+                              "snoozeStart": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                              "snoozeEnd": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                            }
+                          ],
+                          "allSnoozedItems": []
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200 OK",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "application/json",
+            "schema": {
+              "type": "string",
+              "default": "application/json"
+            }
+          },
+          {
+            "name": "User-Agent",
+            "in": "header",
+            "description": "Deliverect/{version}",
+            "schema": {
+              "type": "string",
+              "default": "Deliverect/{version}"
+            }
+          },
+          {
+            "name": "X-Server-Authorization-HMAC-SHA256",
+            "in": "header",
+            "description": "{signature}",
+            "schema": {
+              "type": "string",
+              "default": "{signature}"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

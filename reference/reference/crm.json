@@ -1,0 +1,3548 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "CRM API",
+    "description": " Our CRM API provides comprehensive customer management and order history capabilities",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.staging.deliverect.com"
+    }
+  ],
+  "security": [
+    {
+      "oauth2ClientCredentials": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "oauth2ClientCredentials": {
+        "type": "oauth2",
+        "description": "Obtain an access token using the partner client ID and client secret. Send the returned token with each API request in the Authorization header as a Bearer token.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/oauth/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true,
+    "oauth-options": {
+      "useInsecureClientAuthentication": true
+    }
+  },
+  "x-readme-fauxas": true,
+  "paths": {
+    "/crm/{accountId}/customers/{crmProfileId}/favorites": {
+      "patch": {
+        "description": "Update a customer's favorites",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "crmProfileId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "externalId": "62********************1o",
+                      "loyaltyProviderId": "VjaGFuZ0B0cm9",
+                      "deliveryAddresses": [
+                        {
+                          "street": "Main Street",
+                          "subpremise": "Unit 210",
+                          "area": "Irvine Business Complex",
+                          "city": "Irvine",
+                          "postalCode": "92614",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            40.6456946,
+                            -73.9143276
+                          ],
+                          "id": "62********************6a",
+                          "default": true
+                        },
+                        {
+                          "street": "5678 Ocean View Drive",
+                          "subpremise": "Suite 12",
+                          "area": "Pacific Beach",
+                          "city": "San Diego",
+                          "postalCode": "92109",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            40.6456946,
+                            -73.9143276
+                          ],
+                          "id": "62********************6w",
+                          "default": false
+                        }
+                      ],
+                      "billingAddress": {
+                        "subpremise": null,
+                        "street": "9480 Talbert and Bushard Street",
+                        "area": "Downtown Fountain Valley",
+                        "city": "Fountain Valley",
+                        "postalCode": "92708",
+                        "stateOrProvince": "CA",
+                        "country": "US",
+                        "coordinates": [
+                          40.6456946,
+                          -73.9143276
+                        ]
+                      },
+                      "metadata": {},
+                      "vehicles": [
+                        {
+                          "id": "62********************6z",
+                          "make": "honda",
+                          "model": "civic",
+                          "color": "yellow",
+                          "default": true
+                        },
+                        {
+                          "id": "62********************6b",
+                          "make": "toyota",
+                          "model": "corolla",
+                          "color": "blue",
+                          "default": false
+                        }
+                      ],
+                      "id": "62********************6m",
+                      "accountId": "62********************6e",
+                      "channel": 19066,
+                      "created": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "updated": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "contact": {
+                        "email": "email@email.com",
+                        "firstName": "John",
+                        "lastName": "Doe",
+                        "phone": "+14048888666",
+                        "birthdate": "1970-01-01T00:00:00",
+                        "fullName": "John Doe"
+                      },
+                      "favorites": [
+                        {
+                          "type": "order",
+                          "orderId": "62********************3x",
+                          "label": "My favorite order"
+                        },
+                        {
+                          "type": "order",
+                          "orderId": "62********************3y",
+                          "label": "My 2nd favorite order"
+                        },
+                        {
+                          "type": "item",
+                          "item": "1234"
+                        },
+                        {
+                          "type": "item",
+                          "item": "ABC"
+                        },
+                        {
+                          "type": "store",
+                          "storeId": "62********************2e"
+                        },
+                        {
+                          "type": "store",
+                          "storeId": "62********************2f"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "{id}"
+                    },
+                    "accountId": {
+                      "type": "string",
+                      "example": "{accountId}"
+                    },
+                    "channel": {
+                      "type": "string",
+                      "example": "{channel}"
+                    },
+                    "created": {
+                      "type": "string",
+                      "example": "{created}"
+                    },
+                    "updated": {
+                      "type": "string",
+                      "example": "{updated}"
+                    },
+                    "contact": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "example": "{crmEmail}"
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "example": "{crmFirstName}"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "example": "{crmLastName}"
+                        },
+                        "fullName": {
+                          "type": "string",
+                          "example": "{crmFullName}"
+                        },
+                        "phone": {
+                          "type": "string",
+                          "example": "{crmPhone}"
+                        },
+                        "birthdate": {
+                          "type": "string",
+                          "example": "{crmProfileBirthDate}"
+                        }
+                      }
+                    },
+                    "externalId": {
+                      "type": "string",
+                      "example": "{externalId}"
+                    },
+                    "loyaltyProviderId": {
+                      "type": "string",
+                      "example": "{loyaltyProviderId}"
+                    },
+                    "deliveryAddress": {
+                      "type": "object",
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "example": "{countryCode}"
+                        },
+                        "stateOrProvince": {
+                          "type": "string",
+                          "example": "{stateOrProvince}"
+                        },
+                        "city": {
+                          "type": "string",
+                          "example": "{city}"
+                        },
+                        "streetName": {
+                          "type": "string",
+                          "example": "{streetName}"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "example": "{postalCode}"
+                        },
+                        "houseNumber": {
+                          "type": "string",
+                          "example": "{houseNumber}"
+                        }
+                      }
+                    },
+                    "billingAddress": {
+                      "type": "object",
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "example": "{countryCode}"
+                        },
+                        "stateOrProvince": {
+                          "type": "string",
+                          "example": "{stateOrProvince}"
+                        },
+                        "city": {
+                          "type": "string",
+                          "example": "{city}"
+                        },
+                        "streetName": {
+                          "type": "string",
+                          "example": "{streetName}"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "example": "{postalCode}"
+                        },
+                        "houseNumber": {
+                          "type": "string",
+                          "example": "{houseNumber}"
+                        }
+                      }
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "vehicle": {
+                          "type": "object",
+                          "properties": {
+                            "make": {
+                              "type": "string",
+                              "example": "{vehicleMake}"
+                            },
+                            "model": {
+                              "type": "string",
+                              "example": "{vehicleModel}"
+                            },
+                            "color": {
+                              "type": "string",
+                              "example": "{vehicleColor}"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "favorites": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order"
+                          },
+                          "orderIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "example": "{orderId}"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Deliverect"
+        ],
+        "summary": "Update Customer Favorites",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "item",
+                        "order",
+                        "store"
+                      ]
+                    },
+                    "orderId/item/storeId": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "orderId/item/storeId",
+                    "type"
+                  ]
+                }
+              },
+              "examples": {
+                "Customer Example": {
+                  "summary": "Customer Example",
+                  "value": [
+                    {
+                      "type": "order",
+                      "orderId": "78********************45",
+                      "label": "My favorite order"
+                    },
+                    {
+                      "type": "item",
+                      "item": "PLU-1"
+                    },
+                    {
+                      "type": "order",
+                      "orderId": "88********************47"
+                    },
+                    {
+                      "type": "store",
+                      "storeId": "65********************88"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "patch_crm-accountid-customers-crmprofileid-favorites"
+      }
+    },
+    "/crm/{accountId}/customers/{crmProfileId}/orders/favorites": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "id": "698**************066",
+                      "crmProfileId": "698**************4e9",
+                      "orderId": "698**************e6f",
+                      "accountId": "68d**************bdd",
+                      "channel": 20000,
+                      "payment": {
+                        "amount": {
+                          "value": 3100,
+                          "currency": "EUR",
+                          "display": "31.00"
+                        }
+                      },
+                      "orderDisplayId": "DISPLAY**************156c",
+                      "orderDate": "2026-02-12T15:23:25.967000Z",
+                      "orderType": 3,
+                      "itemQuantity": 1,
+                      "locationId": "68d**************5a9"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "crmProfileId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "oauth2ClientCredentials": []
+          }
+        ],
+        "summary": "Customer Favorite Orders",
+        "tags": [
+          "Deliverect"
+        ],
+        "operationId": "get_crm-accountid-customers-crmprofileid-orders-favorites"
+      }
+    },
+    "/crm/{accountId}/customers/{crmProfileId}/vehicles": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "crmProfileId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "make": {
+                      "type": "string"
+                    },
+                    "model": {
+                      "type": "string"
+                    },
+                    "color": {
+                      "type": "string"
+                    },
+                    "default": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Vehicle Example": {
+                  "summary": "Vehicle Example",
+                  "value": [
+                    {
+                      "make": "Volkswagen",
+                      "model": "Beetle",
+                      "color": "Yellow",
+                      "default": true
+                    },
+                    {
+                      "make": "Audi",
+                      "model": "TT",
+                      "color": "Black",
+                      "default": false
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "externalId": "f965248c-3a00",
+                      "loyaltyProviderId": "VjaG***0cm9",
+                      "deliveryAddresses": [
+                        {
+                          "street": "Main Street",
+                          "subpremise": "Unit 210",
+                          "area": "Irvine Business Complex",
+                          "city": "Irvine",
+                          "postalCode": "92614",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            33.674,
+                            -117.838
+                          ],
+                          "id": "61********************b1",
+                          "default": true
+                        },
+                        {
+                          "street": "5678 Ocean View Drive",
+                          "subpremise": "Apt 5B",
+                          "area": "Pacific Beach",
+                          "city": "San Diego",
+                          "postalCode": "92109",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            32.8,
+                            -117.25
+                          ],
+                          "id": "61********************b2",
+                          "default": false
+                        }
+                      ],
+                      "billingAddress": {
+                        "street": "9480 Talbert and Bushard Street",
+                        "subpremise": "Suite 12",
+                        "area": "Downtown Fountain Valley",
+                        "city": "Fountain Valley",
+                        "postalCode": "92708",
+                        "stateOrProvince": "CA",
+                        "country": "US",
+                        "coordinates": [
+                          33.709,
+                          -117.953
+                        ]
+                      },
+                      "metadata": {},
+                      "vehicles": [
+                        {
+                          "id": "62********************5m",
+                          "make": "volkswagen",
+                          "model": "beetle",
+                          "color": "yellow",
+                          "default": true
+                        },
+                        {
+                          "id": "62********************6t",
+                          "make": "audi",
+                          "model": "tt",
+                          "color": "black",
+                          "default": false
+                        }
+                      ],
+                      "id": "62********************7c",
+                      "accountId": "62********************3c",
+                      "channel": 10000,
+                      "created": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "updated": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "contact": {
+                        "email": "email@email.com",
+                        "firstName": "John",
+                        "lastName": "Doe",
+                        "phone": "+14048091678",
+                        "birthdate": "1970-01-01T00:00:00Z",
+                        "fullName": "John Doe"
+                      },
+                      "favorites": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Deliverect"
+        ],
+        "summary": "Update Customer Vehicles",
+        "operationId": "patch_crm-accountid-customers-crmprofileid-vehicles"
+      }
+    },
+    "/crm/{accountId}/customers/{crmProfileId}/deliveryAddresses": {
+      "patch": {
+        "description": "Update the addresses stored on a customer's profile",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "crmProfileId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "country": {
+                      "type": "string"
+                    },
+                    "stateOrProvince": {
+                      "type": "string"
+                    },
+                    "street": {
+                      "type": "string"
+                    },
+                    "postalCode": {
+                      "type": "string"
+                    },
+                    "subpremise": {
+                      "type": "string"
+                    },
+                    "area": {
+                      "type": "string"
+                    },
+                    "coordinates": {
+                      "type": "array",
+                      "items": {
+                        "type": "number",
+                        "format": "float"
+                      }
+                    },
+                    "default": {
+                      "type": "boolean"
+                    },
+                    "city": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Addresses Example": {
+                  "summary": "Addresses Example",
+                  "value": [
+                    {
+                      "country": "US",
+                      "stateOrProvince": "NY",
+                      "city": "Brooklyn",
+                      "street": "8719 Avenue D",
+                      "subPremise": "",
+                      "area": "",
+                      "postalCode": "11236",
+                      "coordinates": [
+                        40.6456946,
+                        -73.9143276
+                      ],
+                      "default": true
+                    },
+                    {
+                      "street": "5678 Ocean View Drive",
+                      "subPremise": "Apt 5B",
+                      "area": "Pacific Beach",
+                      "city": "San Diego",
+                      "stateOrProvince": "CA",
+                      "postalCode": "92109",
+                      "country": "US",
+                      "coordinates": [
+                        40.6456946,
+                        -73.9143276
+                      ],
+                      "default": false
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "externalId": "62********************1o",
+                      "loyaltyProviderId": "VjaGFuZ0B0cm9",
+                      "deliveryAddresses": [
+                        {
+                          "street": "8719 Avenue D",
+                          "subpremise": "Unit 210",
+                          "area": "",
+                          "city": "Brooklyn",
+                          "postalCode": "11236",
+                          "stateOrProvince": "NY",
+                          "country": "US",
+                          "coordinates": [
+                            40.6456946,
+                            -73.9143276
+                          ],
+                          "id": "62********************6y",
+                          "default": true
+                        },
+                        {
+                          "street": "5678 Ocean View Drive",
+                          "subpremise": "Apt 5B",
+                          "area": "Pacific Beach",
+                          "city": "San Diego",
+                          "postalCode": "92109",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            40.6456946,
+                            -73.9143276
+                          ],
+                          "id": "62********************8p",
+                          "default": false
+                        }
+                      ],
+                      "billingAddress": {
+                        "street": "9480 Talbert and Bushard Street",
+                        "subpremise": "Suite 12",
+                        "area": "Downtown Fountain Valley",
+                        "city": "Fountain Valley",
+                        "postalCode": "92708",
+                        "stateOrProvince": "CA",
+                        "country": "US",
+                        "coordinates": [
+                          40.6456946,
+                          -73.9143276
+                        ]
+                      },
+                      "metadata": {},
+                      "vehicles": [
+                        {
+                          "id": "62********************8s",
+                          "make": "honda",
+                          "model": "civic",
+                          "color": "yellow",
+                          "default": true
+                        },
+                        {
+                          "id": "62********************84",
+                          "make": "toyota",
+                          "model": "corolla",
+                          "color": "blue",
+                          "default": false
+                        }
+                      ],
+                      "id": "62********************6y",
+                      "accountId": "62********************5n",
+                      "channel": 10000,
+                      "created": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "updated": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "contact": {
+                        "email": "email@email.com",
+                        "firstName": "John",
+                        "lastName": "Doe",
+                        "phone": "+14048555666",
+                        "birthdate": "1970-01-01T00:00:00Z",
+                        "fullName": "Eugene Chang"
+                      },
+                      "favorites": [
+                        {
+                          "type": "order",
+                          "orderId": "69d936f77da4b464d9e1b1ac",
+                          "label": "My favorite order"
+                        },
+                        {
+                          "type": "order",
+                          "orderId": "62********************2h",
+                          "label": "My 2nd favorite order"
+                        },
+                        {
+                          "type": "item",
+                          "item": "655298781"
+                        },
+                        {
+                          "type": "item",
+                          "item": "654133498"
+                        },
+                        {
+                          "type": "store",
+                          "storeId": "62********************8m"
+                        },
+                        {
+                          "type": "store",
+                          "storeId": "62********************5v"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Deliverect"
+        ],
+        "summary": "Update Customer Delivery Addresses",
+        "operationId": "patch_crm-accountid-customers-crmprofileid-deliveryaddresses"
+      }
+    },
+    "/crm/{accountId}/customers/{crmProfileId}": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "crmProfileId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contact": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string"
+                      },
+                      "firstName": {
+                        "type": "string"
+                      },
+                      "lastName": {
+                        "type": "string"
+                      },
+                      "birthdate": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "externalId": {
+                    "type": "string"
+                  },
+                  "loyaltyProviderId": {
+                    "type": "string"
+                  },
+                  "deliveryAddresses": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "street": {
+                          "type": "string"
+                        },
+                        "subpremise": {
+                          "type": "string"
+                        },
+                        "city": {
+                          "type": "string"
+                        },
+                        "stateOrProvince": {
+                          "type": "string"
+                        },
+                        "postalCode": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string"
+                        },
+                        "default": {
+                          "type": "boolean"
+                        },
+                        "area": {
+                          "type": "string"
+                        },
+                        "coordinates": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "billingAddress": {
+                    "type": "object",
+                    "properties": {
+                      "street": {
+                        "type": "string"
+                      },
+                      "subpremise": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "stateOrProvince": {
+                        "type": "string"
+                      },
+                      "postalCode": {
+                        "type": "string"
+                      },
+                      "country": {
+                        "type": "string"
+                      },
+                      "area": {
+                        "type": "string"
+                      },
+                      "coordinates": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "vehicles": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "make": {
+                          "type": "string"
+                        },
+                        "model": {
+                          "type": "string"
+                        },
+                        "color": {
+                          "type": "string"
+                        },
+                        "default": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Example": {
+                  "summary": "Example",
+                  "value": {
+                    "externalId": "62********************1o",
+                    "loyaltyProviderId": "VjaGFuZ0B0cm9",
+                    "deliveryAddresses": [
+                      {
+                        "street": "Main Street",
+                        "subPremise": "Unit 210",
+                        "area": "Irvine Business Complex",
+                        "city": "Irvine",
+                        "stateOrProvince": "CA",
+                        "postalCode": "92614",
+                        "country": "US",
+                        "coordinates": [
+                          40.6456946,
+                          -73.9143276
+                        ],
+                        "default": true
+                      },
+                      {
+                        "street": "5678 Ocean View Drive",
+                        "subPremise": "Apt 5B",
+                        "area": "Pacific Beach",
+                        "city": "San Diego",
+                        "stateOrProvince": "CA",
+                        "postalCode": "92109",
+                        "country": "US",
+                        "coordinates": [
+                          40.6456946,
+                          -73.9143276
+                        ],
+                        "default": false
+                      }
+                    ],
+                    "billingAddress": {
+                      "street": "9480 Talbert and Bushard Street",
+                      "subPremise": "Suite 12",
+                      "area": "Downtown Fountain Valley",
+                      "city": "Fountain Valley",
+                      "stateOrProvince": "CA",
+                      "postalCode": "92708",
+                      "country": "US",
+                      "coordinates": [
+                        40.6456946,
+                        -73.9143276
+                      ]
+                    },
+                    "metadata": {},
+                    "vehicles": [
+                      {
+                        "make": "Honda",
+                        "model": "Civic",
+                        "color": "Yellow",
+                        "default": true
+                      },
+                      {
+                        "make": "Toyota",
+                        "model": "Corolla",
+                        "color": "Blue",
+                        "default": false
+                      }
+                    ],
+                    "contact": {
+                      "email": "email@email.com",
+                      "firstName": "John",
+                      "lastName": "Doe",
+                      "birthdate": "1970-01-01",
+                      "phone": "+14048555666"
+                    },
+                    "favorites": [
+                      {
+                        "type": "order",
+                        "orderId": "62********************3x",
+                        "label": "My favorite order"
+                      },
+                      {
+                        "type": "order",
+                        "orderId": "62********************3y",
+                        "label": "My 2nd favorite order"
+                      },
+                      {
+                        "type": "item",
+                        "item": "1234"
+                      },
+                      {
+                        "type": "item",
+                        "item": "ABC"
+                      },
+                      {
+                        "type": "store",
+                        "storeId": "62********************2e"
+                      },
+                      {
+                        "type": "store",
+                        "storeId": "62********************2f"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "externalId": "62********************1o",
+                      "loyaltyProviderId": "VjaGFuZ0B0cm9",
+                      "deliveryAddresses": [
+                        {
+                          "street": "Main Street",
+                          "subpremise": "Unit 210",
+                          "area": "Irvine Business Complex",
+                          "city": "Irvine",
+                          "postalCode": "92614",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            40.6456946,
+                            -73.9143276
+                          ],
+                          "id": "62********************6a",
+                          "default": true
+                        },
+                        {
+                          "street": "5678 Ocean View Drive",
+                          "subpremise": "Suite 12",
+                          "area": "Pacific Beach",
+                          "city": "San Diego",
+                          "postalCode": "92109",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            40.6456946,
+                            -73.9143276
+                          ],
+                          "id": "62********************6w",
+                          "default": false
+                        }
+                      ],
+                      "billingAddress": {
+                        "subpremise": null,
+                        "street": "9480 Talbert and Bushard Street",
+                        "area": "Downtown Fountain Valley",
+                        "city": "Fountain Valley",
+                        "postalCode": "92708",
+                        "stateOrProvince": "CA",
+                        "country": "US",
+                        "coordinates": [
+                          40.6456946,
+                          -73.9143276
+                        ]
+                      },
+                      "metadata": {},
+                      "vehicles": [
+                        {
+                          "id": "62********************6z",
+                          "make": "honda",
+                          "model": "civic",
+                          "color": "yellow",
+                          "default": true
+                        },
+                        {
+                          "id": "62********************6b",
+                          "make": "toyota",
+                          "model": "corolla",
+                          "color": "blue",
+                          "default": false
+                        }
+                      ],
+                      "id": "62********************6m",
+                      "accountId": "62********************6e",
+                      "channel": 10000,
+                      "created": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "updated": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "contact": {
+                        "email": "email@email.com",
+                        "firstName": "John",
+                        "lastName": "Doe",
+                        "phone": "+14048888666",
+                        "birthdate": "1970-01-01T00:00:00",
+                        "fullName": "John Doe"
+                      },
+                      "favorites": [
+                        {
+                          "type": "order",
+                          "orderId": "62********************3x",
+                          "label": "My favorite order"
+                        },
+                        {
+                          "type": "order",
+                          "orderId": "62********************3y",
+                          "label": "My 2nd favorite order"
+                        },
+                        {
+                          "type": "item",
+                          "item": "1234"
+                        },
+                        {
+                          "type": "item",
+                          "item": "ABC"
+                        },
+                        {
+                          "type": "store",
+                          "storeId": "62********************2e"
+                        },
+                        {
+                          "type": "store",
+                          "storeId": "62********************2f"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "{id}"
+                    },
+                    "accountId": {
+                      "type": "string",
+                      "example": "{accountId}"
+                    },
+                    "channel": {
+                      "type": "string",
+                      "example": "{channel}"
+                    },
+                    "created": {
+                      "type": "string",
+                      "example": "{created}"
+                    },
+                    "updated": {
+                      "type": "string",
+                      "example": "{updated}"
+                    },
+                    "contact": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "example": "{crmEmail}"
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "example": "{crmFirstName}"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "example": "{crmLastName}"
+                        },
+                        "fullName": {
+                          "type": "string",
+                          "example": "{crmFullName}",
+                          "description": "This is set by CRM as concatenation of firstName and lastName"
+                        },
+                        "phone": {
+                          "type": "string",
+                          "example": "{crmPhone}"
+                        },
+                        "birthdate": {
+                          "type": "string",
+                          "example": "{crmProfileBirthDate}"
+                        }
+                      }
+                    },
+                    "externalId": {
+                      "type": "string",
+                      "example": "{externalId}"
+                    },
+                    "loyaltyProviderId": {
+                      "type": "string",
+                      "example": "{loyaltyProviderId}"
+                    },
+                    "deliveryAddress": {
+                      "type": "object",
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "example": "{countryCode}"
+                        },
+                        "stateOrProvince": {
+                          "type": "string",
+                          "example": "{stateOrProvince}"
+                        },
+                        "city": {
+                          "type": "string",
+                          "example": "{city}"
+                        },
+                        "streetName": {
+                          "type": "string",
+                          "example": "{streetName}"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "example": "{postalCode}"
+                        },
+                        "houseNumber": {
+                          "type": "string",
+                          "example": "{houseNumber}"
+                        },
+                        "default": {
+                          "type": "boolean"
+                        },
+                        "id": {
+                          "type": "string",
+                          "description": "unique identifier of address in CRM"
+                        }
+                      }
+                    },
+                    "billingAddress": {
+                      "type": "object",
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "example": "{countryCode}"
+                        },
+                        "stateOrProvince": {
+                          "type": "string",
+                          "example": "{stateOrProvince}"
+                        },
+                        "city": {
+                          "type": "string",
+                          "example": "{city}"
+                        },
+                        "street": {
+                          "type": "string",
+                          "example": "{streetName}"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "example": "{postalCode}"
+                        },
+                        "houseNumber": {
+                          "type": "string",
+                          "example": "{houseNumber}"
+                        },
+                        "subpremise": {
+                          "type": "string"
+                        },
+                        "area": {
+                          "type": "string"
+                        },
+                        "coordinates": {
+                          "type": "array",
+                          "items": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "favorites": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order"
+                          },
+                          "orderIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "example": "{orderId}"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "vehicles": {
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "make": {
+                            "type": "string"
+                          },
+                          "model": {
+                            "type": "string"
+                          },
+                          "color": {
+                            "type": "string"
+                          },
+                          "default": {
+                            "type": "boolean"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Deliverect"
+        ],
+        "summary": "Update Customer Profile",
+        "operationId": "patch_crm-accountid-customers-crmprofileid"
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "externalId": "f965248c-3a00",
+                      "loyaltyProviderId": "VjaG***0cm9",
+                      "deliveryAddresses": [
+                        {
+                          "street": "Main Street",
+                          "subpremise": "Unit 210",
+                          "area": "Irvine Business Complex",
+                          "city": "Irvine",
+                          "postalCode": "92614",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            33.674,
+                            -117.838
+                          ],
+                          "id": "61********************b1",
+                          "default": true
+                        },
+                        {
+                          "street": "5678 Ocean View Drive",
+                          "subpremise": "Apt 5B",
+                          "area": "Pacific Beach",
+                          "city": "San Diego",
+                          "postalCode": "92109",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            32.8,
+                            -117.25
+                          ],
+                          "id": "61********************b2",
+                          "default": false
+                        }
+                      ],
+                      "billingAddress": {
+                        "street": "9480 Talbert and Bushard Street",
+                        "subpremise": "Suite 12",
+                        "area": "Downtown Fountain Valley",
+                        "city": "Fountain Valley",
+                        "postalCode": "92708",
+                        "stateOrProvince": "CA",
+                        "country": "US",
+                        "coordinates": [
+                          33.709,
+                          -117.953
+                        ]
+                      },
+                      "metadata": {},
+                      "vehicles": [
+                        {
+                          "id": "61********************b3",
+                          "make": "honda",
+                          "model": "civic",
+                          "color": "yellow",
+                          "default": true
+                        },
+                        {
+                          "id": "61********************b2",
+                          "make": "toyota",
+                          "model": "corolla",
+                          "color": "blue",
+                          "default": false
+                        }
+                      ],
+                      "id": "62********************7c",
+                      "accountId": "62********************3c",
+                      "channel": 10000,
+                      "created": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "updated": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "contact": {
+                        "email": "email@email.com",
+                        "firstName": "John",
+                        "lastName": "Doe",
+                        "phone": "+14048091678",
+                        "birthdate": "1970-01-01T00:00:00Z",
+                        "fullName": "John Doe"
+                      },
+                      "favorites": []
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "externalId": {
+                      "type": "string",
+                      "example": "f965248c-3a00"
+                    },
+                    "loyaltyProviderId": {
+                      "type": "string",
+                      "example": "VjaG***0cm9"
+                    },
+                    "deliveryAddresses": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "street": {
+                            "type": "string",
+                            "example": "Main Street"
+                          },
+                          "subpremise": {
+                            "type": "string",
+                            "example": "Unit 210"
+                          },
+                          "area": {
+                            "type": "string",
+                            "example": "Irvine Business Complex"
+                          },
+                          "city": {
+                            "type": "string",
+                            "example": "Irvine"
+                          },
+                          "postalCode": {
+                            "type": "string",
+                            "example": "92614"
+                          },
+                          "stateOrProvince": {
+                            "type": "string",
+                            "example": "CA"
+                          },
+                          "country": {
+                            "type": "string",
+                            "example": "US"
+                          },
+                          "coordinates": {
+                            "type": "array",
+                            "items": {
+                              "type": "number",
+                              "example": 33.674,
+                              "default": 0
+                            }
+                          },
+                          "id": {
+                            "type": "string",
+                            "example": "61********************b1"
+                          },
+                          "default": {
+                            "type": "boolean",
+                            "example": true,
+                            "default": true
+                          }
+                        }
+                      }
+                    },
+                    "billingAddress": {
+                      "type": "object",
+                      "properties": {
+                        "street": {
+                          "type": "string",
+                          "example": "9480 Talbert and Bushard Street"
+                        },
+                        "subpremise": {
+                          "type": "string",
+                          "example": "Suite 12"
+                        },
+                        "area": {
+                          "type": "string",
+                          "example": "Downtown Fountain Valley"
+                        },
+                        "city": {
+                          "type": "string",
+                          "example": "Fountain Valley"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "example": "92708"
+                        },
+                        "stateOrProvince": {
+                          "type": "string",
+                          "example": "CA"
+                        },
+                        "country": {
+                          "type": "string",
+                          "example": "US"
+                        },
+                        "coordinates": {
+                          "type": "array",
+                          "items": {
+                            "type": "number",
+                            "example": 33.709,
+                            "default": 0
+                          }
+                        }
+                      }
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "vehicles": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "61********************b3"
+                          },
+                          "make": {
+                            "type": "string",
+                            "example": "honda"
+                          },
+                          "model": {
+                            "type": "string",
+                            "example": "civic"
+                          },
+                          "color": {
+                            "type": "string",
+                            "example": "yellow"
+                          },
+                          "default": {
+                            "type": "boolean",
+                            "example": true,
+                            "default": true
+                          }
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "62********************7c"
+                    },
+                    "accountId": {
+                      "type": "string",
+                      "example": "62********************3c"
+                    },
+                    "channel": {
+                      "type": "integer",
+                      "example": 10000,
+                      "default": 0
+                    },
+                    "created": {
+                      "type": "string",
+                      "example": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                    },
+                    "updated": {
+                      "type": "string",
+                      "example": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                    },
+                    "contact": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "example": "email@email.com"
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "example": "John"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "example": "Doe"
+                        },
+                        "phone": {
+                          "type": "string",
+                          "example": "+14048091678"
+                        },
+                        "birthdate": {
+                          "type": "string",
+                          "example": "1970-01-01T00:00:00Z"
+                        },
+                        "fullName": {
+                          "type": "string",
+                          "example": "John Doe"
+                        }
+                      }
+                    },
+                    "favorites": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {}
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "crmProfileId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "Deliverect"
+        ],
+        "summary": "Retrieve Customer Profile",
+        "operationId": "get_crm-accountid-customers-crmprofileid"
+      }
+    },
+    "/crm/{accountId}/orders/{crmOrderId}": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "id": "698**************066",
+                      "crmProfileId": "698**************4e9",
+                      "orderId": "698**************e6f",
+                      "accountId": "68d**************bdd",
+                      "channel": 20000,
+                      "payment": {
+                        "amount": {
+                          "value": 3100,
+                          "currency": "EUR",
+                          "display": "31.00"
+                        }
+                      },
+                      "orderDisplayId": "DISPLAY**************156c",
+                      "orderDate": "2026-02-12T15:23:25.967000Z",
+                      "orderType": 3,
+                      "itemQuantity": 1,
+                      "locationId": "68d**************5a9"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "crmOrderId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "oauth2ClientCredentials": []
+          }
+        ],
+        "summary": "CRM Order",
+        "tags": [
+          "Deliverect"
+        ],
+        "operationId": "get_crm-accountid-orders-crmorderid"
+      }
+    },
+    "/crm/{accountId}/customers": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "externalId": "62********************1o",
+                      "loyaltyProviderId": "VjaG***0cm9",
+                      "deliveryAddresses": [
+                        {
+                          "street": "Main Street",
+                          "subpremise": "Unit 210",
+                          "area": "Irvine Business Complex",
+                          "city": "Irvine",
+                          "postalCode": "92614",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            40.6456946,
+                            -73.9143276
+                          ],
+                          "id": "62********************6y",
+                          "default": true
+                        },
+                        {
+                          "street": "5678 Ocean View Drive",
+                          "subpremise": "Apt 5B",
+                          "area": "Pacific Beach",
+                          "city": "San Diego",
+                          "postalCode": "92109",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            40.6456946,
+                            -73.9143276
+                          ],
+                          "id": "62********************8p",
+                          "default": false
+                        }
+                      ],
+                      "billingAddress": {
+                        "street": "9480 Talbert and Bushard Street",
+                        "subpremise": "Suite 12",
+                        "area": "Downtown Fountain Valley",
+                        "city": "Fountain Valley",
+                        "postalCode": "92708",
+                        "stateOrProvince": "CA",
+                        "country": "US",
+                        "coordinates": [
+                          40.6456946,
+                          -73.9143276
+                        ]
+                      },
+                      "metadata": {},
+                      "vehicles": [
+                        {
+                          "id": "62********************3b",
+                          "make": "honda",
+                          "model": "civic",
+                          "color": "yellow",
+                          "default": true
+                        },
+                        {
+                          "id": "62********************7h",
+                          "make": "toyota",
+                          "model": "corolla",
+                          "color": "blue",
+                          "default": false
+                        }
+                      ],
+                      "id": "62********************1m",
+                      "accountId": "62********************8g",
+                      "channel": 10000,
+                      "created": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "updated": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "contact": {
+                        "email": "email@email.com",
+                        "firstName": "John",
+                        "lastName": "Doe",
+                        "birthdate": "1970-01-01",
+                        "phone": "+5519999999999",
+                        "fullName": "John Doe"
+                      },
+                      "favorites": [
+                        {
+                          "type": "order",
+                          "orderId": "62********************9v",
+                          "label": "My favorite order"
+                        },
+                        {
+                          "type": "order",
+                          "orderId": "62********************3d",
+                          "label": "My 2nd favorite order"
+                        },
+                        {
+                          "type": "item",
+                          "item": "123"
+                        },
+                        {
+                          "type": "item",
+                          "item": "ABC"
+                        },
+                        {
+                          "type": "store",
+                          "storeId": "62********************0s"
+                        },
+                        {
+                          "type": "store",
+                          "storeId": "62********************7m"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "{id}"
+                    },
+                    "accountId": {
+                      "type": "string",
+                      "example": "{accountId}"
+                    },
+                    "externalId": {
+                      "type": "string",
+                      "example": "{externalId}"
+                    },
+                    "channel": {
+                      "type": "string",
+                      "example": "{channel}"
+                    },
+                    "created": {
+                      "type": "string",
+                      "example": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                    },
+                    "updated": {
+                      "type": "string",
+                      "example": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                    },
+                    "contact": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "example": "{email}"
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "example": "{firstName}"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "example": "{lastName}"
+                        },
+                        "phone": {
+                          "type": "string",
+                          "example": "{phone}"
+                        },
+                        "fullName": {
+                          "type": "string",
+                          "example": "{fullName}"
+                        }
+                      }
+                    },
+                    "deliveryAddress": {
+                      "type": "object",
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "example": "{countryCode}"
+                        },
+                        "stateOrProvince": {
+                          "type": "string",
+                          "example": "{stateOrProvince}"
+                        },
+                        "city": {
+                          "type": "string",
+                          "example": "{city}"
+                        },
+                        "streetName": {
+                          "type": "string",
+                          "example": "{streetName}"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "example": "{postalCode}"
+                        },
+                        "houseNumber": {
+                          "type": "string",
+                          "example": "{houseNumber}"
+                        }
+                      }
+                    },
+                    "billingAddress": {
+                      "type": "object",
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "example": "{countryCode}"
+                        },
+                        "stateOrProvince": {
+                          "type": "string",
+                          "example": "{stateOrProvince}"
+                        },
+                        "city": {
+                          "type": "string",
+                          "example": "{city}"
+                        },
+                        "streetName": {
+                          "type": "string",
+                          "example": "{streetName}"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "example": "{postalCode}"
+                        },
+                        "houseNumber": {
+                          "type": "string",
+                          "example": "{houseNumber}"
+                        }
+                      }
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "vehicle": {
+                          "type": "object",
+                          "properties": {
+                            "make": {
+                              "type": "string",
+                              "example": "{vehicleMake}"
+                            },
+                            "model": {
+                              "type": "string",
+                              "example": "{vehicleModel}"
+                            },
+                            "color": {
+                              "type": "string",
+                              "example": "{vehicleColor}"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "favorites": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order"
+                          },
+                          "orderIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "contact": {
+                    "type": "object",
+                    "properties": {
+                      "email": {
+                        "type": "string"
+                      },
+                      "firstName": {
+                        "type": "string"
+                      },
+                      "lastName": {
+                        "type": "string"
+                      },
+                      "birthdate": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "email"
+                    ]
+                  },
+                  "externalId": {
+                    "type": "string"
+                  },
+                  "loyaltyProviderId": {
+                    "type": "string"
+                  },
+                  "deliveryAddresses": {
+                    "type": "array",
+                    "items": {
+                      "properties": {
+                        "street": {
+                          "type": "string"
+                        },
+                        "subpremise": {
+                          "type": "string"
+                        },
+                        "city": {
+                          "type": "string"
+                        },
+                        "stateOrProvince": {
+                          "type": "string"
+                        },
+                        "postalCode": {
+                          "type": "string"
+                        },
+                        "country": {
+                          "type": "string"
+                        },
+                        "default": {
+                          "type": "boolean"
+                        },
+                        "area": {
+                          "type": "string"
+                        },
+                        "coordinates": {
+                          "type": "array",
+                          "items": {
+                            "type": "number",
+                            "format": "float"
+                          }
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "billingAddress": {
+                    "type": "object",
+                    "properties": {
+                      "street": {
+                        "type": "string"
+                      },
+                      "subpremise": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "stateOrProvince": {
+                        "type": "string"
+                      },
+                      "postalCode": {
+                        "type": "string"
+                      },
+                      "country": {
+                        "type": "string"
+                      },
+                      "area": {
+                        "type": "string"
+                      },
+                      "coordinates": {
+                        "type": "array",
+                        "items": {
+                          "type": "number",
+                          "format": "float"
+                        }
+                      }
+                    }
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "vehicles": {
+                    "type": "array",
+                    "items": {
+                      "properties": {
+                        "make": {
+                          "type": "string"
+                        },
+                        "model": {
+                          "type": "string"
+                        },
+                        "color": {
+                          "type": "string"
+                        },
+                        "default": {
+                          "type": "boolean"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  }
+                },
+                "required": [
+                  "contact"
+                ]
+              },
+              "examples": {
+                "Example": {
+                  "summary": "Example",
+                  "value": {
+                    "externalId": "62********************1o",
+                    "loyaltyProviderId": "VjaG***0cm9",
+                    "deliveryAddresses": [
+                      {
+                        "street": "Main Street",
+                        "subpremise": "Unit 210",
+                        "area": "Irvine Business Complex",
+                        "city": "Irvine",
+                        "postalCode": "92614",
+                        "stateOrProvince": "CA",
+                        "country": "US",
+                        "coordinates": [
+                          40.6456946,
+                          -73.9143276
+                        ],
+                        "id": "62********************6y",
+                        "default": true
+                      },
+                      {
+                        "street": "5678 Ocean View Drive",
+                        "subpremise": "Apt 5B",
+                        "area": "Pacific Beach",
+                        "city": "San Diego",
+                        "postalCode": "92109",
+                        "stateOrProvince": "CA",
+                        "country": "US",
+                        "coordinates": [
+                          40.6456946,
+                          -73.9143276
+                        ],
+                        "id": "62********************8p",
+                        "default": false
+                      }
+                    ],
+                    "billingAddress": {
+                      "street": "9480 Talbert and Bushard Street",
+                      "subpremise": "Suite 12",
+                      "area": "Downtown Fountain Valley",
+                      "city": "Fountain Valley",
+                      "postalCode": "92708",
+                      "stateOrProvince": "CA",
+                      "country": "US",
+                      "coordinates": [
+                        40.6456946,
+                        -73.9143276
+                      ]
+                    },
+                    "metadata": {},
+                    "vehicles": [
+                      {
+                        "id": "62********************3b",
+                        "make": "honda",
+                        "model": "civic",
+                        "color": "yellow",
+                        "default": true
+                      },
+                      {
+                        "id": "62********************7h",
+                        "make": "toyota",
+                        "model": "corolla",
+                        "color": "blue",
+                        "default": false
+                      }
+                    ],
+                    "id": "62********************1m",
+                    "accountId": "62********************8g",
+                    "channel": 10000,
+                    "created": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                    "updated": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                    "contact": {
+                      "email": "email@email.com",
+                      "firstName": "John",
+                      "lastName": "Doe",
+                      "birthdate": "1970-01-01",
+                      "phone": "+5519999999999",
+                      "fullName": "John Doe"
+                    },
+                    "favorites": [
+                      {
+                        "type": "order",
+                        "orderId": "62********************9v",
+                        "label": "My favorite order"
+                      },
+                      {
+                        "type": "order",
+                        "orderId": "62********************3d",
+                        "label": "My 2nd favorite order"
+                      },
+                      {
+                        "type": "item",
+                        "item": "123"
+                      },
+                      {
+                        "type": "item",
+                        "item": "ABC"
+                      },
+                      {
+                        "type": "store",
+                        "storeId": "62********************0s"
+                      },
+                      {
+                        "type": "store",
+                        "storeId": "62********************7m"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Deliverect"
+        ],
+        "summary": "Create Customer",
+        "operationId": "post_crm-accountid-customers"
+      }
+    },
+    "/crm/{accountId}/customers/{crmProfileId}/orders": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "total": 6,
+                      "page": 1,
+                      "size": 50,
+                      "items": [
+                        {
+                          "id": "6a3******************d33",
+                          "crmProfileId": "69e******************8ac",
+                          "orderId": "6a3******************074",
+                          "accountId": "68d******************fdf",
+                          "channelLinkId": "690******************681",
+                          "channel": 19066,
+                          "payment": {
+                            "amount": {
+                              "value": 828,
+                              "currency": "USD",
+                              "display": "8.28"
+                            }
+                          },
+                          "orderDisplayId": "452b18cf-7f99-49db-9736-8a719729427a",
+                          "orderDate": "`YYYY-MM-DDTHH:mm:ss.SSSSSSZ`",
+                          "orderType": 1,
+                          "itemQuantity": 1,
+                          "locationId": "690******************01b",
+                          "locationName": "ST191 UPPER EAST CHICKEN STORE",
+                          "locationRestaurantName": "Chicken Store Upper East Side",
+                          "externalLocationId": "ST191",
+                          "items": [
+                            {
+                              "plu": "DRNK-01",
+                              "customizationPlu": null,
+                              "name": "Coca Cola",
+                              "quantity": 1,
+                              "subItems": []
+                            }
+                          ]
+                        },
+                        {
+                          "id": "6a3******************d13",
+                          "crmProfileId": "69e******************8ac",
+                          "orderId": "6a3******************a9c",
+                          "accountId": "68d******************fdf",
+                          "channelLinkId": "690******************681",
+                          "channel": 19066,
+                          "payment": {
+                            "amount": {
+                              "value": 2000,
+                              "currency": "USD",
+                              "display": "20.00"
+                            }
+                          },
+                          "orderDisplayId": "91684084",
+                          "orderDate": "`YYYY-MM-DDTHH:mm:ss.SSSSSSZ`",
+                          "orderType": 2,
+                          "itemQuantity": 2,
+                          "locationId": "690******************01b",
+                          "locationName": "ST192 DOWNTOWN CHICKEN STORE",
+                          "locationRestaurantName": "Chicken Store Downtown",
+                          "externalLocationId": "ST192",
+                          "items": [
+                            {
+                              "plu": "QS-01",
+                              "customizationPlu": null,
+                              "name": "Classic Quesadilla + Drink",
+                              "quantity": 1,
+                              "subItems": [
+                                {
+                                  "customizationPlu": "MOD-01",
+                                  "plu": "GR-CH",
+                                  "name": "Green Chillis",
+                                  "quantity": 1,
+                                  "subItems": []
+                                },
+                                {
+                                  "customizationPlu": "INGR-1",
+                                  "plu": "645611577",
+                                  "name": "No Onions",
+                                  "quantity": 1,
+                                  "subItems": [
+                                    {
+                                      "customizationPlu": "SUB-01",
+                                      "plu": "654267959-655503030",
+                                      "name": "Spring Onion",
+                                      "quantity": 1,
+                                      "subItems": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "example": 6,
+                      "default": 0
+                    },
+                    "page": {
+                      "type": "integer",
+                      "example": 1,
+                      "default": 0
+                    },
+                    "size": {
+                      "type": "integer",
+                      "example": 50,
+                      "default": 0
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "example": "6a3******************d33"
+                          },
+                          "crmProfileId": {
+                            "type": "string",
+                            "example": "69e******************8ac"
+                          },
+                          "orderId": {
+                            "type": "string",
+                            "example": "6a3******************074"
+                          },
+                          "accountId": {
+                            "type": "string",
+                            "example": "68d******************fdf"
+                          },
+                          "channelLinkId": {
+                            "type": "string",
+                            "example": "690******************681"
+                          },
+                          "channel": {
+                            "type": "integer",
+                            "example": 19066,
+                            "default": 0
+                          },
+                          "payment": {
+                            "type": "object",
+                            "properties": {
+                              "amount": {
+                                "type": "object",
+                                "properties": {
+                                  "value": {
+                                    "type": "integer",
+                                    "example": 828,
+                                    "default": 0
+                                  },
+                                  "currency": {
+                                    "type": "string",
+                                    "example": "USD"
+                                  },
+                                  "display": {
+                                    "type": "string",
+                                    "example": "8.28"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "orderDisplayId": {
+                            "type": "string",
+                            "example": "452b18cf-7f99-49db-9736-8a719729427a"
+                          },
+                          "orderDate": {
+                            "type": "string",
+                            "example": "`YYYY-MM-DDTHH:mm:ss.SSSSSSZ`"
+                          },
+                          "orderType": {
+                            "type": "integer",
+                            "example": 1,
+                            "default": 0
+                          },
+                          "itemQuantity": {
+                            "type": "integer",
+                            "example": 1,
+                            "default": 0
+                          },
+                          "locationId": {
+                            "type": "string",
+                            "example": "690******************01b"
+                          },
+                          "locationName": {
+                            "type": "string",
+                            "example": "ST191 UPPER EAST CHICKEN STORE"
+                          },
+                          "locationRestaurantName": {
+                            "type": "string",
+                            "example": "Chicken Store Upper East Side"
+                          },
+                          "externalLocationId": {
+                            "type": "string",
+                            "example": "ST191"
+                          },
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "plu": {
+                                  "type": "string",
+                                  "example": "DRNK-01"
+                                },
+                                "customizationPlu": {},
+                                "name": {
+                                  "type": "string",
+                                  "example": "Coca Cola"
+                                },
+                                "quantity": {
+                                  "type": "integer",
+                                  "example": 1,
+                                  "default": 0
+                                },
+                                "subItems": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {}
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "crmProfileId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "tags": [
+          "Deliverect"
+        ],
+        "summary": "Customer Order History",
+        "operationId": "get_crm-accountid-customers-crmprofileid-orders"
+      }
+    },
+    "/crm/{accountId}/customers/lookup-many": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "externalId": "62********************1o",
+                      "loyaltyProviderId": "VjaG***0cm9",
+                      "deliveryAddresses": [
+                        {
+                          "street": "Main Street",
+                          "subpremise": "Unit 210",
+                          "area": "Irvine Business Complex",
+                          "city": "Irvine",
+                          "postalCode": "92614",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            40.6456946,
+                            -73.9143276
+                          ],
+                          "id": "62********************6y",
+                          "default": true
+                        },
+                        {
+                          "street": "5678 Ocean View Drive",
+                          "subpremise": "Apt 5B",
+                          "area": "Pacific Beach",
+                          "city": "San Diego",
+                          "postalCode": "92109",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            40.6456946,
+                            -73.9143276
+                          ],
+                          "id": "62********************8p",
+                          "default": false
+                        }
+                      ],
+                      "billingAddress": {
+                        "street": "9480 Talbert and Bushard Street",
+                        "subpremise": "Suite 12",
+                        "area": "Downtown Fountain Valley",
+                        "city": "Fountain Valley",
+                        "postalCode": "92708",
+                        "stateOrProvince": "CA",
+                        "country": "US",
+                        "coordinates": [
+                          40.6456946,
+                          -73.9143276
+                        ]
+                      },
+                      "metadata": {},
+                      "vehicles": [
+                        {
+                          "id": "62********************3b",
+                          "make": "honda",
+                          "model": "civic",
+                          "color": "yellow",
+                          "default": true
+                        },
+                        {
+                          "id": "62********************7h",
+                          "make": "toyota",
+                          "model": "corolla",
+                          "color": "blue",
+                          "default": false
+                        }
+                      ],
+                      "id": "62********************1m",
+                      "accountId": "62********************8g",
+                      "channel": 10000,
+                      "created": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "updated": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "contact": {
+                        "email": "email@email.com",
+                        "firstName": "John",
+                        "lastName": "Doe",
+                        "birthdate": "1970-01-01",
+                        "phone": "+5519999999999",
+                        "fullName": "John Doe"
+                      },
+                      "favorites": [
+                        {
+                          "type": "order",
+                          "orderId": "62********************9v",
+                          "label": "My favorite order"
+                        },
+                        {
+                          "type": "order",
+                          "orderId": "62********************3d",
+                          "label": "My 2nd favorite order"
+                        },
+                        {
+                          "type": "item",
+                          "item": "123"
+                        },
+                        {
+                          "type": "item",
+                          "item": "ABC"
+                        },
+                        {
+                          "type": "store",
+                          "storeId": "62********************0s"
+                        },
+                        {
+                          "type": "store",
+                          "storeId": "62********************7m"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "{id}"
+                    },
+                    "accountId": {
+                      "type": "string",
+                      "example": "{accountId}"
+                    },
+                    "externalId": {
+                      "type": "string",
+                      "example": "{externalId}"
+                    },
+                    "channel": {
+                      "type": "string",
+                      "example": "{channel}"
+                    },
+                    "created": {
+                      "type": "string",
+                      "example": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                    },
+                    "updated": {
+                      "type": "string",
+                      "example": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                    },
+                    "contact": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "example": "{email}"
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "example": "{firstName}"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "example": "{lastName}"
+                        },
+                        "phone": {
+                          "type": "string",
+                          "example": "{phone}"
+                        },
+                        "fullName": {
+                          "type": "string",
+                          "example": "{fullName}"
+                        }
+                      }
+                    },
+                    "deliveryAddress": {
+                      "type": "object",
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "example": "{countryCode}"
+                        },
+                        "stateOrProvince": {
+                          "type": "string",
+                          "example": "{stateOrProvince}"
+                        },
+                        "city": {
+                          "type": "string",
+                          "example": "{city}"
+                        },
+                        "streetName": {
+                          "type": "string",
+                          "example": "{streetName}"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "example": "{postalCode}"
+                        },
+                        "houseNumber": {
+                          "type": "string",
+                          "example": "{houseNumber}"
+                        }
+                      }
+                    },
+                    "billingAddress": {
+                      "type": "object",
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "example": "{countryCode}"
+                        },
+                        "stateOrProvince": {
+                          "type": "string",
+                          "example": "{stateOrProvince}"
+                        },
+                        "city": {
+                          "type": "string",
+                          "example": "{city}"
+                        },
+                        "streetName": {
+                          "type": "string",
+                          "example": "{streetName}"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "example": "{postalCode}"
+                        },
+                        "houseNumber": {
+                          "type": "string",
+                          "example": "{houseNumber}"
+                        }
+                      }
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "vehicle": {
+                          "type": "object",
+                          "properties": {
+                            "make": {
+                              "type": "string",
+                              "example": "{vehicleMake}"
+                            },
+                            "model": {
+                              "type": "string",
+                              "example": "{vehicleModel}"
+                            },
+                            "color": {
+                              "type": "string",
+                              "example": "{vehicleColor}"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "favorites": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order"
+                          },
+                          "orderIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "description": "Not Found"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "Example": {
+                  "summary": "Example",
+                  "value": {
+                    "total": 2,
+                    "page": 1,
+                    "size": 50,
+                    "items": [
+                      {
+                        "externalId": "wP78j6lVNoq9zNy2YiPxx",
+                        "loyaltyProviderId": "yyyoqbawc3otEOa_dguya",
+                        "deliveryAddresses": [
+                          {
+                            "subpremise": "2B",
+                            "street": "Castle Close",
+                            "area": "Downtown",
+                            "city": "Midwest City",
+                            "postalCode": "15",
+                            "stateOrProvince": "Flanders",
+                            "country": "TM",
+                            "coordinates": [
+                              50.8503,
+                              4.3517
+                            ],
+                            "id": "6a712d00f5949fc239736420",
+                            "default": true
+                          }
+                        ],
+                        "billingAddress": {
+                          "subpremise": "2A",
+                          "street": "Windmill Lane",
+                          "area": "Downtown",
+                          "city": "East Autumntown",
+                          "postalCode": "114",
+                          "stateOrProvince": "Flanders",
+                          "country": "PN",
+                          "coordinates": [
+                            50.8503,
+                            4.3517
+                          ]
+                        },
+                        "metadata": {},
+                        "vehicles": [
+                          {
+                            "id": "6a712d00f5949fc239736421",
+                            "make": "testwagen",
+                            "model": "audacia",
+                            "color": "silver",
+                            "default": true
+                          }
+                        ],
+                        "id": "6a712d00f5949fc239736423",
+                        "accountId": "68d81ae5bbd981dd03137bdd",
+                        "channel": 10289,
+                        "created": "2026-08-04T00:06:24.955000Z",
+                        "updated": "2026-08-04T00:06:24.955000Z",
+                        "contact": {
+                          "email": "macey78@yahoo.com",
+                          "firstName": "Romaine",
+                          "lastName": "Sporer",
+                          "phone": "+5519999999999",
+                          "birthdate": "2000-01-01T00:00:00Z",
+                          "fullName": "Romaine Sporer"
+                        },
+                        "favorites": []
+                      },
+                      {
+                        "externalId": "1N05Sx9ITxkvq1khloGZg",
+                        "loyaltyProviderId": "d4Y33qLr6_9W1gcKYLLQ9",
+                        "deliveryAddresses": [
+                          {
+                            "subpremise": "2B",
+                            "street": "South Street",
+                            "area": "Downtown",
+                            "city": "East Seamus",
+                            "postalCode": "685",
+                            "stateOrProvince": "Flanders",
+                            "country": "BY",
+                            "coordinates": [
+                              50.8503,
+                              4.3517
+                            ],
+                            "id": "6a67e800e40b17e84d338767",
+                            "default": true
+                          }
+                        ],
+                        "billingAddress": {
+                          "subpremise": "2A",
+                          "street": "Lebsack Fall",
+                          "area": "Downtown",
+                          "city": "Fort Amely",
+                          "postalCode": "854",
+                          "stateOrProvince": "Flanders",
+                          "country": "MC",
+                          "coordinates": [
+                            50.8503,
+                            4.3517
+                          ]
+                        },
+                        "metadata": {},
+                        "vehicles": [
+                          {
+                            "id": "6a67e800e40b17e84d338768",
+                            "make": "testwagen",
+                            "model": "adsuesco",
+                            "color": "cyan",
+                            "default": true
+                          }
+                        ],
+                        "id": "6a67e800e40b17e84d33876a",
+                        "accountId": "68d81ae5bbd981dd03137bdd",
+                        "channel": 10289,
+                        "created": "2026-07-27T23:21:36.594000Z",
+                        "updated": "2026-07-27T23:21:36.594000Z",
+                        "contact": {
+                          "email": "ottis37@hotmail.com",
+                          "firstName": "Nicolas",
+                          "lastName": "Brekke-Schimmel",
+                          "phone": "+5519999999999",
+                          "birthdate": "2000-01-01T00:00:00Z",
+                          "fullName": "Nicolas Brekke-Schimmel"
+                        },
+                        "favorites": []
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Deliverect"
+        ],
+        "summary": "Lookup Customer (many)",
+        "operationId": "post_crm-accountid-customers-lookup-1",
+        "x-internal": false
+      }
+    },
+    "/crm/{accountId}/customers/lookup": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": {
+                      "externalId": "62********************1o",
+                      "loyaltyProviderId": "VjaG***0cm9",
+                      "deliveryAddresses": [
+                        {
+                          "street": "Main Street",
+                          "subpremise": "Unit 210",
+                          "area": "Irvine Business Complex",
+                          "city": "Irvine",
+                          "postalCode": "92614",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            40.6456946,
+                            -73.9143276
+                          ],
+                          "id": "62********************6y",
+                          "default": true
+                        },
+                        {
+                          "street": "5678 Ocean View Drive",
+                          "subpremise": "Apt 5B",
+                          "area": "Pacific Beach",
+                          "city": "San Diego",
+                          "postalCode": "92109",
+                          "stateOrProvince": "CA",
+                          "country": "US",
+                          "coordinates": [
+                            40.6456946,
+                            -73.9143276
+                          ],
+                          "id": "62********************8p",
+                          "default": false
+                        }
+                      ],
+                      "billingAddress": {
+                        "street": "9480 Talbert and Bushard Street",
+                        "subpremise": "Suite 12",
+                        "area": "Downtown Fountain Valley",
+                        "city": "Fountain Valley",
+                        "postalCode": "92708",
+                        "stateOrProvince": "CA",
+                        "country": "US",
+                        "coordinates": [
+                          40.6456946,
+                          -73.9143276
+                        ]
+                      },
+                      "metadata": {},
+                      "vehicles": [
+                        {
+                          "id": "62********************3b",
+                          "make": "honda",
+                          "model": "civic",
+                          "color": "yellow",
+                          "default": true
+                        },
+                        {
+                          "id": "62********************7h",
+                          "make": "toyota",
+                          "model": "corolla",
+                          "color": "blue",
+                          "default": false
+                        }
+                      ],
+                      "id": "62********************1m",
+                      "accountId": "62********************8g",
+                      "channel": 10000,
+                      "created": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "updated": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                      "contact": {
+                        "email": "email@email.com",
+                        "firstName": "John",
+                        "lastName": "Doe",
+                        "birthdate": "1970-01-01",
+                        "phone": "+5519999999999",
+                        "fullName": "John Doe"
+                      },
+                      "favorites": [
+                        {
+                          "type": "order",
+                          "orderId": "62********************9v",
+                          "label": "My favorite order"
+                        },
+                        {
+                          "type": "order",
+                          "orderId": "62********************3d",
+                          "label": "My 2nd favorite order"
+                        },
+                        {
+                          "type": "item",
+                          "item": "123"
+                        },
+                        {
+                          "type": "item",
+                          "item": "ABC"
+                        },
+                        {
+                          "type": "store",
+                          "storeId": "62********************0s"
+                        },
+                        {
+                          "type": "store",
+                          "storeId": "62********************7m"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "{id}"
+                    },
+                    "accountId": {
+                      "type": "string",
+                      "example": "{accountId}"
+                    },
+                    "externalId": {
+                      "type": "string",
+                      "example": "{externalId}"
+                    },
+                    "channel": {
+                      "type": "string",
+                      "example": "{channel}"
+                    },
+                    "created": {
+                      "type": "string",
+                      "example": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                    },
+                    "updated": {
+                      "type": "string",
+                      "example": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ"
+                    },
+                    "contact": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "example": "{email}"
+                        },
+                        "firstName": {
+                          "type": "string",
+                          "example": "{firstName}"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "example": "{lastName}"
+                        },
+                        "phone": {
+                          "type": "string",
+                          "example": "{phone}"
+                        },
+                        "fullName": {
+                          "type": "string",
+                          "example": "{fullName}"
+                        }
+                      }
+                    },
+                    "deliveryAddress": {
+                      "type": "object",
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "example": "{countryCode}"
+                        },
+                        "stateOrProvince": {
+                          "type": "string",
+                          "example": "{stateOrProvince}"
+                        },
+                        "city": {
+                          "type": "string",
+                          "example": "{city}"
+                        },
+                        "streetName": {
+                          "type": "string",
+                          "example": "{streetName}"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "example": "{postalCode}"
+                        },
+                        "houseNumber": {
+                          "type": "string",
+                          "example": "{houseNumber}"
+                        }
+                      }
+                    },
+                    "billingAddress": {
+                      "type": "object",
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "example": "{countryCode}"
+                        },
+                        "stateOrProvince": {
+                          "type": "string",
+                          "example": "{stateOrProvince}"
+                        },
+                        "city": {
+                          "type": "string",
+                          "example": "{city}"
+                        },
+                        "streetName": {
+                          "type": "string",
+                          "example": "{streetName}"
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "example": "{postalCode}"
+                        },
+                        "houseNumber": {
+                          "type": "string",
+                          "example": "{houseNumber}"
+                        }
+                      }
+                    },
+                    "metadata": {
+                      "type": "object",
+                      "properties": {
+                        "vehicle": {
+                          "type": "object",
+                          "properties": {
+                            "make": {
+                              "type": "string",
+                              "example": "{vehicleMake}"
+                            },
+                            "model": {
+                              "type": "string",
+                              "example": "{vehicleModel}"
+                            },
+                            "color": {
+                              "type": "string",
+                              "example": "{vehicleColor}"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "favorites": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "example": "order"
+                          },
+                          "orderIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Profile Not Found": {
+                    "summary": "Profile Not Found",
+                    "value": "profile_not_found"
+                  }
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "ambiguous_profile_lookup": {
+                    "summary": "ambiguous_profile_lookup",
+                    "value": "{}"
+                  },
+                  "Validation error - no email/phone sent": {
+                    "summary": "Validation error - no email/phone sent",
+                    "value": "{}"
+                  }
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "accountId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "Example": {
+                  "summary": "Example",
+                  "value": {
+                    "externalId": "62********************1o",
+                    "loyaltyProviderId": "VjaG***0cm9",
+                    "deliveryAddresses": [
+                      {
+                        "street": "Main Street",
+                        "subpremise": "Unit 210",
+                        "area": "Irvine Business Complex",
+                        "city": "Irvine",
+                        "postalCode": "92614",
+                        "stateOrProvince": "CA",
+                        "country": "US",
+                        "coordinates": [
+                          40.6456946,
+                          -73.9143276
+                        ],
+                        "id": "62********************6y",
+                        "default": true
+                      },
+                      {
+                        "street": "5678 Ocean View Drive",
+                        "subpremise": "Apt 5B",
+                        "area": "Pacific Beach",
+                        "city": "San Diego",
+                        "postalCode": "92109",
+                        "stateOrProvince": "CA",
+                        "country": "US",
+                        "coordinates": [
+                          40.6456946,
+                          -73.9143276
+                        ],
+                        "id": "62********************8p",
+                        "default": false
+                      }
+                    ],
+                    "billingAddress": {
+                      "street": "9480 Talbert and Bushard Street",
+                      "subpremise": "Suite 12",
+                      "area": "Downtown Fountain Valley",
+                      "city": "Fountain Valley",
+                      "postalCode": "92708",
+                      "stateOrProvince": "CA",
+                      "country": "US",
+                      "coordinates": [
+                        40.6456946,
+                        -73.9143276
+                      ]
+                    },
+                    "metadata": {},
+                    "vehicles": [
+                      {
+                        "id": "62********************3b",
+                        "make": "honda",
+                        "model": "civic",
+                        "color": "yellow",
+                        "default": true
+                      },
+                      {
+                        "id": "62********************7h",
+                        "make": "toyota",
+                        "model": "corolla",
+                        "color": "blue",
+                        "default": false
+                      }
+                    ],
+                    "id": "62********************1m",
+                    "accountId": "62********************8g",
+                    "channel": 10000,
+                    "created": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                    "updated": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                    "contact": {
+                      "email": "email@email.com",
+                      "firstName": "John",
+                      "lastName": "Doe",
+                      "birthdate": "1970-01-01",
+                      "phone": "+5519999999999",
+                      "fullName": "John Doe"
+                    },
+                    "favorites": [
+                      {
+                        "type": "order",
+                        "orderId": "62********************9v",
+                        "label": "My favorite order"
+                      },
+                      {
+                        "type": "order",
+                        "orderId": "62********************3d",
+                        "label": "My 2nd favorite order"
+                      },
+                      {
+                        "type": "item",
+                        "item": "123"
+                      },
+                      {
+                        "type": "item",
+                        "item": "ABC"
+                      },
+                      {
+                        "type": "store",
+                        "storeId": "62********************0s"
+                      },
+                      {
+                        "type": "store",
+                        "storeId": "62********************7m"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Deliverect"
+        ],
+        "summary": "Lookup Customer by Email/Phone",
+        "operationId": "post_crm-accountid-customers-lookup"
+      }
+    }
+  }
+}

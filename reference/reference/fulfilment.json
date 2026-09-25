@@ -1,0 +1,776 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "fulfilment",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.staging.deliverect.com"
+    }
+  ],
+  "security": [
+    {
+      "oauth2ClientCredentials": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "oauth2ClientCredentials": {
+        "type": "oauth2",
+        "description": "Obtain an access token using the partner client ID and client secret. Send the returned token with each API request in the Authorization header as a Bearer token.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/oauth/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true,
+    "oauth-options": {
+      "useInsecureClientAuthentication": true
+    }
+  },
+  "x-readme-fauxas": true,
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "This endpoint allows you to exchange client credentials for a Bearer access token, required when authenticating API requests made to Deliverect."
+    },
+    {
+      "name": "Endpoints",
+      "description": "Deliverect Endpoints"
+    }
+  ],
+  "paths": {
+    "/fulfillment/updateJob": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deliveryJobId": {
+                      "type": "string",
+                      "default": "6***924c*****95cc331f93"
+                    },
+                    "updated": {
+                      "type": "boolean",
+                      "default": "true"
+                    }
+                  },
+                  "required": [
+                    "deliveryJobId",
+                    "updated"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": " Invalid JSON or schema validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Job or order not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Eligibility validation failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "object",
+                      "properties": {
+                        "driverTip": {
+                          "type": "string",
+                          "default": "Driver tip cannot be reduced."
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "DSP unsupported or DSP update call failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "deliveryJobId": {
+                    "type": "string"
+                  },
+                  "deliveryAddress": {
+                    "type": "object",
+                    "properties": {
+                      "street": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "postalCode": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "deliveryTime": {
+                    "type": "string"
+                  },
+                  "pickupTime": {
+                    "type": "string"
+                  },
+                  "driverTip": {
+                    "type": "string"
+                  },
+                  "dropoffInstructions": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "deliveryJobId"
+                ]
+              }
+            }
+          }
+        },
+        "operationId": "post_fulfillment-updatejob",
+        "summary": "Update Dispatch Job"
+      }
+    },
+    "/fulfillment/deliveryRefundConfirmation": {
+      "post": {
+        "summary": "Refunded Delivery Status",
+        "description": "",
+        "operationId": "refunds-1",
+        "parameters": [
+          {
+            "name": "X-HMAC-Signature",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "4e94****1aaea"
+            },
+            "required": true
+          },
+          {
+            "name": "X-HMAC-Partner",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "partner_name"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "deliveryExternalJobId"
+                ],
+                "properties": {
+                  "deliveryExternalJobId": {
+                    "type": "string",
+                    "description": "Either deliveryExternalJobId or deliveryJobId required"
+                  },
+                  "deliveryJobId": {
+                    "type": "string",
+                    "description": "Either deliveryExternalJobId or deliveryJobId required"
+                  }
+                }
+              },
+              "examples": {
+                "Request Refund Example": {
+                  "value": {
+                    "deliveryExternalJobId": "your-external-job-id-123"
+                  },
+                  "summary": "Request Refund Example"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "deliveryJobId": "507f1f77bcf86cd799439011",
+                      "deliveryExternalId": "your-external-job-id-123",
+                      "status": "COMPLETED",
+                      "amount": 599,
+                      "completedAt": "2026-01-28T14:30:00.000Z"
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deliveryJobId": {
+                      "type": "string",
+                      "description": ""
+                    },
+                    "deliveryExternalId": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "COMPLETED",
+                        "PENDING",
+                        "FAILED",
+                        "INCOMPLETE"
+                      ],
+                      "default": "COMPLETED"
+                    },
+                    "amount": {
+                      "type": "string",
+                      "description": "Defined by a an int with 2 decimal digits. i.e. 2 euros is stored as 200."
+                    },
+                    "completedAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "deliveryExternalId",
+                    "amount",
+                    "status",
+                    "deliveryJobId"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing/invalid fields",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Missing/Invalid Fields": {
+                    "value": "\tMissing/invalid fields.",
+                    "summary": "Missing/Invalid Fields"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Missing/ invalid fields"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ]
+                }
+              }
+            }
+          },
+          "415": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Content-Type must be application/json.": {
+                    "summary": "Content-Type must be application/json.",
+                    "value": "Content-Type must be application/json."
+                  }
+                }
+              }
+            },
+            "description": "Unsupported Media Type"
+          }
+        },
+        "deprecated": false,
+        "security": []
+      }
+    },
+    "/fulfillment/priceJob": {
+      "post": {
+        "summary": "Dispatch Price Check",
+        "description": "",
+        "operationId": "pricecheck",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "channelLinkId",
+                  "subTotal",
+                  "deliveryLocations"
+                ],
+                "properties": {
+                  "channelLinkId": {
+                    "type": "string",
+                    "description": "ID for the channel link created by the partner in the portal."
+                  },
+                  "validationId": {
+                    "type": "string",
+                    "description": "D passed in the Dispatch Availability response related to the ongoing customer offer"
+                  },
+                  "subTotal": {
+                    "type": "integer",
+                    "description": "The total amount of the order the customer will pay",
+                    "format": "int32"
+                  },
+                  "pickupTime": {
+                    "type": "string",
+                    "description": "Defaults to 2025-05-17T09:50:00Z"
+                  },
+                  "deliveryLocations": {
+                    "type": "object",
+                    "description": "Object containing details of the customer and delivery address",
+                    "required": [
+                      "deliveryTime",
+                      "street",
+                      "city",
+                      "country",
+                      "postalCode"
+                    ],
+                    "properties": {
+                      "deliveryTime": {
+                        "type": "string",
+                        "description": "Expected delivery time.",
+                        "format": "date"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "name of the customer"
+                      },
+                      "phone": {
+                        "type": "string",
+                        "description": "The contact number of the customer"
+                      },
+                      "coordinates": {
+                        "type": "object",
+                        "description": "The coordinates of the delivery address provided (strongly recommended)",
+                        "required": [
+                          "coordinates"
+                        ],
+                        "properties": {
+                          "coordinates": {
+                            "type": "object",
+                            "description": "array of two floats (latitude and longitude)",
+                            "properties": {}
+                          }
+                        }
+                      },
+                      "street": {
+                        "type": "string",
+                        "description": "The street of the location"
+                      },
+                      "streetNumber": {
+                        "type": "string",
+                        "description": "The street number of the location"
+                      },
+                      "city": {
+                        "type": "string",
+                        "description": "The city of the location"
+                      },
+                      "country": {
+                        "type": "string"
+                      },
+                      "postalCode": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "type": "string",
+                        "description": "The complete address for delivery"
+                      },
+                      "": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Request Example": {
+                  "value": {
+                    "channelLinkId": "64********************67",
+                    "validationId": "68********************e3",
+                    "subTotal": "1200",
+                    "deliveryLocations": {
+                      "deliveryTime": "2025-09-18T11:00:00Z",
+                      "packageSize": "unknown",
+                      "name": "Deliverect Employee",
+                      "postalCode": "3818 LE",
+                      "street": "Stationsplein",
+                      "city": "Amersfoort",
+                      "country": "The Netherlands",
+                      "source": "Deliverect Restaurant,Stationsplein 3818 LE,  Amersfoort",
+                      "phone": "+31 85 888 3577"
+                    },
+                    "coordinates": {
+                      "longitude": 5.3738916,
+                      "latitude": 52.1529549
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "value": "{\n        \"validationId\": \"62********************2b\",\n        \"available\": true,\n        \"price\": 799\n}",
+                    "summary": "OK"
+                  },
+                  "OK (with smallBasketFee)": {
+                    "summary": "OK (with smallBasketFee)",
+                    "value": {
+                      "validationId": "69**********************04",
+                      "available": true,
+                      "price": 599,
+                      "smallBasketFee": 199
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "validationId": {
+                      "type": "string",
+                      "example": "68dba4fa418bf3ad2fa2471d"
+                    },
+                    "available": {
+                      "type": "boolean",
+                      "example": true,
+                      "default": true
+                    },
+                    "price": {
+                      "type": "integer",
+                      "example": 599,
+                      "default": 0
+                    },
+                    "smallBasketFee": {
+                      "type": "integer",
+                      "example": 199,
+                      "default": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/fulfillment/refund": {
+      "post": {
+        "summary": "Refunded Delivery Notification",
+        "description": "",
+        "operationId": "refunds",
+        "parameters": [
+          {
+            "name": "X-HMAC-Signature",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "4e94****1aaea"
+            }
+          },
+          {
+            "name": "X-HMAC-Partner",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "default": "partner_name"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "externalJobId",
+                  "deliveryRefundDetails",
+                  "deliveryRefundItemDetails",
+                  "deliveryRefundFeeDetails"
+                ],
+                "properties": {
+                  "externalJobId": {
+                    "type": "string",
+                    "default": "67d8****2a71a"
+                  },
+                  "deliveryRefundDetails": {
+                    "type": "object",
+                    "description": "object with the details of the refund",
+                    "required": [
+                      "type",
+                      "totalRestaurantAmount",
+                      "totalDspAmount",
+                      "reason",
+                      "owner"
+                    ],
+                    "properties": {
+                      "type": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "owner": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "totalRestaurantAmount": {
+                        "type": "integer",
+                        "description": "Required value, it can be 0. Defined by a an int with 2 decimal digits. i.e. 2 euros is stored as 200.",
+                        "format": "int32"
+                      },
+                      "totalDspAmount": {
+                        "type": "integer",
+                        "description": "Required value, it can be 0. Defined by a an int with 2 decimal digits. i.e. 2 euros is stored as 200.",
+                        "format": "int32"
+                      },
+                      "reason": {
+                        "type": "string"
+                      },
+                      "extraInfo": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "deliveryRefundItemDetails": {
+                    "type": "array",
+                    "items": {
+                      "properties": {
+                        "itemName": {
+                          "type": "string",
+                          "description": "itemPLU"
+                        },
+                        "itemPLU": {
+                          "type": "string"
+                        },
+                        "quantity": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "reason": {
+                          "type": "string"
+                        },
+                        "amount": {
+                          "type": "integer",
+                          "description": "Defined by a an int with 2 decimal digits. i.e. 2 euros is stored as 200.",
+                          "format": "int32"
+                        },
+                        "percentage": {
+                          "type": "integer",
+                          "description": "2% should be sent as 2",
+                          "format": "int32"
+                        },
+                        "owner": {
+                          "type": "string",
+                          "default": ""
+                        }
+                      },
+                      "required": [
+                        "itemName",
+                        "itemPLU",
+                        "quantity",
+                        "reason",
+                        "amount",
+                        "percentage",
+                        "owner"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "deliveryRefundFeeDetails": {
+                    "type": "array",
+                    "items": {
+                      "properties": {
+                        "amount": {
+                          "type": "integer",
+                          "description": "Defined by a an int with 2 decimal digits. i.e. 2 euros is stored as 200.",
+                          "format": "int32"
+                        },
+                        "owner": {
+                          "type": "string",
+                          "default": ""
+                        }
+                      },
+                      "required": [
+                        "amount",
+                        "owner"
+                      ],
+                      "type": "object"
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Refund Example": {
+                  "value": {
+                    "externalJobId": "67d89438a697346d7**2a71a",
+                    "deliveryRefundDetails": {
+                      "type": 0,
+                      "owner": 0,
+                      "totalRestaurantAmount": 0,
+                      "totalDspAmount": 0,
+                      "reason": "string",
+                      "extraInfo": "string"
+                    },
+                    "deliveryRefundItemDetails": [
+                      {
+                        "itemName": "string",
+                        "itemPLU": "string",
+                        "quantity": 0,
+                        "reason": "string",
+                        "amount": 0,
+                        "percentage": 0,
+                        "owner": 0
+                      }
+                    ],
+                    "deliveryRefundFeeDetails": [
+                      {
+                        "amount": 0,
+                        "owner": 0
+                      }
+                    ]
+                  }
+                },
+                "Flat refund Example - Type 3": {
+                  "value": {
+                    "externalJobId": "67d89438a697346d7**2a71a",
+                    "deliveryRefundDetails": {
+                      "type": 3,
+                      "owner": 1,
+                      "totalRestaurantAmount": 0,
+                      "totalDspAmount": 0,
+                      "reason": "string",
+                      "extraInfo": "string"
+                    },
+                    "deliveryRefundFeeDetails": [
+                      {
+                        "amount": 0,
+                        "owner": 1
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": []
+      }
+    }
+  }
+}

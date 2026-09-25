@@ -1,0 +1,191 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Token Vault"
+  },
+  "servers": [
+    {
+      "url": "https://basistheory.staging.deliverect.com"
+    }
+  ],
+  "security": [
+    {
+      "oauth2ClientCredentials": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "oauth2ClientCredentials": {
+        "type": "oauth2",
+        "description": "Obtain an access token using the partner client ID and client secret. Send the returned token with each API request in the Authorization header as a Bearer token.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/oauth/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true,
+    "oauth-options": {
+      "useInsecureClientAuthentication": true
+    }
+  },
+  "x-readme-fauxas": true,
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "This endpoint allows you to exchange client credentials for a Bearer access token, required when authenticating API requests made to Deliverect."
+    },
+    {
+      "name": "Endpoints",
+      "description": "Deliverect Endpoints"
+    }
+  ],
+  "paths": {
+    "/": {
+      "post": {
+        "summary": "Create Token",
+        "description": "Creates and verifies a reusable payment token for a customer card submitted through the BasisTheory proxy.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "gatewayProfileId",
+                  "channelLinkId",
+                  "customerId",
+                  "payment_method"
+                ],
+                "properties": {
+                  "gatewayProfileId": {
+                    "type": "string",
+                    "description": "Identifies the gateway configuration to use for this token."
+                  },
+                  "channelLinkId": {
+                    "type": "string",
+                    "description": "Identifies the channel-to-location link the token is created under."
+                  },
+                  "customerId": {
+                    "type": "string",
+                    "description": "Channel-side identifier of the customer the card belongs to. Echoed back in the response and used to associate the token with the payer."
+                  },
+                  "payment_method": {
+                    "type": "object",
+                    "description": "Raw card details sent only to the proxy.",
+                    "required": [
+                      "number",
+                      "expiration_month",
+                      "expiration_year",
+                      "cvc"
+                    ],
+                    "properties": {
+                      "number": {
+                        "type": "string",
+                        "description": "Card PAN (Primary Account Number), digits only.",
+                        "pattern": "^[0-9]+$"
+                      },
+                      "expiration_month": {
+                        "type": "integer",
+                        "description": "Card expiry month.",
+                        "minimum": 1,
+                        "maximum": 12
+                      },
+                      "expiration_year": {
+                        "type": "integer",
+                        "description": "Card expiry year as four digits, for example 2030.",
+                        "minimum": 1000,
+                        "maximum": 9999
+                      },
+                      "cvc": {
+                        "type": "string",
+                        "description": "Card security code (CVC/CVV), 3–4 digits.",
+                        "pattern": "^[0-9]{3,4}$"
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Create Token": {
+                  "summary": "Create Token",
+                  "value": {
+                    "gatewayProfileId": "gateway-profile-id",
+                    "channelLinkId": "channel-link-id",
+                    "customerId": "customer-id",
+                    "payment_method": {
+                      "number": "4111111111111111",
+                      "expiration_month": 12,
+                      "expiration_year": 2030,
+                      "cvc": "123"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token verification completed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "customerId",
+                    "status"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The newly created token identifier. Use this token to request payments."
+                    },
+                    "customerId": {
+                      "type": "string",
+                      "description": "The customer identifier supplied in the request, echoed back."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Verification outcome from the PSP. Only verified tokens can be used for payments.",
+                      "enum": [
+                        "verified",
+                        "failed"
+                      ]
+                    }
+                  }
+                },
+                "examples": {
+                  "verified": {
+                    "summary": "Verified token",
+                    "value": {
+                      "id": "token-id",
+                      "customerId": "customer-id",
+                      "status": "verified"
+                    }
+                  },
+                  "failed": {
+                    "summary": "Failed verification",
+                    "value": {
+                      "id": "token-id",
+                      "customerId": "customer-id",
+                      "status": "failed"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

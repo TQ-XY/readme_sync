@@ -1,0 +1,423 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Dispatch  API",
+    "description": " We team up with the best global third-party delivery apps, seamlessly consolidating all your channels into one simple system.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.staging.deliverect.com"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "Machine2MachineAccessTokenRequest": {
+        "title": "Get Access Token",
+        "required": [
+          "client_id",
+          "client_secret",
+          "audience",
+          "grant_type"
+        ],
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "string"
+          },
+          "client_secret": {
+            "type": "string"
+          },
+          "audience": {
+            "type": "string"
+          },
+          "grant_type": {
+            "type": "string"
+          }
+        },
+        "examples": [
+          {
+            "client_id": "{{clientId}}",
+            "client_secret": "{{clientSecret}}",
+            "audience": "https://api.deliverect.com",
+            "grant_type": "client_credentials"
+          }
+        ]
+      },
+      "DeliveryJob": {
+        "title": "DeliveryJob Model",
+        "required": [
+          "deliveryLocations.payment.orderIsAlreadyPaid"
+        ],
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string"
+          },
+          "account": {
+            "type": "string"
+          },
+          "pickupTime": {
+            "type": "string"
+          },
+          "pickupLocation.location": {
+            "type": "string"
+          },
+          "pickupLocation.name": {
+            "type": "string"
+          },
+          "pickupLocation.street": {
+            "type": "string"
+          },
+          "pickupLocation.streetNumber": {
+            "type": "string"
+          },
+          "pickupLocation.postalCode": {
+            "type": "string"
+          },
+          "pickupLocation.city": {
+            "type": "string"
+          },
+          "pickupLocation.latitude": {
+            "type": "string"
+          },
+          "pickupLocation.longitude": {
+            "type": "string"
+          },
+          "deliveryLocations.orderId": {
+            "type": "string"
+          },
+          "deliveryLocations.payment.orderIsAlreadyPaid": {
+            "type": "string"
+          },
+          "deliveryLocations.payment.amount": {
+            "type": "string"
+          },
+          "deliveryLocations.payment.paymentType": {
+            "type": "string"
+          }
+        },
+        "examples": [
+          {
+            "client_id": "{{clientId}}",
+            "client_secret": "{{clientSecret}}",
+            "audience": "https://api.deliverect.com",
+            "grant_type": "client_credentials"
+          }
+        ]
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": " "
+    },
+    {
+      "name": "Endpoints",
+      "description": "(Deliverect Endpoints)"
+    }
+  ],
+  "paths": {
+    "/oauth/token": {},
+    "/fulfillment/generic/events": {
+      "post": {
+        "tags": [
+          "Endpoints"
+        ],
+        "summary": "Update Delivery Job",
+        "description": "",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "deliveryJobId": {
+                    "type": "string"
+                  },
+                  "externalJobId": {
+                    "type": "string"
+                  },
+                  "pickupTimeETA": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "transportType": {
+                    "type": "string"
+                  },
+                  "trackingUrl": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "courier": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      },
+                      "longitude": {
+                        "type": "string"
+                      },
+                      "latitude": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "locations": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "orderId": {
+                          "type": "string"
+                        },
+                        "channelOrderDisplayId": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "integer"
+                        },
+                        "deliveryTimeETA": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "Update Example": {
+                  "summary": "Update Example",
+                  "value": {
+                    "deliveryJobId": "61********************b4",
+                    "pickupTimeETA": "YYYY-MM-DDTHH:mm:ss.SSSSSSZ",
+                    "transportType": "bicycle",
+                    "trackingUrl": "https://example.com",
+                    "courier": {
+                      "name": "Mac Miller",
+                      "phone": "+3292331234",
+                      "longitude": "51.05433703603857",
+                      "latitude": "3.738214852809371"
+                    },
+                    "locations": [
+                      {
+                        "orderId": "61********************b4",
+                        "status": 83,
+                        "deliveryTimeETA": "YYYY-MM-DDTHH:mm:ss.SSSSSSZZ"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {
+                  "OK": {
+                    "value": "",
+                    "summary": "OK"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "default",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                },
+                "examples": {
+                  "error": {
+                    "value": null
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fulfillment/cancel": {
+      "post": {
+        "tags": [
+          "Endpoints"
+        ],
+        "summary": "Cancel Delivery Job",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "deliveryJobId": {
+                    "type": "string"
+                  },
+                  "reasonTag": {
+                    "type": "string",
+                    "enum": [
+                      "COURIER_NO_LONGER_AVAILABLE",
+                      "COURIER_TRANSPORT_FAILURE",
+                      "FOOD_ITEMS_ARE_NOT_READY",
+                      "DROP_OFF_LOCATION_NOT_FOUND",
+                      "CUSTOMER_UNRESPONSIVE",
+                      "PACKAGE_SIZE_TOO_LARGE"
+                    ]
+                  },
+                  "deliveryFeeCharged": {
+                    "type": "integer"
+                  },
+                  "extraDescription": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "Cancel Example": {
+                  "summary": "Cancel Example",
+                  "value": {
+                    "deliveryJobId": "648******************874",
+                    "reasonTag": "CUSTOMER_UNRESPONSIVE",
+                    "deliveryFeeCharged": 4500,
+                    "extraDescription": "Tried many times"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": ""
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "Bad Request": {
+                    "summary": "Bad Request",
+                    "value": "{}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fulfillment/hetaUpdate/{dspname}/{locationId}": {
+      "put": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "OK": {
+                    "summary": "OK",
+                    "value": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "dspname",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "locationId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "operationId": "put_fulfillment-hetaupdate-dspname-locationid",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "examples": {
+                "HETA Sample": {
+                  "summary": "HETA Sample",
+                  "value": [
+                    {
+                      "heta": 100
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Hypothetical Estimated Time"
+      }
+    }
+  },
+  "webhooks": {
+    "/yourwebhook.com/validateJob": {},
+    "/yourwebhook.com/createJob": {},
+    "/yourwebhook.com/cancelJob": {}
+  },
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}

@@ -1,0 +1,638 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "payattable",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.staging.deliverect.com/"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "sec0": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://api.staging.deliverect.com/oauth/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "sec0": []
+    }
+  ],
+  "paths": {
+    "//accounts": {},
+    "//v2/locations/{locationId}/syncProducts": {},
+    "//updateStoreStatus/{locationId}": {},
+    "//location/{locationId}/holidays": {},
+    "//commerce/{accountId}/stores/{storeId}/paymentGateways": {},
+    "/commerce/{accountId}/baskets/{basketId}/fulfillment": {},
+    "/commerce/{accountId}/baskets/{basketId}/customer": {},
+    "/commerce/{accountId}/baskets/{basketId}/items": {},
+    "/commerce/{accountId}/baskets/{basketId}/discounts": {},
+    "/commerce/{accountId}/baskets/{basketId}/charges": {},
+    "//commerce/{accountId}/checkouts": {},
+    "//commerce/{accountId}/checkouts/{checkoutId}": {},
+    "//giftCards/channel/{channelLinkId}/providerProfileLinks": {},
+    "//{channel}/channelLinks/{channelLinkId}/paymentProfile": {},
+    "//{channel}/channelLinks/{channelLinkId}/payments/{paymentId}": {},
+    "//resellers/{partner}/account": {
+      "parameters": [
+        {
+          "name": "partner",
+          "in": "path",
+          "required": true,
+          "description": "Unique identifier of the reseller partner",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/{partner}/account": {
+      "parameters": [
+        {
+          "name": "partner",
+          "in": "path",
+          "required": true,
+          "description": "Unique identifier of the partner",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "//{partner}/location": {
+      "parameters": [
+        {
+          "name": "partner",
+          "in": "path",
+          "required": true,
+          "description": "Unique identifier of the partner",
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "//integrations": {},
+    "//integrations/pos": {},
+    "/channelMenus/{accountId}": {
+      "parameters": [
+        {
+          "name": "accountId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "/{channel}/channelLinks/{channelLinkId}/bills/{billId}": {
+      "get": {
+        "summary": "Retrieve Bill by ID",
+        "description": "",
+        "operationId": "bill-by-id",
+        "parameters": [
+          {
+            "name": "channel",
+            "in": "path",
+            "description": "Identifier of the channel making the request.",
+            "schema": {
+              "type": "string",
+              "default": "dh"
+            },
+            "required": true
+          },
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "description": "ID of the channelLink that is requesting to receive the bills.",
+            "schema": {
+              "type": "string",
+              "default": "6308e0d26d73c88087bf244e"
+            },
+            "required": true
+          },
+          {
+            "name": "billId",
+            "in": "path",
+            "description": "ID of the bill.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "callbackId": "62fe4b2f913e738c62fa5f90",
+                      "bill": {
+                        "freshness": 50,
+                        "id": "62fe4993887d65385ab8e096",
+                        "table": {
+                          "id": "T1",
+                          "name": "Table 1"
+                        },
+                        "posSpecificData": {
+                          "id": "POSID123456"
+                        },
+                        "createdAt": "2022-02-14T12:00:00.000Z",
+                        "closedAt": "",
+                        "decimalDigits": 2,
+                        "discountTotal": 100,
+                        "discounts": [
+                          {
+                            "name": "Happy to see you back",
+                            "amount": 100
+                          }
+                        ],
+                        "surchargesTotal": 200,
+                        "surcharges": [
+                          {
+                            "name": "VIP Waiter service",
+                            "amount": 200
+                          }
+                        ],
+                        "taxTotal": 300,
+                        "taxes": [
+                          {
+                            "name": "VAT 20%",
+                            "amount": 300
+                          }
+                        ],
+                        "total": 1900,
+                        "totalDue": 1900,
+                        "items": [
+                          {
+                            "plu": "10000000-1",
+                            "name": "Moon Burger",
+                            "quantity": 2,
+                            "price": 750,
+                            "subItems": []
+                          }
+                        ],
+                        "payments": [
+                          {
+                            "totalAmount": 1400,
+                            "paymentType": "Credit Card"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "callbackId": {
+                      "type": "string",
+                      "example": "62fe4b2f913e738c62fa5f90"
+                    },
+                    "bill": {
+                      "type": "object",
+                      "properties": {
+                        "freshness": {
+                          "type": "integer",
+                          "example": 50,
+                          "default": 0
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "62fe4993887d65385ab8e096"
+                        },
+                        "table": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "T1"
+                            },
+                            "name": {
+                              "type": "string",
+                              "example": "Table 1"
+                            }
+                          }
+                        },
+                        "posSpecificData": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "example": "POSID123456"
+                            }
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "example": "2022-02-14T12:00:00.000Z"
+                        },
+                        "closedAt": {
+                          "type": "string",
+                          "example": ""
+                        },
+                        "decimalDigits": {
+                          "type": "integer",
+                          "example": 2,
+                          "default": 0
+                        },
+                        "discountTotal": {
+                          "type": "integer",
+                          "example": 100,
+                          "default": 0
+                        },
+                        "discounts": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "example": "Happy to see you back"
+                              },
+                              "amount": {
+                                "type": "integer",
+                                "example": 100,
+                                "default": 0
+                              }
+                            }
+                          }
+                        },
+                        "surchargesTotal": {
+                          "type": "integer",
+                          "example": 200,
+                          "default": 0
+                        },
+                        "surcharges": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "example": "VIP Waiter service"
+                              },
+                              "amount": {
+                                "type": "integer",
+                                "example": 200,
+                                "default": 0
+                              }
+                            }
+                          }
+                        },
+                        "taxTotal": {
+                          "type": "integer",
+                          "example": 300,
+                          "default": 0
+                        },
+                        "taxes": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "example": "VAT 20%"
+                              },
+                              "amount": {
+                                "type": "integer",
+                                "example": 300,
+                                "default": 0
+                              }
+                            }
+                          }
+                        },
+                        "total": {
+                          "type": "integer",
+                          "example": 1900,
+                          "default": 0
+                        },
+                        "totalDue": {
+                          "type": "integer",
+                          "example": 1900,
+                          "default": 0
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "plu": {
+                                "type": "string",
+                                "example": "10000000-1"
+                              },
+                              "name": {
+                                "type": "string",
+                                "example": "Moon Burger"
+                              },
+                              "quantity": {
+                                "type": "integer",
+                                "example": 2,
+                                "default": 0
+                              },
+                              "price": {
+                                "type": "integer",
+                                "example": 750,
+                                "default": 0
+                              },
+                              "subItems": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {}
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "payments": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "totalAmount": {
+                                "type": "integer",
+                                "example": 1400,
+                                "default": 0
+                              },
+                              "paymentType": {
+                                "type": "string",
+                                "example": "Credit Card"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"statusCode\": 400,\n    \"message\": \"Could not find a bill with ID 62fe4993887d65385ab8e096\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 400,
+                      "default": 0
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Could not find a bill with ID 62fe4993887d65385ab8e096"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "501",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"statusCode\": 501,\n    \"message\": \"Getting bill not supported for POS\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 501,
+                      "default": 0
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Getting bill not supported for POS"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/{channel}/channelLinks/{channelLinkId}/tables/{tableId}/bills": {
+      "get": {
+        "summary": "Retrieve Bill by Table",
+        "description": "",
+        "operationId": "bills-by-table",
+        "parameters": [
+          {
+            "name": "channel",
+            "in": "path",
+            "description": "Identifier of the channel making the request.",
+            "schema": {
+              "type": "string",
+              "default": "StoreKit"
+            },
+            "required": true
+          },
+          {
+            "name": "channelLinkId",
+            "in": "path",
+            "description": "ID of the channelLink that is requesting to receive the bills.",
+            "schema": {
+              "type": "string",
+              "default": "6411c13243a9048f982f21e4"
+            },
+            "required": true
+          },
+          {
+            "name": "tableId",
+            "in": "path",
+            "description": "ID of the table. ID can be retrieved via the GET POS Tables endpoint.",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": {
+                      "callbackId": "62fe5916913e738c62fa5f9a",
+                      "bills": [
+                        {
+                          "freshness": 20,
+                          "id": "62fe4993887d65385ab8e096",
+                          "table": {
+                            "id": "T1",
+                            "name": "Table 1"
+                          },
+                          "posSpecificData": {
+                            "id": "POSID123456"
+                          },
+                          "createdAt": "2022-02-14T12:00:00.000Z",
+                          "closedAt": "",
+                          "decimalDigits": 2,
+                          "discountTotal": 100,
+                          "discounts": [
+                            {
+                              "name": "Happy to see you back",
+                              "amount": 100
+                            }
+                          ],
+                          "surchargesTotal": 200,
+                          "surcharges": [
+                            {
+                              "name": "VIP Waiter service",
+                              "amount": 200
+                            }
+                          ],
+                          "taxTotal": 300,
+                          "taxes": [
+                            {
+                              "name": "VAT 20%",
+                              "amount": 300
+                            }
+                          ],
+                          "total": 1900,
+                          "totalDue": 1900,
+                          "items": [
+                            {
+                              "plu": "10000000-1",
+                              "name": "Moon Burger",
+                              "quantity": 2,
+                              "price": 750,
+                              "subItems": []
+                            }
+                          ],
+                          "payments": [
+                            {
+                              "totalAmount": 1400,
+                              "paymentType": "Credit Card"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"statusCode\": 400,\n    \"message\": \"Table ID 12589 not found for location 618aa181656fc5393b34a149\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 400,
+                      "default": 0
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Table ID 12589 not found for location 618aa181656fc5393b34a149"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "404",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"statusCode\": 404,\n    \"message\": \"No bills were found\",\n    \"callbackId\": \"62fe4b2f913e738c62fa5f90\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 404,
+                      "default": 0
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "No bills were found"
+                    },
+                    "callbackId": {
+                      "type": "string",
+                      "example": "62fe4b2f913e738c62fa5f90"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "501",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"statusCode\": 501,\n    \"message\": \"Getting bills not supported for POS\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "statusCode": {
+                      "type": "integer",
+                      "example": 501,
+                      "default": 0
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Getting bills not supported for POS"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}

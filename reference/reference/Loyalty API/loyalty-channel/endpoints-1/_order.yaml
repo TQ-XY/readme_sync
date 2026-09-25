@@ -1,0 +1,8 @@
+- loyalty-channel-get-configuration
+- loyalty-channel-get-customer
+- loyalty-channel-create-loyalty-customer
+- get-loyalty-customer-wallet
+- get-loyalty-tiers
+- loyalty-channel-get-programs
+- loyalty-channel-validate-programs
+- loyalty-channel-validate-compensation-cards

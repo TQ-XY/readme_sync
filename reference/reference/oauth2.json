@@ -1,0 +1,160 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Oauth2",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.staging.deliverect.com/"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "oauth2ClientCredentials": {
+        "type": "oauth2",
+        "description": "Obtain an access token using the partner client ID and client secret. Send the returned token with each API request in the Authorization header as a Bearer token.",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/oauth/token",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2ClientCredentials": []
+    }
+  ],
+  "paths": {
+    "/oauth/token": {
+      "post": {
+        "summary": "Get Access Token",
+        "description": "",
+        "operationId": "machine-2-machine-access-token",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "client_id",
+                  "client_secret",
+                  "audience",
+                  "grant_type"
+                ],
+                "properties": {
+                  "client_id": {
+                    "type": "string"
+                  },
+                  "client_secret": {
+                    "type": "string"
+                  },
+                  "audience": {
+                    "type": "string",
+                    "default": "https://api.staging.deliverect.com"
+                  },
+                  "grant_type": {
+                    "type": "string",
+                    "default": "client_credentials"
+                  }
+                }
+              },
+              "examples": {
+                "Token Request Example": {
+                  "summary": "Token Request Example",
+                  "value": {
+                    "client_id": "{clientId}",
+                    "client_secret": "{clientSecret}",
+                    "audience": "{baseUrl}",
+                    "grant_type": "client_credentials"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "access_token": "1234567890",
+                      "expires_at": 1767225600,
+                      "expires_in": 3600,
+                      "scope": "YOUR_GRANTED_SCOPES",
+                      "token_type": "Bearer"
+                    }
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "example": "1234567890"
+                    },
+                    "expires_at": {
+                      "type": "integer",
+                      "example": 1767225600,
+                      "default": 0
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "example": 3600,
+                      "default": 0
+                    },
+                    "scope": {
+                      "type": "string",
+                      "example": "YOUR_GRANTED_SCOPES"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": "Bearer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n    \"error\": \"access_denied\",\n    \"error_description\": \"Unauthorized\"\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "access_denied"
+                    },
+                    "error_description": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false,
+        "security": []
+      }
+    }
+  },
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}
