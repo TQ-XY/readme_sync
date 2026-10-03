@@ -20,4 +20,4 @@ jobs:
       - name: Sync API reference (./reference)
         uses: readmeio/rdme@v10
         with:
-          rdme: reference upload ./reference --key=${{ secrets.README_API_KEY }} --branch=v1.0
+          rdme: openapi upload ./reference --key=${{ secrets.README_API_KEY }} --branch=v1.0
