@@ -18,6 +18,7 @@ The deprecation policy is a part of our API terms and conditions and refers to t
 - Coupon API
 - Upsell API
 - Payment API
+- Standalone Dispatch API
 
 **The Deliverect deprecation policy conforms to the following rules:**
 
