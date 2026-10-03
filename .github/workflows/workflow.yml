@@ -17,7 +17,26 @@ jobs:
         with:
           rdme: docs upload ./docs --key=${{ secrets.README_API_KEY }} --branch=v1.0
 
-      - name: Sync API reference (./reference)
-        uses: readmeio/rdme@v10
+      - uses: actions/setup-node@v4
         with:
-          rdme: openapi upload ./reference --key=${{ secrets.README_API_KEY }} --branch=v1.0
+          node-version: 20
+
+      - name: Sync API reference (all JSON in ./reference)
+        env:
+          README_API_KEY: ${{ secrets.README_API_KEY }}
+        run: |
+          shopt -s nullglob
+          files=(reference/*.json)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No JSON files found in ./reference"
+            exit 0
+          fi
+          for f in "${files[@]}"; do
+            slug=$(basename "$f")
+            echo "Uploading $f (slug: $slug)"
+            npx --yes rdme@10 openapi upload "$f" \
+              --key="$README_API_KEY" \
+              --branch=v1.0 \
+              --slug="$slug" \
+              --confirm-overwrite
+          done
