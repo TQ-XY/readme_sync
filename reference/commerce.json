@@ -1,7 +1,7 @@
 {
     "openapi": "3.1.0",
     "info": {
-        "title": "Commerce",
+        "title": "Commerce API",
         "description": " Our Commerce API powers digital ordering via endpoints that provide store details, menu data, basket calculation and validation and provides a checkout flow to handle POS order injection.",
         "version": "1.0.0"
     },
