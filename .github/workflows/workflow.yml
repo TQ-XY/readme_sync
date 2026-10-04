@@ -3,7 +3,7 @@ name: readme_sync
 on:
   push:
     branches:
-      - main
+      - v1.0
 
 jobs:
   sync:
